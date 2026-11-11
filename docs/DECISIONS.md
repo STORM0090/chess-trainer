@@ -46,8 +46,11 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - **The engine is not needed at runtime until M4** (bot). Traps and puzzles follow a prepared
   move tree. M1a ships only a diagnostics page that runs the engine, to test devices early.
 - **Hash routing** (`#/diag`): GitHub Pages has no SPA fallback.
-- **Build scripts are plain `.mjs` for now.** Type-checking Node scripts needs `@types/node`,
-  which is a new dependency and has not been approved yet. To be raised for M1b (verify script).
+- **Node version is pinned.** `.nvmrc` is `24.22.1`, `engines.node` is `24.x`, CI uses
+  `node-version-file: .nvmrc`. Node is not upgraded through `winget upgrade`. (2026-11-11)
+- **Build scripts are plain `.mjs` in M1a.** From M1b scripts are TypeScript: the owner approved
+  `@types/node` as a dev dependency for the verify script (2026-11-11). `tsx` is not needed:
+  Node 24 runs `.ts` files directly (type stripping, checked locally with 24.22.1).
 - **No linter or formatter yet.** ESLint and Prettier were offered and not requested.
 - **Exact versions, lockfile committed, `npm ci` in CI.** `.npmrc` sets `save-exact=true`.
 
@@ -69,6 +72,27 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   once online.
 - **No third-party deploy action.** The publish step is a few git commands in the workflow.
 
+## Board
+
+- **chessground only draws; chess.js owns the rules.** After every move the board is reset from
+  the chess.js FEN, which also takes care of en passant, castling and promotion.
+- **The board refreshes its cached screen position before every touch.** chessground caches the
+  board rectangle and refreshes it only on scroll and resize. When the update banner appeared
+  above the board, taps landed one row off. Found in the M1a browser check; fixed with a
+  capture-phase listener in `src/ui/board/Board.tsx`.
+- **Promotion uses our own dialog** with four large buttons. While it is open the board shows
+  the position before the move and is read-only; "cancel" leaves the pawn where it was.
+- **Coordinates are drawn inside the squares.** chessground's default places them in a margin
+  around the board, and a full-width phone board has no margin.
+- **Board edge is rounded down to a multiple of 8 px** (CSS `round()`), so squares are whole
+  pixels and there are no hairline gaps.
+
+## Local development notes
+
+- In Git Bash on Windows, `npm run build -- --base=/chess-trainer/` is rewritten by MSYS path
+  conversion into a `C:/Program Files/Git/...` path. Prefix the command with
+  `MSYS_NO_PATHCONV=1` or use PowerShell. CI runs on Linux and is not affected.
+
 ## Quality
 
 - verify uses a fixed node count (`go nodes N`), one thread, fixed hash, hash cleared between
@@ -82,8 +106,21 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 
 ## Known open points
 
-- `npm audit` reports moderate advisories in the build-time chain under `workbox-build`
-  (`glob`, `minimatch`, `deepmerge`). They are not shipped to users. Not force-fixed, because
-  the fix changes pinned versions; revisit when `workbox-build` updates.
+- **`npm audit`: 6 advisories (2 low, 4 moderate), accepted for now; revisit in M5.**
+  Recorded on 2026-11-11. All six sit in the build-time chain
+  `vite-plugin-pwa` -> `workbox-build` -> (`glob` -> `minimatch`, `@rollup/plugin-node-resolve`
+  -> `deepmerge`). None of this code is shipped to users; it runs only on the developer machine
+  and in CI, on our own files. Owner's decision: never `npm audit fix --force` (it would change
+  pinned versions and can downgrade `vite-plugin-pwa`). Re-check in M5, before the APK release,
+  or earlier if `workbox-build` publishes a fixed version.
+
+  | Package | Severity | Affected range | Cause |
+  | --- | --- | --- | --- |
+  | `minimatch` | moderate | 7.0.0 - 11.0.0 | GHSA-g3hv-75wg-m249: denial of service via glob-part amplification |
+  | `glob` | moderate | 9.0.0 - 14.0.1 | GHSA-3g3m-2fjr-6pw4: AbortSignal cancellation bypass; also depends on `minimatch` |
+  | `workbox-build` | moderate | >=6.0.0-alpha.0 | depends on `glob` and `@rollup/plugin-node-resolve` |
+  | `vite-plugin-pwa` | moderate | >=1.2.0 | depends on `workbox-build` |
+  | `deepmerge` | low | >=4.2.0 | GHSA-gcqx-w48m-w2h4: `mergeObject()` prototype poisoning of returned objects |
+  | `@rollup/plugin-node-resolve` | low | >=8.0.0 | depends on `deepmerge` |
 - Stockfish inside a real Capacitor WebView is unconfirmed until tested on the device
   (cheap early check: open the diagnostics page from Telegram's in-app browser).

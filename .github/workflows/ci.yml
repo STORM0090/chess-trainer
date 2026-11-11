@@ -1,0 +1,101 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - 'm[0-9]*'
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: Typecheck, test, build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Work out the GitHub Pages base path
+        id: base
+        env:
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+          REPO: ${{ github.event.repository.name }}
+        run: |
+          if [ "$BRANCH" = "main" ]; then
+            echo "path=/$REPO/" >> "$GITHUB_OUTPUT"
+          else
+            echo "path=/$REPO/preview/$BRANCH/" >> "$GITHUB_OUTPUT"
+          fi
+      - name: Build
+        env:
+          VITE_BRANCH: ${{ github.head_ref || github.ref_name }}
+        run: |
+          export VITE_COMMIT="${GITHUB_SHA::7}"
+          npm run build -- --base="${{ steps.base.outputs.path }}"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: site
+          path: dist
+          retention-days: 7
+
+  deploy:
+    name: Publish to GitHub Pages
+    needs: check
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    # One deploy at a time: every deploy pushes to the same gh-pages branch.
+    concurrency:
+      group: gh-pages
+      cancel-in-progress: false
+    steps:
+      - uses: actions/download-artifact@v8
+        with:
+          name: site
+          path: dist
+      # main is published to the site root; a stage branch to /preview/<branch>/.
+      # A root deploy replaces everything except the preview/ directory.
+      - name: Publish
+        env:
+          BRANCH: ${{ github.ref_name }}
+          REPO_URL: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
+        run: |
+          set -euo pipefail
+          if git clone --quiet --depth 1 --branch gh-pages "$REPO_URL" site; then
+            echo "Updating the existing gh-pages branch"
+          else
+            echo "Creating the gh-pages branch"
+            git init --quiet --initial-branch gh-pages site
+            git -C site remote add origin "$REPO_URL"
+          fi
+
+          if [ "$BRANCH" = "main" ]; then
+            find site -mindepth 1 -maxdepth 1 ! -name .git ! -name preview -exec rm -rf {} +
+            cp -R dist/. site/
+          else
+            rm -rf "site/preview/$BRANCH"
+            mkdir -p "site/preview/$BRANCH"
+            cp -R dist/. "site/preview/$BRANCH/"
+          fi
+          # Serve files as they are; Jekyll would skip some paths.
+          touch site/.nojekyll
+
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add --all
+          if git diff --cached --quiet; then
+            echo "Nothing to publish"
+          else
+            git commit --quiet -m "Deploy $BRANCH @ ${GITHUB_SHA::7}"
+            git push origin gh-pages
+          fi

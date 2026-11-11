@@ -1,0 +1,36 @@
+{
+  "name": "chess-trainer",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Learn chess opening traps and basic tactics in five minutes a day.",
+  "license": "GPL-3.0-or-later",
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "copy-engine": "node scripts/copy-engine.mjs",
+    "icons": "node scripts/make-icons.mjs",
+    "predev": "npm run copy-engine",
+    "dev": "vite",
+    "prebuild": "npm run copy-engine",
+    "build": "vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@lichess-org/chessground": "10.5.0",
+    "chess.js": "1.4.0",
+    "preact": "11.2.0"
+  },
+  "devDependencies": {
+    "stockfish": "19.0.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.8",
+    "vite-plugin-pwa": "2.0.0",
+    "vitest": "5.1.0",
+    "workbox-build": "7.4.1",
+    "workbox-window": "7.4.1"
+  }
+}

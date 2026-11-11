@@ -12,8 +12,12 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 ## Commits and branches
 
-- Never add `Co-Authored-By` or any similar trailer to commits.
-- Commits use the owner's GitHub noreply address. Never write a personal email into history.
+- These rules cover every commit and every pull request in the whole repository:
+  - Never add `Co-Authored-By` or any similar trailer.
+  - No signature or mention of Claude or any AI tool in commit messages or PR descriptions
+    (no "Generated with ..." line either).
+  - The commit author is the owner, through the GitHub noreply address. Never write a personal
+    email into history.
 - Small commits. Every milestone must build, pass CI and deploy.
 - One branch per stage (`m1a`, `m1b`, `m2`, ...). Merge into `main` only when CI is green
   **and** the owner has passed the phone checklist for that stage.
@@ -33,14 +37,24 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 - Exact versions only (no `^` or `~`); `package-lock.json` is committed; CI uses `npm ci`.
 - No new dependency without the owner's approval. This includes dev dependencies.
-- Scripts are written for Node, not Python.
+- Node is pinned: `.nvmrc` holds the exact version, `engines` in `package.json` allows only
+  that major, and CI reads the version from `.nvmrc`. Do not upgrade Node as a side effect of
+  anything else. On the owner's Windows machine winget's `OpenJS.NodeJS.LTS` package already
+  points to a newer major, so never run `winget upgrade` for Node; if upgrades become a
+  problem, offer `winget pin add --id OpenJS.NodeJS.LTS` to the owner (do not run it unasked).
+- Never run `npm audit fix --force`. Known advisories are listed in `docs/DECISIONS.md`.
+- Scripts are written for Node, not Python. Node 24 runs `.ts` files directly (type
+  stripping), so `tsx` is not needed.
 - Project license is GPL-3.0-or-later (Stockfish and chessground are GPL).
   Check the license of anything new and record it in `THIRD_PARTY_NOTICES.md`.
 
 ## Secrets
 
-- Never commit keystores, `.env` files or tokens. The APK keystore lives outside the repository.
-- Never ask the owner to paste tokens into the chat. The owner runs `gh auth login` themselves.
+- Tokens, keys and keystores never enter the repository and are never shown in the chat
+  (do not print them, do not echo command output that contains them).
+  The APK keystore lives outside the repository.
+- Never ask the owner to paste tokens into the chat. Only the owner runs `gh auth login`.
+- Anything that affects the license, the user's data or the public repository is asked first.
 
 ## Content
 
