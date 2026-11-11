@@ -2,6 +2,17 @@
 
 Preview URL: https://storm0090.github.io/chess-trainer/preview/m1a/
 
+## Results
+
+| Device | Status | Date | Notes |
+| --- | --- | --- | --- |
+| Samsung S24 Ultra (section A) | **Passed** | 2026-11-12 | Checked by the owner: a normal game works, checklist passed. |
+| iPad Pro M5 (section B) | Pending | | Not blocking. To be checked separately. |
+| Windows, Edge or Chrome (section C) | Pending | | Not blocking. To be checked separately. |
+
+The stage was accepted on the S24 Ultra result and merged into `main` as `v0.1.0-m1a`.
+Problems found later on the iPad or on Windows are fixed in the stage that is open at the time.
+
 Stage M1a has no training content yet. It proves that the app installs, works offline,
 that the board handles touch well, and that the Stockfish engine runs on each device.
 

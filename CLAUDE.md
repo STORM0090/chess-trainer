@@ -12,8 +12,12 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 ## Commits and branches
 
-- Never add `Co-Authored-By` or any similar trailer to commits.
-- Commits use the owner's GitHub noreply address. Never write a personal email into history.
+- These rules cover every commit and every pull request in the whole repository:
+  - Never add `Co-Authored-By` or any similar trailer.
+  - No signature or mention of Claude or any AI tool in commit messages or PR descriptions
+    (no "Generated with ..." line either).
+  - The commit author is the owner, through the GitHub noreply address. Never write a personal
+    email into history.
 - Small commits. Every milestone must build, pass CI and deploy.
 - One branch per stage (`m1a`, `m1b`, `m2`, ...). Merge into `main` only when CI is green
   **and** the owner has passed the phone checklist for that stage.
@@ -46,8 +50,11 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 ## Secrets
 
-- Never commit keystores, `.env` files or tokens. The APK keystore lives outside the repository.
-- Never ask the owner to paste tokens into the chat. The owner runs `gh auth login` themselves.
+- Tokens, keys and keystores never enter the repository and are never shown in the chat
+  (do not print them, do not echo command output that contains them).
+  The APK keystore lives outside the repository.
+- Never ask the owner to paste tokens into the chat. Only the owner runs `gh auth login`.
+- Anything that affects the license, the user's data or the public repository is asked first.
 
 ## Content
 
