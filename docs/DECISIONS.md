@@ -69,6 +69,27 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   once online.
 - **No third-party deploy action.** The publish step is a few git commands in the workflow.
 
+## Board
+
+- **chessground only draws; chess.js owns the rules.** After every move the board is reset from
+  the chess.js FEN, which also takes care of en passant, castling and promotion.
+- **The board refreshes its cached screen position before every touch.** chessground caches the
+  board rectangle and refreshes it only on scroll and resize. When the update banner appeared
+  above the board, taps landed one row off. Found in the M1a browser check; fixed with a
+  capture-phase listener in `src/ui/board/Board.tsx`.
+- **Promotion uses our own dialog** with four large buttons. While it is open the board shows
+  the position before the move and is read-only; "cancel" leaves the pawn where it was.
+- **Coordinates are drawn inside the squares.** chessground's default places them in a margin
+  around the board, and a full-width phone board has no margin.
+- **Board edge is rounded down to a multiple of 8 px** (CSS `round()`), so squares are whole
+  pixels and there are no hairline gaps.
+
+## Local development notes
+
+- In Git Bash on Windows, `npm run build -- --base=/chess-trainer/` is rewritten by MSYS path
+  conversion into a `C:/Program Files/Git/...` path. Prefix the command with
+  `MSYS_NO_PATHCONV=1` or use PowerShell. CI runs on Linux and is not affected.
+
 ## Quality
 
 - verify uses a fixed node count (`go nodes N`), one thread, fixed hash, hash cleared between
