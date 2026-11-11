@@ -33,7 +33,14 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 - Exact versions only (no `^` or `~`); `package-lock.json` is committed; CI uses `npm ci`.
 - No new dependency without the owner's approval. This includes dev dependencies.
-- Scripts are written for Node, not Python.
+- Node is pinned: `.nvmrc` holds the exact version, `engines` in `package.json` allows only
+  that major, and CI reads the version from `.nvmrc`. Do not upgrade Node as a side effect of
+  anything else. On the owner's Windows machine winget's `OpenJS.NodeJS.LTS` package already
+  points to a newer major, so never run `winget upgrade` for Node; if upgrades become a
+  problem, offer `winget pin add --id OpenJS.NodeJS.LTS` to the owner (do not run it unasked).
+- Never run `npm audit fix --force`. Known advisories are listed in `docs/DECISIONS.md`.
+- Scripts are written for Node, not Python. Node 24 runs `.ts` files directly (type
+  stripping), so `tsx` is not needed.
 - Project license is GPL-3.0-or-later (Stockfish and chessground are GPL).
   Check the license of anything new and record it in `THIRD_PARTY_NOTICES.md`.
 
