@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "id": "fools-mate",
+  "kind": "trap",
+  "title": {
+    "ru": "Дурацкий мат",
+    "en": "Fool's Mate"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 0,
+  "idea": {
+    "ru": "После f3 и g4 диагональ e1-h4 открыта, и ферзь матует сразу.",
+    "en": "After f3 and g4 the e1-h4 diagonal is open and the queen mates at once."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.f3 e5 2.g4?? Qh4#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.g4 e5 2.f3?? Qh4#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.f3 e5 2.h3? Qh4+ 3.g3 Qxg3#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.f3 e5 2.e4",
+      "result": {
+        "cp": 80,
+        "best": "f8c5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.f3 e5 2.Nc3",
+      "result": {
+        "cp": 72,
+        "best": "g8f6",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Fool's mate (revision 1384532120)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Fool's_mate&oldid=1384532120"
+    },
+    {
+      "label": "Lichess opening name: Barnes Opening: Fool's Mate (A00)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Wikipedia: this mate rarely occurs in practice, even among beginners. It is here as the simplest picture of the weak e1-h4 diagonal.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 1,
+    "blowMoves": 1,
+    "firstBlowMove": "mate",
+    "worstCorrectPlayCp": 72,
+    "reliability": "solid",
+    "problems": []
+  }
+}

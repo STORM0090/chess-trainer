@@ -1,0 +1,114 @@
+[
+  {
+    "name": "Traxler Counterattack",
+    "side": "black",
+    "repertoire": "branch",
+    "note": "The mirror of knight-attack-f7. Wikipedia: wild complications, no clear refutation known.",
+    "sources": [
+      {
+        "label": "Wikipedia: Traxler Counterattack (revision 1373025777)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Traxler_Counterattack&oldid=1373025777"
+      }
+    ]
+  },
+  {
+    "name": "Lolli Attack",
+    "side": "white",
+    "repertoire": "core",
+    "note": "Sister line of the Fried Liver (6.d4).",
+    "sources": [
+      {
+        "label": "Wikipedia: Two Knights Defense (revision 1381945263)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Two_Knights_Defense&oldid=1381945263"
+      },
+      {
+        "label": "Lichess opening name: Italian Game: Two Knights Defense, Lolli Attack (C57)",
+        "url": "https://github.com/lichess-org/chess-openings"
+      }
+    ]
+  },
+  {
+    "name": "Tarrasch Trap (Steinitz Defence)",
+    "side": "white",
+    "repertoire": "outside",
+    "note": "Second trap of the same name; long, wins the exchange.",
+    "sources": [
+      {
+        "label": "Wikipedia: Ruy Lopez, Tarrasch Trap (revision 1356337163)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Tarrasch_Trap&oldid=1356337163"
+      }
+    ]
+  },
+  {
+    "name": "Würzburger Trap",
+    "side": "white",
+    "repertoire": "outside",
+    "note": "Vienna Gambit; a bishop is trapped on c2.",
+    "sources": [
+      {
+        "label": "Wikipedia: Vienna Game, Würzburger Trap (revision 1356337156)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Vienna_Game%2C_W%C3%BCrzburger_Trap&oldid=1356337156"
+      }
+    ]
+  },
+  {
+    "name": "Rubinstein Trap",
+    "side": "white",
+    "repertoire": "outside",
+    "note": "Wins only a pawn, so it will not reach the +2.0 threshold as a trap.",
+    "sources": [
+      {
+        "label": "Wikipedia: Queen's Gambit Declined, Rubinstein Trap (revision 1356337191)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined%2C_Rubinstein_Trap&oldid=1356337191"
+      }
+    ]
+  },
+  {
+    "name": "Monticelli Trap",
+    "side": "white",
+    "repertoire": "outside",
+    "note": "Wins the exchange; Wikipedia: unclear whether it is a forced win.",
+    "sources": [
+      {
+        "label": "Wikipedia: Bogo-Indian Defence, Monticelli Trap (revision 1320200217)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Bogo-Indian_Defence%2C_Monticelli_Trap&oldid=1320200217"
+      }
+    ]
+  },
+  {
+    "name": "Noah's Ark Trap in the Sicilian",
+    "side": "black",
+    "repertoire": "outside",
+    "note": "Rossolimo: 3...a6 4.Ba4?? b5 5.Bb3 c4.",
+    "sources": [
+      {
+        "label": "Wikipedia: Ruy Lopez, Noah's Ark Trap (revision 1356337143)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Noah's_Ark_Trap&oldid=1356337143"
+      }
+    ]
+  },
+  {
+    "name": "Tennison Gambit traps",
+    "side": "white",
+    "repertoire": "branch",
+    "note": "Against the Scandinavian with 2.Nf3. Wikipedia: theoretically unsound.",
+    "sources": [
+      {
+        "label": "Wikipedia: Tennison Gambit (revision 1358052164)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Tennison_Gambit&oldid=1358052164"
+      }
+    ]
+  },
+  {
+    "name": "Peruvian Immortal (Canal)",
+    "side": "white",
+    "repertoire": "outside",
+    "note": "A famous miniature with a double rook sacrifice; a story for view mode rather than a trap.",
+    "sources": [
+      {
+        "label": "Wikipedia: Peruvian Immortal (revision 1365818764)",
+        "url": "https://en.wikipedia.org/w/index.php?title=Peruvian_Immortal&oldid=1365818764"
+      }
+    ]
+  }
+]

@@ -1,0 +1,656 @@
+{
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|1rbnkb1r/pp2pppp/5n2/1N2N3/2B5/8/PP3PPP/R1B1K2R b KQk - 0 10": {
+  "score": {
+   "cp": -114
+  },
+  "best": "e7e6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k1nr/ppp2ppp/2n5/4P3/1BP4q/8/PP1K2PP/RN1Q1BnR w kq - 4 10": {
+  "score": {
+   "cp": -767
+  },
+  "best": "d2c3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k1nr/pppp1ppp/2n5/3NP3/1b6/q4N2/P1PBPPPP/1R1QKB1R b Kkq - 5 8": {
+  "score": {
+   "cp": -284
+  },
+  "best": "b4d2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k1nr/pppp1ppp/2n5/4P3/1b3B2/2Q2N2/PqP1PPPP/RN2KB1R w KQkq - 2 7": {
+  "score": {
+   "cp": -980
+  },
+  "best": "e1d1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k1nr/pppp1ppp/8/4P3/1n6/5N2/PqP1PPPP/RN1QKB1R w KQkq - 0 8": {
+  "score": {
+   "cp": -688
+  },
+  "best": "b1a3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k2r/ppp2ppp/2p5/8/4n2q/3PP3/PPP3PP/RN1QKB1R w KQkq - 1 9": {
+  "score": {
+   "cp": -604
+  },
+  "best": "g2g3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k2r/ppppqppp/2n5/3QP3/2P2Bn1/2P2N2/P3PPPP/R3KB1R b KQkq - 2 8": {
+  "score": {
+   "cp": -61
+  },
+  "best": "f7f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1k2r/ppppqppp/8/4n3/2P2B2/P3P3/1P1Q1PPP/R3KB1R b KQkq - 0 10": {
+  "score": {
+   "cp": -30
+  },
+  "best": "d7d6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1N/ppppq1p1/2n2n1p/4p3/2B1P3/8/PPPP1PPP/RNBQK2R b KQq - 0 6": {
+  "score": {
+   "cp": -737
+  },
+  "best": "d7d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1r/pp1n1ppp/2p1pn2/q2p2B1/2PP4/2N1PN2/PP3PPP/R2QKB1R w KQkq - 2 7": {
+  "score": {
+   "cp": 24
+  },
+  "best": "c4d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1r/pp1pnppp/2p2n2/4q3/2B1P3/2NP4/PPP2PPP/R1BQK2R w KQkq - 0 8": {
+  "score": {
+   "cp": -305
+  },
+  "best": "d3d4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1r/pp1pnppp/2p2n2/4q3/B3P3/2NP4/PPP2PPP/R1BQK2R w KQkq - 0 8": {
+  "score": {
+   "cp": -302
+  },
+  "best": "e1g1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1r/pppp1pp1/2n5/1B2p3/4P1pq/8/PPPP1PP1/RNBQNRK1 w kq - 2 8": {
+  "score": {
+   "mate": -3
+  },
+  "best": "f2f4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kb1r/ppqp1ppp/4p3/8/2B1P1P1/2N2N2/PP2nPP1/R1B2RK1 w kq - 0 11": {
+  "score": {
+   "cp": -469
+  },
+  "best": "c4e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/ppp2ppp/8/3p2q1/2BnP1N1/8/PPPP1PPP/RNBQK2R w KQkq - 0 6": {
+  "score": {
+   "cp": -504
+  },
+  "best": "g4e3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/pppp1ppp/2n5/3NP3/4q3/5N2/PPP1PPPP/R2QKB1R w KQkq - 2 7": {
+  "score": {
+   "cp": 18
+  },
+  "best": "d5c7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/pppp1ppp/2n5/4P3/5q2/2P2N2/PP2PPPP/RN1QKB1R w KQkq - 0 6": {
+  "score": {
+   "cp": -606
+  },
+  "best": "g2g3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/pppp1ppp/2n5/4P3/5q2/5N2/PPPNPPPP/R2QKB1R w KQkq - 0 6": {
+  "score": {
+   "cp": -571
+  },
+  "best": "g2g3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/ppppqppp/2n5/3QP3/8/5N2/PPP1PPPP/RNB1KB1R b KQkq - 4 4": {
+  "score": {
+   "cp": -71
+  },
+  "best": "f7f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b1kbnr/ppppqppp/2n5/4p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4": {
+  "score": {
+   "cp": -3
+  },
+  "best": "d2d3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b2br1/ppppk1pp/2n5/4q3/3PP3/2P5/PP3PPP/RNBQ1RK1 b - - 0 9": {
+  "score": {
+   "cp": -97
+  },
+  "best": "e5f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b2rk1/pp1n1ppp/2p1pn2/q2p2B1/1bPP4/2N1P3/PPQNBPPP/R3K2R b KQ - 7 9": {
+  "score": {
+   "cp": -20
+  },
+  "best": "d5c4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1b2rk1/pp3ppp/2p1pn2/q7/1b1P4/2NQP3/PP1N1PPP/R3K2R w KQ - 0 12": {
+  "score": {
+   "cp": -715
+  },
+  "best": "e1g1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bQ1b1r/p3pk1p/2p2np1/4p3/8/2N5/PPP2PPP/R1B1K2R b KQ - 0 10": {
+  "score": {
+   "cp": -818
+  },
+  "best": "f8g7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bQ1b1r/pp2pkpp/5n2/4p3/8/2N5/PP3PPP/R1B1K2R b KQ - 0 10": {
+  "score": {
+   "cp": -814
+  },
+  "best": "g7g6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bk1b1r/ppppq1pp/2n2n2/4p1N1/4P3/1B6/PPPP1PPP/RNBQK2R b KQ - 2 6": {
+  "score": {
+   "cp": -247
+  },
+  "best": "d8e8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bk1bnr/pppp1Bpp/8/4q3/3nP3/8/PPPP1PPP/RNBQ1RK1 w - - 0 7": {
+  "score": {
+   "cp": -68
+  },
+  "best": "c2c3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bk3r/pppn1ppp/8/3n4/3P4/8/PP1KPPPP/R4BNR w - - 0 10": {
+  "score": {
+   "cp": -523
+  },
+  "best": "e2e4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bq1b1r/p1ppkB1p/5np1/1p2p3/2QnP3/8/PPPP1PPP/RNB1K1NR w KQ - 0 8": {
+  "score": {
+   "cp": -593
+  },
+  "best": "c4d3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bq1b1r/pp4pp/2p1k3/3np3/1nBP4/2N2Q2/PPP2PPP/R1B2RK1 b - - 0 10": {
+  "score": {
+   "cp": -91
+  },
+  "best": "d8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bq3r/ppppk1pp/2n2n2/2bBp1N1/4P3/8/PPPP1PPP/RNBQK2R b KQ - 2 6": {
+  "score": {
+   "cp": -86
+  },
+  "best": "h8f8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqk2r/ppp2pp1/2p2n2/2b4p/4P3/3P3P/PPP1BPP1/RNBQK2R b KQkq - 0 7": {
+  "score": {
+   "cp": -251
+  },
+  "best": "d8d4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqk2r/ppp2ppp/2p2n2/2b5/4P3/3P4/PPP1BPPP/RNBQK2R b KQkq - 2 6": {
+  "score": {
+   "cp": -216
+  },
+  "best": "f6g4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqk2r/ppppbNpp/2n2n2/4p3/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq - 0 5": {
+  "score": {
+   "cp": -806
+  },
+  "best": "c6a5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/p2p1ppp/2p2nn1/1p6/B1N1P3/3P4/PPP2PPP/RNBQK2R w KQkq - 0 8": {
+  "score": {
+   "cp": -339
+  },
+  "best": "e4e5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/p3pp1p/2pp2p1/4P3/2B2Bn1/2N5/PPP2PPP/R2QK2R b KQkq - 2 9": {
+  "score": {
+   "cp": -53
+  },
+  "best": "d6d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/p4ppp/2p2n2/n3p1N1/8/3B4/PPPP1PPP/RNBQK2R b KQkq - 1 8": {
+  "score": {
+   "cp": -16
+  },
+  "best": "f6d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pp1p1ppp/2p2nn1/4p3/2B1P3/2NP1N2/PPP2PPP/R1BQK2R w KQkq - 2 7": {
+  "score": {
+   "cp": 65
+  },
+  "best": "h2h4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pp3ppp/2nppn2/8/2BNP3/2N5/PPP2PPP/R1BQK2R w KQkq - 0 7": {
+  "score": {
+   "cp": 28
+  },
+  "best": "c1e3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/ppp2Npp/2np1n2/4p3/2B1P3/8/PPPP1PPP/RNBQK2R b KQkq - 0 5": {
+  "score": {
+   "cp": -640
+  },
+  "best": "c8g4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/ppp2ppp/2p2n2/4N3/4P3/7P/PPPP1PP1/RNBQ1RK1 b kq - 0 7": {
+  "score": {
+   "cp": -189
+  },
+  "best": "c8e6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/ppp3pp/2n5/3Bp3/8/5Q2/PPPP1PPP/RNB1K2R b KQ - 0 8": {
+  "score": {
+   "cp": -343
+  },
+  "best": "d8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pppn1ppp/5n2/3p2B1/3P4/2N1P3/PP3PPP/R2QKBNR b KQkq - 0 6": {
+  "score": {
+   "cp": -24
+  },
+  "best": "f8e7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5": {
+  "score": {
+   "cp": -24
+  },
+  "best": "g1e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pppp1pp1/2n5/1B2p2p/4P1n1/3P1N1P/PPP2PP1/RNBQ1RK1 b kq - 0 6": {
+  "score": {
+   "cp": -173
+  },
+  "best": "d7d6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 4 4": {
+  "score": {
+   "cp": 0
+  },
+  "best": "g1e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/1pp2ppp/p1np4/4p3/B3P3/2P2N2/PP1P1PPP/RNBQK2R b KQkq - 0 5": {
+  "score": {
+   "cp": -26
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/2p2ppp/p2p4/1p1B4/3pP3/8/PPP2PPP/RNBQK2R b KQkq - 1 8": {
+  "score": {
+   "cp": 14
+  },
+  "best": "a8b8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/p3pppp/2Q5/1p6/2pP4/4P3/1P3PPP/RNB1KBNR b KQkq - 0 7": {
+  "score": {
+   "cp": -553
+  },
+  "best": "c8d7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/pp2pppp/2p2n2/8/3PN3/8/PPP1QPPP/R1B1KBNR w KQkq - 3 6": {
+  "score": {
+   "cp": 24
+  },
+  "best": "g1f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/pp3ppp/2npp3/8/2B1P3/2N2N2/PP3PPP/R1BQK2R w KQkq - 0 7": {
+  "score": {
+   "cp": -10
+  },
+  "best": "d1e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/pppp1ppp/8/4p3/2B1P3/2P2Q2/PP1P1PPP/RNB1K2R b KQkq - 0 5": {
+  "score": {
+   "cp": -55
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/pppp1ppp/8/4p3/2BnP3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 5 4": {
+  "score": {
+   "cp": -111
+  },
+  "best": "d4f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r1bqkbnr/pppp1ppp/8/8/2BpP3/8/PPPP1PPP/RNBQ1RK1 b kq - 1 5": {
+  "score": {
+   "cp": -128
+  },
+  "best": "c7c6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2q1rk1/2p1bppp/p3b3/1p1pP3/3Pn3/1B6/PP3PPP/RNBQR1K1 b - - 0 12": {
+  "score": {
+   "cp": -56
+  },
+  "best": "e7h4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qk2r/ppp2ppp/2p5/4P3/4P1b1/8/PPP1KbPP/RNBQ1B1R w kq - 2 9": {
+  "score": {
+   "cp": -748
+  },
+  "best": "e2f2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkb1r/ppp2ppp/2np1n2/8/2B1P1b1/2N2N2/PP3PPP/R1BQ1RK1 w kq - 4 8": {
+  "score": {
+   "cp": 7
+  },
+  "best": "d1b3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/1pp2pp1/p1p5/4p2p/4P1b1/2P2N1P/PP1P1PP1/RNBQ1RK1 b kq - 0 7": {
+  "score": {
+   "cp": 0
+  },
+  "best": "d8d3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/1pp2pp1/p1p5/4p2p/4P1b1/3P1N1P/PPP2PP1/RNBQ1RK1 b kq - 0 7": {
+  "score": {
+   "cp": 3
+  },
+  "best": "d8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/3b1ppp/p2p4/1p1Q4/2p1P3/1B6/PPP2PPP/RNB1K2R w KQkq - 0 12": {
+  "score": {
+   "cp": -472
+  },
+  "best": "b3c4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/pp3ppp/2pp4/8/2Q1P3/2N4P/PPPP1PP1/R1B1K2R b KQkq - 0 9": {
+  "score": {
+   "cp": -222
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/ppp2ppp/2np4/4p3/2B1P1b1/2N2N1P/PPPP1PP1/R1BQK2R b KQkq - 0 5": {
+  "score": {
+   "cp": -57
+  },
+  "best": "g4f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/ppp2ppp/2np4/4p3/2B1P3/2N2Q1P/PPPP1PP1/R1B1K2R b KQkq - 0 6": {
+  "score": {
+   "cp": -45
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/ppp2ppp/3p4/4n3/2B1P1b1/2N5/PPPP1PPP/R1BQK2R w KQkq - 0 6": {
+  "score": {
+   "cp": -486
+  },
+  "best": "c4e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r2qkbnr/ppp2ppp/8/4p3/2B1P1Q1/2N5/PP3PPP/R1B2RK1 b kq - 0 9": {
+  "score": {
+   "cp": -705
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r3kb1r/p1p1pppp/Q4n2/1Nq5/6b1/5N2/PPP3PP/1K1R1B1R b kq - 3 12": {
+  "score": {
+   "cp": -332
+  },
+  "best": "a8b8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r3kbnr/1pp2pp1/p1p5/4p3/4P1pq/8/PPPP1PPN/RNBQ1RK1 w kq - 2 9": {
+  "score": {
+   "cp": -835
+  },
+  "best": "f1e1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r4rk1/2p1bppp/p1n1q3/1p1pP3/4R3/1BP5/PP3PPP/RNBQ2K1 b - - 0 13": {
+  "score": {
+   "cp": -622
+  },
+  "best": "a8d8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|r4rk1/2pqb1pp/p1n1p3/1p1pP3/4R3/1BP5/PP3PPP/RNBQ2K1 b - - 0 13": {
+  "score": {
+   "cp": -604
+  },
+  "best": "e7c5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1q1knr/p1ppp1bP/1p6/7Q/3P4/3B1N2/PPP2PbP/RNB1K2R b KQ - 2 8": {
+  "score": {
+   "cp": -422
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1q1rk1/ppp3pp/3b4/3P1p2/3Pn1b1/2NB1N2/PP3PPP/R1BQ1RK1 b - - 1 10": {
+  "score": {
+   "cp": -139
+  },
+  "best": "d8e8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1q1rk1/ppp3pp/8/3P1p2/3Pn3/3B4/PP3PPN/RNBbR1K1 w - - 0 12": {
+  "score": {
+   "cp": -405
+  },
+  "best": "e1d1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1qk1nr/ppp2ppp/8/4P3/1BP3b1/8/PP2K1PP/RN1Q1BR1 w kq - 1 9": {
+  "score": {
+   "cp": -1019
+  },
+  "best": "e2f2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1qkb1r/ppp2ppp/3p1n2/4p3/2B1P1b1/2N2N1P/PPPP1PP1/R1BQK2R b KQkq - 0 5": {
+  "score": {
+   "cp": -41
+  },
+  "best": "g4f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1qkbnr/pbpp1ppp/1p2p3/8/3PP3/3B4/PPP2PPP/RNBQK1NR w KQkq - 0 4": {
+  "score": {
+   "cp": 94
+  },
+  "best": "g1f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1qkbnr/ppp1pppp/4b3/8/2pP4/4P3/PP3PPP/RNBQKBNR w KQkq - 1 4": {
+  "score": {
+   "cp": 63
+  },
+  "best": "g1f3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn1qkbnr/ppp2p1p/6p1/4p3/2B1P1Q1/2N5/PPPP1PPP/R1B1K2R b KQkq - 0 6": {
+  "score": {
+   "cp": -238
+  },
+  "best": "b8c6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rn3rk1/ppp3pp/8/3P1p2/3P4/5Q2/PP4P1/RNB1q1K1 w - - 0 16": {
+  "score": {
+   "cp": -647
+  },
+  "best": "f3f1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1k1nr/pppp1ppp/8/2b1P3/8/6P1/PPPPQ2P/RNB1KBNq w Qkq - 0 6": {
+  "score": {
+   "cp": -496
+  },
+  "best": "d2d4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1k1nr/ppppqppp/8/2b1p2Q/2B1P3/8/PPPP1PPP/RNB1K1NR w KQkq - 4 4": {
+  "score": {
+   "cp": -14
+  },
+  "best": "h5e2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1k2r/ppppbppp/5n2/8/8/8/PPPPQPPP/RNB1KB1R w KQkq - 0 7": {
+  "score": {
+   "cp": 798
+  },
+  "best": "e2d1"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kb1r/ppp1pppp/5n2/8/6q1/2N1BQ2/PPP3PP/R3KBNR w KQkq - 2 7": {
+  "score": {
+   "cp": -141
+  },
+  "best": "f3f2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kb1r/ppp1qppp/8/4P3/4Q3/8/PPP2PPP/RNB1KB1R b KQkq - 0 7": {
+  "score": {
+   "cp": -63
+  },
+  "best": "b8c6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kb1r/ppp2ppp/8/3Pq3/8/8/PPP1QPPP/RNB1KB1R b KQkq - 0 7": {
+  "score": {
+   "cp": -167
+  },
+  "best": "f8d6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kb1r/ppppNppp/3n4/8/8/8/PPPPQPPP/RNB1KB1R b KQkq - 0 6": {
+  "score": {
+   "cp": -834
+  },
+  "best": "f8e7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kbnQ/ppppq2p/6p1/8/4P3/8/PPPP1PPP/RNB1KB1R b KQq - 0 6": {
+  "score": {
+   "cp": -559
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kbnQ/ppppqp1p/6p1/8/4P3/8/PPPP1PPP/RNB1KBNR b KQq - 0 4": {
+  "score": {
+   "cp": -704
+  },
+  "best": "d7d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kbnr/ppp1q1pp/5p2/8/4P3/5N2/PPP2PPP/RNBQKB1R b KQkq - 0 6": {
+  "score": {
+   "cp": -196
+  },
+  "best": "e7e4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kbnr/pppp2pp/5p2/8/4q3/5N2/PPPPBPPP/RNBQK2R b KQkq - 1 5": {
+  "score": {
+   "cp": -246
+  },
+  "best": "d7d5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnb1kbnr/pppp3p/5pq1/7Q/8/8/PPPPBPPP/RNB1K2R w KQkq - 0 7": {
+  "score": {
+   "cp": -451
+  },
+  "best": "b1c3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbNk2r/ppppbppp/5n2/8/8/8/PPPPQPPP/RNB1KB1R b KQkq - 0 6": {
+  "score": {
+   "cp": -828
+  },
+  "best": "e8d8"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbq1bnr/ppp3pp/6k1/3BQ3/4P2P/8/PPPP1PP1/RNB1K2R b KQ - 0 8": {
+  "score": {
+   "cp": -426
+  },
+  "best": "h7h6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqk1nr/ppp2ppp/3p4/2b1p3/4PP2/2P2N2/PP1P2PP/RNBQKB1R b KQkq - 0 4": {
+  "score": {
+   "cp": -7
+  },
+  "best": "b8c6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqk1nr/ppp2ppp/3p4/2b1p3/4PP2/5N2/PPPP2PP/RNBQKB1R w KQkq - 0 4": {
+  "score": {
+   "cp": 28
+  },
+  "best": "c2c3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqk1nr/ppp2ppp/8/4P3/1bP5/4P3/PP1B2PP/RN1QKBNR b KQkq - 0 6": {
+  "score": {
+   "cp": 13
+  },
+  "best": "d8h4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqk1nr/pppp1ppp/8/2bPp3/8/8/PPP1PPPP/RNBQKBNR w KQkq - 1 3": {
+  "score": {
+   "cp": -8
+  },
+  "best": "e2e4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqk2r/ppppbppp/5n2/4Q3/4P3/8/PPPP1PPP/RNB1KBNR w KQkq - 1 4": {
+  "score": {
+   "cp": -13
+  },
+  "best": "e5f4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkb1r/ppp1pppp/5n2/8/2pP4/4P3/PP3PPP/RNBQKBNR w KQkq - 1 4": {
+  "score": {
+   "cp": 28
+  },
+  "best": "f1c4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkb1r/ppp2ppp/3p4/8/4n3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 0 5": {
+  "score": {
+   "cp": 44
+  },
+  "best": "d2d4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkb1r/pppp1ppp/8/4P3/2P1P1n1/8/PP3PPP/RNBQKBNR b KQkq - 0 4": {
+  "score": {
+   "cp": -78
+  },
+  "best": "g4e5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/ppp2ppp/8/4P3/2Pp4/5N2/PP2PPPP/RNBQKB1R b KQkq - 1 4": {
+  "score": {
+   "cp": -71
+  },
+  "best": "b8c6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp1p1p/6p1/4Q3/4P3/8/PPPP1PPP/RNB1KBNR b KQkq - 0 3": {
+  "score": {
+   "cp": -726
+  },
+  "best": "d8e7"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp1ppp/8/4p3/4P3/5P2/PPPP2PP/RNBQKBNR b KQkq - 0 2": {
+  "score": {
+   "cp": 80
+  },
+  "best": "f8c5"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp1ppp/8/4p3/8/2N2P2/PPPPP1PP/R1BQKBNR b KQkq - 1 2": {
+  "score": {
+   "cp": 72
+  },
+  "best": "g8f6"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp1ppp/8/8/3P1p2/8/PPP1PPPP/RN1QKBNR w KQkq - 0 3": {
+  "score": {
+   "cp": -663
+  },
+  "best": "g1h3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp1ppp/8/8/3Pp3/5N2/PPP1PPPP/RNBQKB1R w KQkq - 0 3": {
+  "score": {
+   "cp": -26
+  },
+  "best": "f3d2"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppp2pp/4pp2/8/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3": {
+  "score": {
+   "cp": 151
+  },
+  "best": "a2a3"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rnbqkbnr/pppppp2/7p/6p1/3PP3/8/PPP2PPP/RNBQKBNR w KQkq - 0 3": {
+  "score": {
+   "cp": 215
+  },
+  "best": "h2h4"
+ },
+ "stockfish 19.0.1 (single, full network)|nodes=2000000|hash=64|rqb1kb1r/pp1p1pp1/2n1p3/1N5p/2B1P1n1/5N1P/PP2QPP1/R1B2RK1 w kq - 0 11": {
+  "score": {
+   "cp": 0
+  },
+  "best": "e4e5"
+ }
+}

@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "id": "blackburne-shilling",
+  "kind": "trap",
+  "title": {
+    "ru": "Шиллинговый гамбит Блэкберна",
+    "en": "Blackburne Shilling Gambit"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 3,
+  "idea": {
+    "ru": "Белые берут пешку e5, ферзь с g5 бьёт коня и g2, а дальше мат конём на f3.",
+    "en": "White grabs the e5-pawn, the queen on g5 hits the knight and g2, and the knight mates on f3."
+  },
+  "sacrifice": "rook",
+  "prerequisites": [
+    "fork",
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Nxh8 Qxh1+ 7.Bf1 Qxe4+ 8.Be2 Nxc2+ 9.Kf1 Qh1#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Ng4 d5",
+      "result": {
+        "cp": 504,
+        "best": "g4e3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Bxf7+ Kd8 6.O-O Qxe5",
+      "note": "Wikipedia gives 5.Bxf7+ as White's best chance. The engine prefers 5...Kd8 to the book move 5...Ke7.",
+      "result": {
+        "cp": 68,
+        "best": "c2c3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Bxf7+ Ke7 6.O-O Qxe5 7.Bxg8 Rxg8 8.c3 Nc6 9.d4",
+      "note": "The line printed on Wikipedia.",
+      "result": {
+        "cp": -97,
+        "best": "e5f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxd4 exd4 5.O-O",
+      "result": {
+        "cp": -128,
+        "best": "c7c6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.c3 Nxf3+ 5.Qxf3",
+      "result": {
+        "cp": -55,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.O-O",
+      "result": {
+        "cp": -111,
+        "best": "d4f3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.c3 Nxf3+ 5.Qxf3 d6?? 6.Qxf7#",
+      "result": {
+        "end": "checkmated",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Blackburne Shilling Gambit (revision 1382027590)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Blackburne_Shilling_Gambit&oldid=1382027590"
+    },
+    {
+      "label": "Lichess opening name: Italian Game: Blackburne-Kostić Gambit (C50)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Joseph Henry Blackburne, who reputedly won a shilling a game with it; no recorded Blackburne game with this line is known. Also called the Kostić Gambit. Wikipedia calls the opening dubious.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 3,
+    "blowMoves": 4,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": -128,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

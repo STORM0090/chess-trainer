@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "id": "noahs-ark",
+  "kind": "trap",
+  "title": {
+    "ru": "Ноев ковчег",
+    "en": "Noah's Ark Trap"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 4,
+  "idea": {
+    "ru": "Ферзь белых взял на d4, и пешки a6, b5, c5, c4 запирают слона на b3.",
+    "en": "The white queen took on d4, and the pawns on a6, b5, c5 and c4 lock the bishop in on b3."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "hangingPiece"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Qxd4?? c5 9.Qd5 Be6 10.Qc6+ Bd7 11.Qd5 c4",
+      "result": {
+        "cp": 472,
+        "best": "b3c4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Bd5",
+      "note": "Wikipedia: White should play 8.Bd5 or gambit with 8.c3.",
+      "result": {
+        "cp": 14,
+        "best": "a8b8",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.c3",
+      "note": "Wikipedia: 5.c3, 5.Bxc6+ and 5.O-O are better than 5.d4.",
+      "result": {
+        "cp": -26,
+        "best": "g8f6",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Ruy Lopez, Noah's Ark Trap (revision 1356337143)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Noah's_Ark_Trap&oldid=1356337143"
+    },
+    {
+      "label": "Lichess opening name: Ruy Lopez: Noah's Ark Trap (C71)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Steiner-Capablanca, Budapest 1929, went this way. The origin of the name is uncertain.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 4,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": -26,
+    "reliability": "solid",
+    "problems": []
+  }
+}

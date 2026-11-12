@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "id": "budapest-kieninger",
+  "kind": "trap",
+  "title": {
+    "ru": "Будапештский гамбит: ловушка Кинингера",
+    "en": "Budapest Gambit: Kieninger Trap"
+  },
+  "side": "black",
+  "repertoire": "branch",
+  "stage": 5,
+  "idea": {
+    "ru": "Конь берёт на e5 и оставляет слона под боем: взятие слона открывает мат конём на d3.",
+    "en": "The knight takes on e5 and leaves the bishop hanging: taking the bishop allows a knight mate on d3."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "pin",
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.axb4?? Nd3#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.Nxe5 Nxe5 9.axb4?? Nd3#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.Nxe5 Nxe5 9.e3 Bxd2+ 10.Qxd2",
+      "result": {
+        "cp": -30,
+        "best": "d7d6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nc3 Bxc3+ 7.bxc3 Qe7 8.Qd5",
+      "result": {
+        "cp": -61,
+        "best": "f7f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.e4",
+      "result": {
+        "cp": -78,
+        "best": "g4e5",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Budapest Gambit (revision 1382027140)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Budapest_Gambit&oldid=1382027140"
+    },
+    {
+      "label": "Lichess opening name: Indian Defense: Budapest Gambit Accepted, Main Line, Rubinstein Variation (A52)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Georg Kieninger (offhand game against Godai, Vienna 1925). Needs 2.c4; Wikipedia notes that 2.Nf3 avoids the Budapest. A second answer to 1.d4, so practice opens after the Englund.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 1,
+    "firstBlowMove": "mate",
+    "worstCorrectPlayCp": -78,
+    "reliability": "risky",
+    "problems": []
+  }
+}

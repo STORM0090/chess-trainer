@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "id": "smith-morra-queen-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Гамбит Смита-Морра: потеря ферзя",
+    "en": "Smith-Morra Gambit: the queen trap"
+  },
+  "side": "white",
+  "repertoire": "outside",
+  "stage": 6,
+  "idea": {
+    "ru": "Пешка e5 вскрывает линию d, слон жертвуется на f7 и король уходит от своего ферзя.",
+    "en": "The e5-pawn opens the d-file, the bishop is sacrificed on f7, and the king is pulled away from its queen."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "deflection"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 6.Bc4 Nf6 7.e5 Nxe5?? 8.Nxe5 dxe5 9.Bxf7+ Kxf7 10.Qxd8",
+      "result": {
+        "cp": 814,
+        "best": "g7g6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 6.Bc4 Nf6 7.e5 dxe5 8.Qxd8+ Nxd8 9.Nb5 Rb8 10.Nxe5",
+      "result": {
+        "cp": 114,
+        "best": "e7e6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 6.Bc4 e6",
+      "result": {
+        "cp": -10,
+        "best": "d1e2",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Smith–Morra Gambit (revision 1341932942)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Smith%E2%80%93Morra_Gambit&oldid=1341932942"
+    },
+    {
+      "label": "Lichess opening name: Sicilian Defense: Smith-Morra Gambit Accepted (B21)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "The opening is from the sources; this line is engine-checked only. Wikipedia: the gambit has a minefield of traps for Black.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 3,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": -10,
+    "reliability": "risky",
+    "problems": []
+  }
+}

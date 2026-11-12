@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "id": "kings-gambit-declined-qh4",
+  "kind": "trap",
+  "title": {
+    "ru": "Отказанный королевский гамбит: шах с h4",
+    "en": "King's Gambit Declined: the check on h4"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 1,
+  "idea": {
+    "ru": "Белые взяли на e5 и открыли диагональ: шах с h4 матует или выигрывает ладью.",
+    "en": "White took on e5 and opened the diagonal: the check on h4 mates or wins the rook."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "fork",
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.Ke2 Qxe4#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.g3 Qxe4+ 5.Qe2 Qxh1",
+      "result": {
+        "cp": 496,
+        "best": "d2d4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6",
+      "result": {
+        "cp": -28,
+        "best": "c2c3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6 4.c3",
+      "result": {
+        "cp": -7,
+        "best": "b8c6",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: King's Gambit (revision 1382023287)",
+      "url": "https://en.wikipedia.org/w/index.php?title=King's_Gambit&oldid=1382023287"
+    },
+    {
+      "label": "Lichess opening name: King's Gambit Declined: Classical Variation (C30)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "The opening name and the 2...Bc5 3.Nf3 d6 main line are from the sources. The 3.fxe5 punishment is engine-checked only.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 2,
+    "blowMoves": 2,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": -28,
+    "reliability": "solid",
+    "problems": []
+  }
+}

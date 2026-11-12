@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "id": "blackburne-shilling-defence",
+  "kind": "defence",
+  "title": {
+    "ru": "Шиллинговый гамбит: как не попасться",
+    "en": "Blackburne Shilling Gambit: the refutation"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 1,
+  "idea": {
+    "ru": "Не брать на e5: разменять коня на d4 и остаться с лучшей игрой.",
+    "en": "Do not take on e5: trade the knight on d4 and keep the better game."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "hangingPiece"
+  ],
+  "lines": [
+    {
+      "tag": "hold",
+      "main": true,
+      "expect": "hold",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxd4 exd4 5.O-O",
+      "result": {
+        "cp": 128,
+        "best": "c7c6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "hold",
+      "expect": "hold",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.c3 Nxf3+ 5.Qxf3",
+      "result": {
+        "cp": 55,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3#",
+      "result": {
+        "end": "checkmated",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Blackburne Shilling Gambit (revision 1382027590)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Blackburne_Shilling_Gambit&oldid=1382027590"
+    },
+    {
+      "label": "Lichess opening name: Italian Game: Blackburne-Kostić Gambit (C50)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "The mirror of blackburne-shilling: the same opening from White's side.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 5,
+    "blowMoves": 0,
+    "firstBlowMove": "none",
+    "worstCorrectPlayCp": 55,
+    "reliability": "solid",
+    "problems": []
+  }
+}

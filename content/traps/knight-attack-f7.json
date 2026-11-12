@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "id": "knight-attack-f7",
+  "kind": "trap",
+  "title": {
+    "ru": "Конь на g5: вилка на f7",
+    "en": "Knight Attack: the fork on f7"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 1,
+  "idea": {
+    "ru": "Конь и слон вдвоём бьют на f7; если чёрные не защитились, конь берёт с вилкой на ферзя и ладью.",
+    "en": "Knight and bishop both hit f7; if Black ignores it, the knight takes and forks queen and rook."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "fork"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 h6?? 5.Nxf7 Qe7 6.Nxh8",
+      "result": {
+        "cp": 737,
+        "best": "d7d5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Be7?? 5.Nxf7",
+      "result": {
+        "cp": 806,
+        "best": "c6a5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d6?? 5.Nxf7",
+      "result": {
+        "cp": 640,
+        "best": "c8g4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Qe7 5.Bxf7+ Kd8 6.Bb3",
+      "result": {
+        "cp": 247,
+        "best": "d8e8",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3",
+      "result": {
+        "cp": 16,
+        "best": "f6d5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Bc5 5.Bxf7+ Ke7 6.Bd5",
+      "note": "Traxler Counterattack. Wikipedia: 5.Bxf7+ is preferred by most modern masters.",
+      "result": {
+        "cp": 86,
+        "best": "h8f8",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Lichess opening name: Italian Game: Two Knights Defense, Knight Attack (C57)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    },
+    {
+      "label": "Wikipedia: Two Knights Defense (revision 1381945263)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Two_Knights_Defense&oldid=1381945263"
+    }
+  ],
+  "notes": "The 4...h6, 4...Be7 and 4...d6 punishments are engine-checked only.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 4,
+    "blowMoves": 2,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 16,
+    "reliability": "solid",
+    "problems": []
+  }
+}

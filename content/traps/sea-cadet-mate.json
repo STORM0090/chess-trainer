@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "id": "sea-cadet-mate",
+  "kind": "trap",
+  "title": {
+    "ru": "Мат морского кадета",
+    "en": "Sea-Cadet Mate"
+  },
+  "side": "white",
+  "repertoire": "outside",
+  "stage": 6,
+  "idea": {
+    "ru": "Тот же мат Легаля в шотландской партии: конь бьёт на e5, ферзь отдан, три фигуры матуют.",
+    "en": "The same Légal mate in the Scotch: the knight takes on e5, the queen is given, three pieces mate."
+  },
+  "sacrifice": "queen",
+  "prerequisites": [
+    "pin",
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.O-O Ne5?? 8.Nxe5 Bxd1 9.Bxf7+ Ke7 10.Nd5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.O-O Ne5?? 8.Nxe5 dxe5 9.Qxg4",
+      "result": {
+        "cp": 705,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.O-O Nf6",
+      "result": {
+        "cp": 7,
+        "best": "d1b3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Lichess opening name: Scotch Game: Sea-Cadet Mate (C44)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "The name and the mating line come from the Lichess opening data set. Needs the Göring Gambit as White.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 3,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 7,
+    "reliability": "solid",
+    "problems": []
+  }
+}

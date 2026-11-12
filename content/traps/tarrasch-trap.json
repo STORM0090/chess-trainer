@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "id": "tarrasch-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Тарраша",
+    "en": "Tarrasch Trap (Open Defence)"
+  },
+  "side": "white",
+  "repertoire": "outside",
+  "stage": 6,
+  "idea": {
+    "ru": "После размена на e6 пешка d5 связана, и ладья забирает коня на e4.",
+    "en": "After the trade on e6 the d5-pawn is pinned, so the rook takes the knight on e4."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "pin"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7 10.Re1 O-O 11.Nd4 Qd7? 12.Nxe6 fxe6 13.Rxe4",
+      "result": {
+        "cp": 604,
+        "best": "e7c5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7 10.Re1 O-O 11.Nd4 Qd7? 12.Nxe6 Qxe6 13.Rxe4",
+      "result": {
+        "cp": 622,
+        "best": "a8d8",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7 10.Re1 O-O 11.Nd4 Nxd4 12.cxd4",
+      "result": {
+        "cp": 56,
+        "best": "e7h4",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Ruy Lopez, Tarrasch Trap (revision 1356337163)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Tarrasch_Trap&oldid=1356337163"
+    },
+    {
+      "label": "Lichess opening name: Ruy Lopez: Open, Tarrasch Trap (C83)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Siegbert Tarrasch, who caught Zukertort (1887) and Gunsberg (1890) with it. Needs the Ruy Lopez as White.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 11,
+    "blowMoves": 2,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 56,
+    "reliability": "solid",
+    "problems": []
+  }
+}

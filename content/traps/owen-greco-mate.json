@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "id": "owen-greco-mate",
+  "kind": "trap",
+  "title": {
+    "ru": "Защита Оуэна: мат Греко",
+    "en": "Owen's Defence: Greco's mate"
+  },
+  "side": "white",
+  "repertoire": "branch",
+  "stage": 5,
+  "idea": {
+    "ru": "Чёрные берут ладью и гонят ферзя, а пешка с шахом открывает слона, который матует на g6.",
+    "en": "Black wins the rook and chases the queen, but a pawn check opens the bishop, which mates on g6."
+  },
+  "sacrifice": "queen",
+  "prerequisites": [
+    "mateIn2",
+    "discoveredAttack"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 b6 2.d4 Bb7 3.Bd3 f5? 4.exf5 Bxg2 5.Qh5+ g6 6.fxg6 Nf6?? 7.gxh7+ Nxh5 8.Bg6#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 b6 2.d4 Bb7 3.Bd3 f5? 4.exf5 Bxg2 5.Qh5+ g6 6.fxg6 Bg7 7.gxh7+ Kf8 8.Nf3",
+      "note": "Wikipedia: 6...Bg7 is better, but White is winning.",
+      "result": {
+        "cp": 422,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 b6 2.d4 Bb7 3.Bd3 e6",
+      "result": {
+        "cp": 94,
+        "best": "g1f3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Owen's Defence (revision 1384648868)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Owen's_Defence&oldid=1384648868"
+    },
+    {
+      "label": "Lichess opening name: Owen Defense: Matovinsky Gambit (B00)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Wikipedia: the line was given by Greco in the 17th century.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 3,
+    "blowMoves": 5,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 94,
+    "reliability": "solid",
+    "problems": []
+  }
+}

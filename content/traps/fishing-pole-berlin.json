@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "id": "fishing-pole-berlin",
+  "kind": "trap",
+  "title": {
+    "ru": "Удочка в берлинской защите",
+    "en": "Fishing Pole Trap, Berlin Defence"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 4,
+  "idea": {
+    "ru": "Конь на g4 это наживка под пешку h5: взятие открывает линию h для мата.",
+    "en": "The knight on g4 is the bait behind the h5-pawn: taking it opens the h-file for mate."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.hxg4?? hxg4 7.Ne1 Qh4",
+      "result": {
+        "mate": 3,
+        "best": "f2f4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.hxg4?? hxg4 7.Ne1 Qh4 8.f4 g3 9.Nf3 Qh1#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.d3",
+      "result": {
+        "cp": -173,
+        "best": "d7d6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 Nf6 6.Bxc6 dxc6 7.Nxe5",
+      "note": "Wikipedia: the knight is simply kicked back and e5 falls.",
+      "result": {
+        "cp": -189,
+        "best": "c8e6",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Fishing Pole Trap (revision 1377229184)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Fishing_Pole_Trap&oldid=1377229184"
+    },
+    {
+      "label": "Lichess opening name: Ruy Lopez: Berlin Defense, Fishing Pole Variation (C65)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 5,
+    "blowMoves": 2,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": -189,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

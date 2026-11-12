@@ -1,0 +1,163 @@
+{
+  "schema": 1,
+  "id": "englund-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Гамбит Энглунда: ловушка",
+    "en": "Englund Gambit: the trap"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 2,
+  "idea": {
+    "ru": "Шах с b4 с вилкой на b2; если слон встал на c3, его связывают, меняют и ферзь матует на c1.",
+    "en": "A check on b4 forks b2; if the bishop goes to c3 it is pinned and traded, and the queen mates on c1."
+  },
+  "sacrifice": "pawn",
+  "prerequisites": [
+    "pin",
+    "mateIn2",
+    "fork"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Bxb4 Nxb4",
+      "result": {
+        "cp": 688,
+        "best": "b1a3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.c3?? Qxf4",
+      "result": {
+        "cp": 606,
+        "best": "g2g3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nbd2?? Qxf4",
+      "result": {
+        "cp": 571,
+        "best": "g2g3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Qd2?? Qxb2 6.Qc3 Bb4",
+      "result": {
+        "cp": 980,
+        "best": "e1d1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 e5 2.Bf4?? exf4",
+      "result": {
+        "cp": 663,
+        "best": "g1h3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nc3 Qxf4 6.Nd5 Qe4",
+      "note": "Wikipedia calls 5.Nc3 perfectly playable because of 6.Nd5.",
+      "result": {
+        "cp": -18,
+        "best": "d5c7",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5",
+      "note": "The critical line. An opponent who knows 6.Nc3 is close to winning.",
+      "result": {
+        "cp": -284,
+        "best": "b4d2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Qd5",
+      "note": "Stockholm Variation.",
+      "result": {
+        "cp": -71,
+        "best": "f7f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 e5 2.d5 Bc5",
+      "result": {
+        "cp": 8,
+        "best": "e2e4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 e5 2.Nf3 e4",
+      "result": {
+        "cp": 26,
+        "best": "f3d2",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Englund Gambit (revision 1382025129)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Englund_Gambit&oldid=1382025129"
+    },
+    {
+      "label": "Lichess opening name: Englund Gambit: Main Line (A40)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Objectively weak by the engine: see the \"sound\" lines. Kept as the first answer to 1.d4 by the owner's decision. Review rule: after 25 of the owner's games that start 1.d4 e5, compare how often a trap line or a one-move win appeared with how often the critical 6.Nc3 line appeared, and decide whether the Budapest replaces it. The 2...Nc6, 3...Qe7 line was introduced by Kārlis Bētiņš; the opening is named after Fritz Englund.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 5,
+    "blowMoves": 3,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": -284,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

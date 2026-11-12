@@ -1,0 +1,126 @@
+{
+  "schema": 1,
+  "id": "scholars-mate",
+  "kind": "trap",
+  "title": {
+    "ru": "Детский мат",
+    "en": "Scholar's Mate"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 0,
+  "idea": {
+    "ru": "Ферзь и слон вместе бьют на f7, которое защищает только король.",
+    "en": "Queen and bishop attack f7 together, and only the king defends it."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Bc4 Nc6 3.Qh5 Nf6?? 4.Qxf7#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nd4?? 5.Qxf7#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Qh5 g6?? 3.Qxe5+ Qe7 4.Qxh8",
+      "result": {
+        "cp": 704,
+        "best": "d7d5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Qh5 Ke7?? 3.Qxe5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Qh5 Nf6 3.Qxe5+ Be7",
+      "note": "White wins a pawn but falls behind in development.",
+      "result": {
+        "cp": -13,
+        "best": "e5f4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6",
+      "result": {
+        "cp": -24,
+        "best": "g1e2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Qe7",
+      "result": {
+        "cp": -3,
+        "best": "d2d3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Scholar's mate (revision 1356335449)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Scholar's_mate&oldid=1356335449"
+    },
+    {
+      "label": "Lichess opening name: King's Pawn Game: Wayward Queen Attack (C20)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Wikipedia: easy to parry, and once parried the attacker's position usually gets worse.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 3,
+    "blowMoves": 1,
+    "firstBlowMove": "mate",
+    "worstCorrectPlayCp": -24,
+    "reliability": "risky",
+    "problems": []
+  }
+}

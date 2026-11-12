@@ -1,0 +1,86 @@
+{
+  "schema": 1,
+  "id": "fools-mate-white",
+  "kind": "trap",
+  "title": {
+    "ru": "Дурацкий мат за белых",
+    "en": "Fool's Mate, White's version"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 0,
+  "idea": {
+    "ru": "Чёрные двинули пешки f и g, и ферзь матует с h5.",
+    "en": "Black has pushed the f- and g-pawns, so the queen mates from h5."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 g5 2.d4 f6?? 3.Qh5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 f6 2.d4 g5?? 3.Qh5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 g5 2.d4 h6",
+      "result": {
+        "cp": 215,
+        "best": "h2h4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 f6 2.d4 e6",
+      "result": {
+        "cp": 151,
+        "best": "a2a3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Fool's mate (revision 1384532120)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Fool's_mate&oldid=1384532120"
+    },
+    {
+      "label": "Lichess opening name: Borg Defense (B00)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 2,
+    "blowMoves": 1,
+    "firstBlowMove": "mate",
+    "worstCorrectPlayCp": 151,
+    "reliability": "solid",
+    "problems": []
+  }
+}
