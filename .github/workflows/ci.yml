@@ -23,6 +23,9 @@ jobs:
       - run: npm ci
       - run: npm run typecheck
       - run: npm test
+      # Trap content: legality is replayed every time; engine evaluations come from the
+      # committed cache, and only positions missing from it are searched.
+      - run: npm run verify:check
       - name: Work out the GitHub Pages base path
         id: base
         env:

@@ -104,7 +104,51 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   when traps exist.
 - Piece set license is checked and recorded in `THIRD_PARTY_NOTICES.md` before shipping.
 
+## Content and verify (step "M1b content", 2026-11-12)
+
+- **Horizon is two years and more.** The roadmap is built from ladder stages and tactics
+  levels, not weeks. Long-term material comes from the Lichess puzzle stream, FSRS reviews,
+  trap batches and the owner's own games; see `content/ROADMAP.md`.
+- **Trap files hold lines, not a hand-written tree.** `content/traps/<id>.json` lists full
+  move texts from move 1 (`"1.e4 e5 2.Nf3 f6? 3.Nxe5"`), each with a tag and an expectation.
+  Lines that share a prefix form the tree; the app-side compile step builds it later. Reason:
+  30+ traps are readable, diffable and can be pasted into any analysis board.
+- **The decisive mistake is marked in the move text** (`?` or `??` on an opponent move of the
+  main line). Verify derives setup moves, blow moves and the first blow move from it, so these
+  numbers are never typed by hand.
+- **Verify parameters (owner's decision):** Stockfish full network from the pinned `stockfish`
+  package, 2,000,000 nodes, one thread, 64 MB hash cleared before every search; a win is
+  +2.00 or a forced mate. Added by me: a defence holds down to -0.50; a player's mistake must
+  cost at least -1.00.
+- **Reliability is side-aware.** It compares the evaluation after correct play with the side's
+  normal opening balance (White +0.25, Black -0.25). A flat threshold labelled ordinary Black
+  openings such as the Queen's Gambit Declined as "risky".
+- **Evaluations are cached** in `content/verify-cache.json` by engine, node count, hash size and
+  FEN, and the cache is committed. CI replays every line and reads evaluations from the cache;
+  positions missing from it are searched. The manual workflow `verify-full.yml` ignores the
+  cache and fails on any difference. It can only be started once it is on `main`.
+- **Searches run in up to four worker threads.** Each search is independent, so parallelism does
+  not change results. The first full run (109 positions) took about four minutes locally.
+- **CI fails on a trap that does not verify**, unless the file is marked `"draft": true`.
+  Drafts are listed as unverified.
+- **The catalogue in `content/ROADMAP.md` is generated** by verify between two markers, so the
+  document cannot drift from the trap files. Names without lines live in `content/backlog.json`.
+- **Englund Gambit stays first against 1.d4** (owner's decision), labelled "dubious": the
+  critical line is about -2.8. Review after 25 of the owner's games that start 1.d4 e5.
+- **The Fried Liver is not treated as a forced win.** Its trap lines are the two king retreats
+  that lose by force; the correct 7...Ke6 is recorded with its honest evaluation.
+- **Defences are trap files of kind `defence`** (`scholars-mate-defence`,
+  `blackburne-shilling-defence`): the main line must hold, mistakes must lose.
+- **`@types/node` 24.19.2** added as a dev dependency (approved by the owner). Scripts are
+  TypeScript run directly by Node 24; `tsconfig.scripts.json` checks them with
+  `erasableSyntaxOnly`.
+
 ## Known open points
+
+- The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
+  data for opponent mistakes yet.
+- Reproducibility of verify across machines is not confirmed yet: the full no-cache run has
+  only been done on the owner's machine.
 
 - **`npm audit`: 6 advisories (2 low, 4 moderate), accepted for now; revisit in M5.**
   Recorded on 2026-11-11. All six sit in the build-time chain
