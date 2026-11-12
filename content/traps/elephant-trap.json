@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs 1...d5 as Black. By shape it would be stage 2: capture first, queen sacrifice.",
   "idea": {
     "ru": "Связанный конь всё равно бьёт на d5: за ферзя шах слоном с b4 возвращает ферзя с лишней фигурой.",
     "en": "The pinned knight takes on d5 anyway: a bishop check from b4 wins the queen back with an extra piece."

@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 2,
+  "stageReason": "The key move is a quiet pin (Bb4) before the mate.",
   "idea": {
     "ru": "Шах с b4 с вилкой на b2; если слон встал на c3, его связывают, меняют и ферзь матует на c1.",
     "en": "A check on b4 forks b2; if the bishop goes to c3 it is pinned and traded, and the queen mates on c1."

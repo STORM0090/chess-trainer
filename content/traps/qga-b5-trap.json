@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs 1.d4 as White.",
   "idea": {
     "ru": "Чёрные держатся за пешку c4, диагональ a8-h1 слабеет, и ферзь с f3 выигрывает фигуру.",
     "en": "Black clings to the c4-pawn, the a8-h1 diagonal weakens, and the queen on f3 wins a piece."

@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs the Sicilian as Black.",
   "idea": {
     "ru": "Конь на g4 и ферзь на c7 целятся на h2: конь d4 отвлекает защитника, и ферзь матует.",
     "en": "Knight on g4 and queen on c7 aim at h2: the d4-knight removes the defender and the queen mates."

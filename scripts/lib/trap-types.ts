@@ -73,8 +73,10 @@ export interface TrapFile {
   side: Side;
   /** "core": the owner's current repertoire. "branch": a second reply. "outside": other openings. */
   repertoire: 'core' | 'branch' | 'outside';
-  /** Ladder stage, see content/ROADMAP.md. */
+  /** Ladder stage, see content/ROADMAP.md. Data, not code: change it here to move a trap. */
   stage: number;
+  /** One sentence: why the trap sits on this stage. */
+  stageReason: string;
   idea: { ru: string; en: string };
   sacrifice: 'none' | 'pawn' | 'minor' | 'rook' | 'queen';
   /** Lichess puzzle theme keys the player should have met before. */

@@ -99,6 +99,19 @@ export function renderCatalog(traps: TrapFile[], backlog: BacklogEntry[]): strin
       'and bails out. "sound": the opponent avoids it.',
   ];
 
+  out.push(
+    '',
+    '### Stage overview',
+    '',
+    'The stage of a trap is the `stage` field of its file. Moving a trap is a data change.',
+    '',
+    '| Trap | Stage | Why |',
+    '| --- | --- | --- |',
+  );
+  for (const trap of traps) {
+    out.push(`| ${trap.title.en} (\`${trap.id}\`) | ${trap.stage} | ${trap.stageReason} |`);
+  }
+
   const stages = [...new Set(traps.map((trap) => trap.stage))].sort((a, b) => a - b);
   let number = 0;
   for (const stage of stages) {

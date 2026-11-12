@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "branch",
   "stage": 5,
+  "stageReason": "A second reply to 2.Nf3; a queen sacrifice and a two-bishop mate.",
   "idea": {
     "ru": "Слон связал коня, но конь бьёт на e4: взятие ферзя ведёт к мату двумя слонами.",
     "en": "The bishop pins the knight, but the knight takes on e4: capturing the queen allows mate by the two bishops."

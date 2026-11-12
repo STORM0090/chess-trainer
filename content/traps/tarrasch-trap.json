@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs the Ruy Lopez as White; eleven setup moves.",
   "idea": {
     "ru": "После размена на e6 пешка d5 связана, и ладья забирает коня на e4.",
     "en": "After the trade on e6 the d5-pawn is pinned, so the rook takes the knight on e4."

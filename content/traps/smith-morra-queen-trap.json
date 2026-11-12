@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs the Smith-Morra Gambit as White.",
   "idea": {
     "ru": "Пешка e5 вскрывает линию d, слон жертвуется на f7 и король уходит от своего ферзя.",
     "en": "The e5-pawn opens the d-file, the bishop is sacrificed on f7, and the king is pulled away from its queen."

@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "branch",
   "stage": 5,
+  "stageReason": "Only against the Caro-Kann with 4...Nd7; a one-move mate after five setup moves.",
   "idea": {
     "ru": "Ферзь на e2 связал пешку e7, поэтому конь матует с d6.",
     "en": "The queen on e2 pins the e7-pawn, so the knight mates from d6."

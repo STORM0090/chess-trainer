@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs 1...d5 as Black; eight setup moves.",
   "idea": {
     "ru": "Пешка бьёт на c4 с нападением на слона d3 и открывает ферзя на слона g5.",
     "en": "The pawn takes on c4, attacking the d3-bishop and uncovering the queen against the g5-bishop."

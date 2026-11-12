@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 0,
+  "stageReason": "One blow on f7 after three setup moves.",
   "idea": {
     "ru": "Ферзь и слон вместе бьют на f7, которое защищает только король.",
     "en": "Queen and bishop attack f7 together, and only the king defends it."

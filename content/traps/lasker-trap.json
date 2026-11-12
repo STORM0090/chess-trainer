@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs the Albin Countergambit as Black; an underpromotion.",
   "idea": {
     "ru": "Пешка доходит до g1 и превращается в коня с шахом: превращение в ферзя ничего не даёт.",
     "en": "The pawn reaches g1 and promotes to a knight with check: promoting to a queen would achieve nothing."

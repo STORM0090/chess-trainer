@@ -169,6 +169,7 @@ function structuralProblems(trap: TrapFile, fileId: string): string[] {
   if (trap.id !== fileId) problems.push(`id "${trap.id}" does not match the file name`);
   if (!trap.title?.ru || !trap.title?.en) problems.push('title needs ru and en');
   if (!trap.idea?.ru || !trap.idea?.en) problems.push('idea needs ru and en');
+  if (!Number.isInteger(trap.stage) || !trap.stageReason) problems.push('stage and stageReason are required');
   if (!trap.sources?.length || trap.sources.some((source) => !/^https:\/\//.test(source.url))) {
     problems.push('at least one source with an https URL is required');
   }
@@ -197,6 +198,7 @@ function serialise(trap: TrapFile): string {
     side: trap.side,
     repertoire: trap.repertoire,
     stage: trap.stage,
+    stageReason: trap.stageReason,
     idea: trap.idea,
     sacrifice: trap.sacrifice,
     prerequisites: trap.prerequisites,

@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 0,
+  "stageReason": "One move: the queen mates on h5.",
   "idea": {
     "ru": "Чёрные двинули пешки f и g, и ферзь матует с h5.",
     "en": "Black has pushed the f- and g-pawns, so the queen mates from h5."

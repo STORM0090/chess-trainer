@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 4,
+  "stageReason": "Seven setup moves and an attack that is not a forced win.",
   "idea": {
     "ru": "Конь жертвуется на f7, король выходит в центр, и связка на d5 решает, если король отступит назад.",
     "en": "The knight is sacrificed on f7, the king comes out, and the pin on d5 decides if the king steps back."

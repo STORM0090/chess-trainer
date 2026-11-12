@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 1,
+  "stageReason": "Two forcing moves: a check, then mate or the rook.",
   "idea": {
     "ru": "Белые взяли на e5 и открыли диагональ: шах с h4 матует или выигрывает ладью.",
     "en": "White took on e5 and opened the diagonal: the check on h4 mates or wins the rook."

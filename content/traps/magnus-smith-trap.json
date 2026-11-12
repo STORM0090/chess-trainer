@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "branch",
   "stage": 5,
+  "stageReason": "Needs the Open Sicilian with 6.Bc4 as White; eight setup moves.",
   "idea": {
     "ru": "Пешка e5 вынуждает взятие, слон жертвуется на f7 и отвлекает короля от ферзя.",
     "en": "The e5-pawn forces a capture, and the bishop sacrifice on f7 pulls the king away from the queen."

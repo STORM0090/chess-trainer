@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 3,
+  "stageReason": "Quiet first move (Qg5), a rook left hanging, four moves.",
   "idea": {
     "ru": "Белые берут пешку e5, ферзь с g5 бьёт коня и g2, а дальше мат конём на f3.",
     "en": "White grabs the e5-pawn, the queen on g5 hits the knight and g2, and the knight mates on f3."

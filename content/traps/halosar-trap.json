@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "stageReason": "Needs 1.d4 and the Blackmar-Diemer Gambit as White.",
   "idea": {
     "ru": "Конь идёт на b5 с угрозой мата на c7, а взять его нельзя из-за шаха слоном.",
     "en": "The knight jumps to b5 threatening mate on c7, and it cannot be taken because of a bishop check."

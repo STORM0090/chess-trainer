@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 0,
+  "stageReason": "One move: the queen mates on h4.",
   "idea": {
     "ru": "После f3 и g4 диагональ e1-h4 открыта, и ферзь матует сразу.",
     "en": "After f3 and g4 the e1-h4 diagonal is open and the queen mates at once."
