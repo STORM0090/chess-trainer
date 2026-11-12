@@ -2,6 +2,16 @@
 
 Preview URL: https://storm0090.github.io/chess-trainer/preview/m1b/
 
+## Results
+
+| Check | Status | Date | Notes |
+| --- | --- | --- | --- |
+| Samsung S24 Ultra (section A) | **Passed** | 2026-11-12 | Checked by the owner. |
+| Content review (section B) | **Passed** | 2026-11-12 | ROADMAP read and accepted; the four questions were answered (ROADMAP section 9). |
+| iPad Pro and Windows | Pending | | Not blocking. |
+
+Merged into `main` as `v0.2.0-m1b`.
+
 This step adds no screens. The app in the preview is the same as M1a. What changed is the
 content behind it: 32 trap files, the verify script and the roadmap. The checks are a short
 phone check that nothing broke and a reading check of the content.

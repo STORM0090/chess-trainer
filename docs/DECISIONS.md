@@ -143,6 +143,18 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   TypeScript run directly by Node 24; `tsconfig.scripts.json` checks them with
   `erasableSyntaxOnly`.
 
+## Owner's decisions on the roadmap (2026-11-12)
+
+- **Stages are data.** Every trap file has `stage` and `stageReason`; no stage is decided in
+  code. Stages are reviewed after the entry test and after the first two weeks of the owner's
+  real results.
+- **Extra puzzle themes** are added as their tactics levels are reached, `quietMove` and
+  `sacrifice` first.
+- **Opponent move weights are equal.** No Lichess token for now. If the bot stage needs
+  frequency data, the owner creates the token and keeps it in a local `.env` outside git.
+- **Exercises from the owner's own games stay on the device.** The owner's games and user name
+  never enter the repository or any public file. Progress export and import as JSON is required.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
