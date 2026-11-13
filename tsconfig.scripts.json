@@ -15,5 +15,5 @@
     "noEmit": true,
     "types": ["node"]
   },
-  "include": ["scripts", "tests/scripts"]
+  "include": ["scripts", "shared", "tests/scripts"]
 }

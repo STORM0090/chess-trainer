@@ -27,6 +27,9 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - M2 also adds the rest of the seed traps (10 in total) so ladder steps 0 and 1 exist.
 - The trap list and ladder are proposed in `content/ROADMAP.md` and approved by the owner
   before M1b.
+- **Stage order revised (2026-11-13).** M1b delivered content only (32 verified traps), so the
+  learning modes moved to M2. The owner approved the new order M2 to M8 together with the
+  engagement, reminder, data and APK-key plans; all of it is in `docs/PLAN.md`.
 
 ## Stack (versions checked against the npm registry on 2026-11-11)
 
@@ -159,8 +162,9 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
   data for opponent mistakes yet.
-- Reproducibility of verify across machines is not confirmed yet: the full no-cache run has
-  only been done on the owner's machine.
+- Reproducibility of verify across machines: confirmed on 2026-11-13. The manual workflow
+  "Verify traps (full, no cache)" searched all 109 positions again on a GitHub Linux runner
+  (3 workers) and matched every committed result from the owner's Windows machine.
 
 - **`npm audit`: 6 advisories (2 low, 4 moderate), accepted for now; revisit in M5.**
   Recorded on 2026-11-11. All six sit in the build-time chain

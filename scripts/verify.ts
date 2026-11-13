@@ -19,7 +19,7 @@ import { Chess } from 'chess.js';
 import { injectCatalog, renderCatalog, trapStatus } from './lib/catalog.ts';
 import { enginePackageVersion, type EngineFlavour, type EngineResult } from './lib/engine.ts';
 import { evaluateAll } from './lib/eval-pool.ts';
-import { measureLine, parseMovetext } from './lib/movetext.ts';
+import { measureLine, parseMovetext } from '../shared/movetext.ts';
 import type {
   BacklogEntry,
   Expect,
@@ -29,7 +29,7 @@ import type {
   TrapFile,
   TrapLine,
   Verification,
-} from './lib/trap-types.ts';
+} from '../shared/trap-types.ts';
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..');
 const TRAPS_DIR = join(ROOT, 'content', 'traps');

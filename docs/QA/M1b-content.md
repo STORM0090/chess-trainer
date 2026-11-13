@@ -47,5 +47,5 @@ still apply and do not block.
 - Trap texts for the player (the "why it works" explanations, comments per move) are not
   written yet; each trap has a one-sentence idea in Russian and English.
 - There is no frequency data: the Lichess opening explorer needs a token.
-- Reproducibility of the engine results was checked on one machine only. The manual workflow
-  that re-checks it on GitHub can be started after this branch is merged into `main`.
+- Reproducibility of the engine results: first checked on one machine only. After the merge
+  the manual workflow re-ran every position on GitHub (2026-11-13) and matched all results.

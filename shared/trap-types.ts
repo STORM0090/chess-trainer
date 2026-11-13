@@ -1,5 +1,6 @@
-// Shape of content/traps/*.json. Fields under "written by verify" are owned by scripts/verify.ts;
-// everything else is authored by hand.
+// Shape of content/traps/*.json. Shared by the Node scripts and the app.
+// Fields under "written by verify" are owned by scripts/verify.ts; everything else is
+// authored by hand.
 
 import type { Side } from './movetext.ts';
 

@@ -6,8 +6,8 @@ import {
   measureLine,
   parseMovetext,
   type ParsedMove,
-} from './movetext.ts';
-import type { BacklogEntry, LineResult, TrapFile, TrapLine } from './trap-types.ts';
+} from '../../shared/movetext.ts';
+import type { BacklogEntry, LineResult, TrapFile, TrapLine } from '../../shared/trap-types.ts';
 
 export function formatResult(result: LineResult | undefined): string {
   if (!result) return 'not evaluated';

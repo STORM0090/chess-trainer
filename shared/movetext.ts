@@ -1,5 +1,5 @@
 // Parsing of PGN-style move text used in content/traps/*.json, for example
-// "1.e4 e5 2.Nf3 f6? 3.Nxe5! fxe5?? 4.Qh5+".
+// "1.e4 e5 2.Nf3 f6? 3.Nxe5! fxe5?? 4.Qh5+". Pure code: runs in Node scripts and in the app.
 
 export type MoveMark = '!' | '!!' | '?' | '??' | '!?' | '?!';
 

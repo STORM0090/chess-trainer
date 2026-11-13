@@ -17,6 +17,7 @@
     "noFallthroughCasesInSwitch": true,
     "verbatimModuleSyntax": true,
     "isolatedModules": true,
+    "allowImportingTsExtensions": true,
     "skipLibCheck": true,
     "noEmit": true,
     "types": [
@@ -26,6 +27,7 @@
   },
   "include": [
     "src",
+    "shared",
     "tests"
   ],
   "exclude": [
