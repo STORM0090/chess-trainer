@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'preact/hooks';
 import { Chessground } from '@lichess-org/chessground';
 import type { Api } from '@lichess-org/chessground/api';
 import type { Config } from '@lichess-org/chessground/config';
+import type { DrawShape } from '@lichess-org/chessground/draw';
 import type { Dests as BoardDests, Key } from '@lichess-org/chessground/types';
 import type { Square } from 'chess.js';
 import '@lichess-org/chessground/assets/chessground.base.css';
@@ -25,6 +26,19 @@ export interface BoardProps {
   syncKey: number;
   /** Called after the user moved a piece by tapping two squares or by dragging. */
   onMove: (from: Square, to: Square) => void;
+  /** A hint drawn over the board: `piece` circles one square, `move` draws an arrow. */
+  hint?: BoardHint;
+}
+
+export type BoardHint =
+  | { kind: 'piece'; square: Square }
+  | { kind: 'move'; from: Square; to: Square };
+
+function hintShapes(hint: BoardHint | undefined): DrawShape[] {
+  if (!hint) return [];
+  return hint.kind === 'piece'
+    ? [{ orig: hint.square, brush: 'green' }]
+    : [{ orig: hint.from, dest: hint.to, brush: 'green' }];
 }
 
 function positionConfig(props: BoardProps): Config {
@@ -64,7 +78,8 @@ export function Board(props: BoardProps) {
       draggable: { enabled: true, showGhost: true },
       selectable: { enabled: true },
       premovable: { enabled: false },
-      drawable: { enabled: false },
+      // The user cannot draw; the app draws hints.
+      drawable: { enabled: false, visible: true, autoShapes: hintShapes(props.hint) },
       events: {},
     });
     board.set({
@@ -94,6 +109,11 @@ export function Board(props: BoardProps) {
     api.current?.set(positionConfig(props));
     // dests, lastMove and inCheck are all derived from the position, so `fen` covers them.
   }, [props.fen, props.orientation, props.turnColor, props.movableColor, props.syncKey]);
+
+  const hintKey = props.hint ? JSON.stringify(props.hint) : '';
+  useEffect(() => {
+    api.current?.setAutoShapes(hintShapes(props.hint));
+  }, [hintKey]);
 
   return <div class="board" ref={element} />;
 }
