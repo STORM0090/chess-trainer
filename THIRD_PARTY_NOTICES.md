@@ -12,6 +12,23 @@ third-party work. Versions are the exact versions pinned in `package.json`.
 | chess.js (rules) | 1.4.0 | BSD-2-Clause | https://github.com/jhlywa/chess.js |
 | Preact (UI) | 11.2.0 | MIT | https://github.com/preactjs/preact |
 | workbox-window (service worker registration) | 7.4.1 | MIT | https://github.com/GoogleChrome/workbox |
+| idb (IndexedDB wrapper) | 8.0.4 | ISC | https://github.com/jakearchibald/idb |
+| ts-fsrs (spaced repetition scheduler) | 6.0.0 | MIT | https://github.com/open-spaced-repetition/ts-fsrs |
+| @open-spaced-repetition/srs-kit (dependency of ts-fsrs) | 1.0.0 | BSD-3-Clause | https://www.npmjs.com/package/@open-spaced-repetition/srs-kit |
+
+ISC, MIT, BSD-2-Clause and BSD-3-Clause are permissive licenses and are compatible with
+GPL-3.0-or-later: such code may be included in a GPL work as long as its copyright notice and
+license text are kept. Licenses of idb, ts-fsrs and srs-kit were read from their
+`package.json` and `LICENSE` files on 2026-11-14:
+
+- idb: ISC License, Copyright (c) 2016, Jake Archibald
+- ts-fsrs: MIT License, Copyright (c) 2026 Open Spaced Repetition
+- @open-spaced-repetition/srs-kit: BSD 3-Clause License, Copyright (c) 2026, Open Spaced
+  Repetition contributors
+
+The full license texts are in each package's `LICENSE` file (in `node_modules` after
+`npm ci`, and in the repositories above). They are not copied into the built site yet; a
+generated file with the full texts is planned before the first APK release.
 
 ## Artwork
 
