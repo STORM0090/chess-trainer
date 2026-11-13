@@ -107,9 +107,12 @@ describe('judgeMove', () => {
     // Scholar's Mate: the main line plays 2.Qh5, another line reaches the mate with 2.Bc4.
     const scholars = trap('scholars-mate');
     expect(scholars.main.steps[2]?.san).toBe('Qh5');
-    expect(judgeMove(scholars, scholars.main, 2, { from: 'f1', to: 'c4', promotion: undefined })).toEqual({
-      kind: 'otherLine',
-    });
+    const verdict = judgeMove(scholars, scholars.main, 2, { from: 'f1', to: 'c4', promotion: undefined });
+    expect(verdict.kind).toBe('otherLine');
+    // The line with the same moves so far, so a chain or review run can go on along it.
+    const follow = verdict.kind === 'otherLine' ? verdict.follow : undefined;
+    expect(follow?.steps[2]?.san).toBe('Bc4');
+    expect(follow?.main).toBe(false);
   });
 
   it('wants the right promotion piece', () => {

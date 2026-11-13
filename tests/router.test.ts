@@ -12,11 +12,14 @@ describe('parseRoute', () => {
     expect(parseRoute('#/diag')).toEqual({ name: 'diag' });
     expect(parseRoute('#/diag/')).toEqual({ name: 'diag' });
     expect(parseRoute('#/board')).toEqual({ name: 'board' });
+    expect(parseRoute('#/data')).toEqual({ name: 'data' });
   });
 
   it('reads the trap id for View and Learn', () => {
     expect(parseRoute('#/trap/legal-mate')).toEqual({ name: 'trap', id: 'legal-mate' });
     expect(parseRoute('#/trap/legal-mate/learn')).toEqual({ name: 'learn', id: 'legal-mate' });
+    expect(parseRoute('#/trap/legal-mate/chain')).toEqual({ name: 'chain', id: 'legal-mate' });
+    expect(parseRoute('#/trap/legal-mate/review')).toEqual({ name: 'review', id: 'legal-mate' });
   });
 
   it('reports unknown paths', () => {
@@ -36,6 +39,9 @@ describe('parseRoute', () => {
       { name: 'diag' },
       { name: 'trap', id: 'englund-trap' },
       { name: 'learn', id: 'englund-trap' },
+      { name: 'chain', id: 'englund-trap' },
+      { name: 'review', id: 'englund-trap' },
+      { name: 'data' },
     ];
     for (const route of routes) expect(parseRoute(routeHref(route))).toEqual(route);
   });

@@ -84,8 +84,11 @@ export type Verdict =
   | { kind: 'otherMate'; fen: string; san: string }
   /** A mistake the trap file describes. */
   | { kind: 'knownMistake'; mistake: KnownMistake }
-  /** A good move that belongs to another line of the same trap. */
-  | { kind: 'otherLine' }
+  /**
+   * A good move that belongs to another line of the same trap. `follow` is such a line with
+   * exactly the same moves so far, when there is one: chain and review runs go on along it.
+   */
+  | { kind: 'otherLine'; follow: CompiledLine | undefined }
   | { kind: 'wrong' };
 
 /** Judges the player's move in the position before `line.steps[ply]`. */
@@ -113,16 +116,19 @@ export function judgeMove(
   );
   if (mistake) return { kind: 'knownMistake', mistake };
 
-  const inOtherLine = trap.lines.some(
-    (other) =>
-      other !== line &&
-      PRACTICE_ORDER.includes(other.tag) &&
-      other.steps.some(
-        (step) =>
-          step.mover === trap.side && positionKey(step.fenBefore) === here && sameMove(step, move),
-      ),
+  const others = trap.lines.filter((other) => other !== line && PRACTICE_ORDER.includes(other.tag));
+  const follow = others.find((other) => {
+    const step = other.steps[ply];
+    return step !== undefined && commonPrefix(line, other) >= ply && sameMove(step, move);
+  });
+  if (follow) return { kind: 'otherLine', follow };
+  const inOtherLine = others.some((other) =>
+    other.steps.some(
+      (step) =>
+        step.mover === trap.side && positionKey(step.fenBefore) === here && sameMove(step, move),
+    ),
   );
-  return inOtherLine ? { kind: 'otherLine' } : { kind: 'wrong' };
+  return inOtherLine ? { kind: 'otherLine', follow: undefined } : { kind: 'wrong' };
 }
 
 /**
