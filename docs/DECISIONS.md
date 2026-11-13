@@ -233,8 +233,8 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - **Learned, mastered, unlocked.** A trap is *learned* when the last depth is passed. Its
   first review opens the next calendar day (FSRS alone would wait almost five days). It is
   *mastered* after the first review without a wrong move; hints are allowed there. Mastering a
-  trap opens the next one in the order of the list (stage, then file name). A trap that was
-  started stays open whatever happens to the order. Mastery is not taken away by a later
+  trap opens the next one in the order of the list (stage, then the `order` field). A trap
+  that was started stays open whatever happens to the order. Mastery is not taken away by a later
   failed review.
 - **One new trap a day** is not a rule of its own yet: it follows from the next-day review.
   The explicit limit comes with the daily session in M5.
@@ -270,8 +270,34 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   it is on. Dates written while it is on stay shifted.
 - **License texts.** `THIRD_PARTY_NOTICES.md` names every shipped package with its license
   and, for the M3 additions, the copyright line. The full texts of the permissive licenses
-  (MIT, ISC, BSD) are not copied into the built site. To do before the first APK release:
-  generate a file with the full texts and link it from the app.
+  (MIT, ISC, BSD) are not copied into the built site. The owner put this into stage M7: a
+  generated file with the full texts, linked from the app, before the first APK.
+- **Order inside a stage is a field** (`order`, from 1) in every trap file, at the owner's
+  request; file names no longer decide. `shared/ladder.ts` sorts by stage, then order, for
+  the app and for the ROADMAP catalogue alike. verify requires the field and a unit test
+  requires 1, 2, 3 without gaps in every stage. The numbers were proposed by one rule and
+  wait for the owner's confirmation: shorter blow first, then shorter setup, then a forcing
+  first move before a quiet one; a defence after the attacks of its stage.
+  - Stage 0: Fool's Mate, Fool's Mate (White), Scholar's Mate, the defence against it.
+  - Stage 1: King's Gambit Declined Qh4, Knight Attack on f7, Petrov discovered check,
+    Damiano Defence, Blackburne Shilling refutation.
+  - Stage 2: Legal Trap, Mortimer Trap, Englund Trap.
+  - Stage 3: Blackburne Shilling, Fishing Pole (Exchange).
+  - Stage 4: Fishing Pole (Berlin), Fried Liver, Noah's Ark.
+  - Stage 5: Caro-Kann smothered mate, Budapest Kieninger, Magnus Smith, Stafford, Owen Greco
+    mate, Marshall.
+  - Stage 6: Halosar, Siberian, Tarrasch, Sea Cadet, Smith-Morra queen trap, Cambridge
+    Springs, QGA b5, Elephant, Lasker.
+- **"Я это знаю"** (owner's request: stage 0 would otherwise take days of mates he knows).
+  On the page of an open trap that is not learned yet. After a confirmation the trap becomes
+  learned without the chain, its first review is tomorrow like for any learned trap, and the
+  next trap opens at once. It is "mastered" only after that review goes without a wrong move;
+  a failed review brings it back more often but closes nothing. Not offered for closed traps,
+  so the ladder cannot be jumped in the middle. It cannot be undone. Saved as `knownAt`;
+  files and records written before the field existed read as "not marked".
+- **Russian explanations: the owner's rules** (2026-11-14) are in `docs/PLAN.md`: one or two
+  sentences for the main line, one phrase for the others, a source mark on every text, claims
+  checked by program, batches of at most five traps published as a file before merge.
 - **Not done in M3:** the adaptive part beyond the hint ladder (runs are counted per trap but
   the success rate is not used yet), the monthly backup reminder (needs the settings screen of
   M5), an explicit position of a trap inside its stage.

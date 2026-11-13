@@ -28,7 +28,8 @@ license text are kept. Licenses of idb, ts-fsrs and srs-kit were read from their
 
 The full license texts are in each package's `LICENSE` file (in `node_modules` after
 `npm ci`, and in the repositories above). They are not copied into the built site yet; a
-generated file with the full texts is planned before the first APK release.
+generated file with the full texts is part of stage M7, before the first APK release
+(`docs/PLAN.md`, "APK signing key").
 
 ## Artwork
 

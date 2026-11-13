@@ -30,26 +30,38 @@ for `keytool` (M7).
   see "Progression (M3)" in `docs/DECISIONS.md`.
 - **"Skip variant" button** in Learn: done in M3. Deviation steps of the chain can be skipped
   too; the main steps of the chain cannot.
-- **Russian explanations for every line.** Proposed, waiting for the owner's "ok":
-  - Written by the developer, from the first ladder stages on, as content: a new text field
-    per line in the trap file, shown in View, Learn and after a chain step.
-  - No invention: a sentence may state only what can be checked on the board (what is
-    attacked, what is pinned, where the mate is), what the stored engine result says (the
-    evaluation and the best move from verify), or what a listed source says. Every trap keeps
-    its `sources`; an explanation that leans on a source names it. History and names stay
-    as they are in the file.
-  - Batches of at most five traps, one ladder stage at a time, each batch read by the owner
-    before it is merged:
+- **"Я это знаю" button** on the trap page and **the `order` field** inside a stage: done in
+  M3 at the owner's request; see "Progression (M3)" in `docs/DECISIONS.md`. The order itself
+  is a proposal until the owner confirms it.
+- **Russian explanations for every line.** Approved by the owner on 2026-11-14 with the
+  rules below. The split into batches was redone at the owner's request and waits for a last
+  look.
+  - **Length.** The main line gets one or two sentences: the idea of the trap and why the
+    opponent's mistake can be punished. Every other line gets one phrase.
+  - **No invention.** A text states only what can be checked. Each text carries a source
+    mark: "по доске" (seen in the position), "по оценке движка" (the stored verify result),
+    or a link to a listed source.
+  - **Concrete claims are checked by program, not from memory:** which piece is pinned or
+    attacked, what is won, whether the line ends in mate or in material. chess.js answers the
+    questions about the position, the engine result from verify answers the questions about
+    the evaluation, and a new fixed-node search is run where the stored one does not answer.
+  - **Review before merge.** The texts of a batch are published as one file,
+    `docs/explanations/batch-<n>.md` (trap, line, text, source mark, how it was checked), in
+    the stage branch. The owner shows it for review; the batch is merged only after that.
+  - **Batches:** at most five traps and about 25 lines each, in ladder order.
 
-    | With stage | Traps | Lines to explain |
-    | --- | --- | --- |
-    | M4 | Stage 0 (4 traps), then stage 1 (5 traps) | 23 + 26 |
-    | M5 | Stage 2 (3 traps) and stage 3 (2 traps) | 24 + 13 |
-    | M6 | Stage 4 (3 traps), then stage 5 (6 traps, two batches) | 12 + 20 |
-    | M8 | Stage 6 (9 traps, two batches) | 27 |
+    | Batch | Traps | Lines | With stage |
+    | --- | --- | --- | --- |
+    | 1 | Stage 0: Fool's Mate, Fool's Mate (White), Scholar's Mate, its defence | 23 | M4 (which also has the entry test, so only one batch) |
+    | 2 | Stage 1: King's Gambit Declined Qh4, Knight Attack on f7, Petrov discovered check, Damiano Defence, Blackburne Shilling refutation | 26 | M5 |
+    | 3 | Stage 2: Legal Trap, Mortimer Trap, Englund Trap | 24 | M6 |
+    | 4 | Stage 3 and 4: Blackburne Shilling, Fishing Pole (Exchange), Fishing Pole (Berlin), Fried Liver, Noah's Ark | 25 | M7 |
+    | 5 | Stage 5: Caro-Kann smothered mate, Budapest Kieninger, Magnus Smith, Stafford, Owen Greco mate | 17 | M8 |
+    | 6 | Marshall Trap (stage 5); stage 6: Halosar, Siberian, Tarrasch, Sea Cadet | 15 | M8 |
+    | 7 | Stage 6: Smith-Morra queen trap, Cambridge Springs, QGA b5, Elephant, Lasker | 15 | M8 |
 
-  - At one new trap in about two days the owner reaches stage 1 after roughly a week and
-    stage 2 after two to three weeks, so the batches stay ahead of the practice.
+  - If the owner's practice gets ahead of the texts, the next batch can be done earlier as
+    its own content branch, with the owner's "ok".
 
 ## Engagement
 
@@ -99,3 +111,6 @@ for `keytool` (M7).
 - Copies: a password manager and a second offline medium. Losing the key means reinstalling
   the app and losing its data, which is why export comes before the APK.
 - The certificate fingerprint is published in the release notes.
+- **License texts (M7, before the first APK).** The full texts of the MIT, ISC and BSD
+  licenses of the shipped packages are generated into the build and linked from the app;
+  `THIRD_PARTY_NOTICES.md` only names them today. Owner's request of 2026-11-14.
