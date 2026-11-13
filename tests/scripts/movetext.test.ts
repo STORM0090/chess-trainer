@@ -4,7 +4,7 @@ import {
   formatMoves,
   measureLine,
   parseMovetext,
-} from '../../scripts/lib/movetext.ts';
+} from '../../shared/movetext.ts';
 import { formatResult, injectCatalog, CATALOG_END, CATALOG_START } from '../../scripts/lib/catalog.ts';
 
 describe('parseMovetext', () => {

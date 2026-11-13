@@ -10,6 +10,7 @@
   --accent: #1d4ed8;
   --accent-text: #ffffff;
   --ok: #15803d;
+  --warn: #b45309;
   --bad: #b91c1c;
   --header: #1f2937;
   --header-text: #f9fafb;
@@ -25,6 +26,7 @@
     --border: #374151;
     --accent: #3b82f6;
     --ok: #4ade80;
+    --warn: #fbbf24;
     --bad: #f87171;
     --header: #0b1220;
   }
@@ -441,4 +443,320 @@ body {
   overflow-wrap: anywhere;
   user-select: text;
   -webkit-user-select: text;
+}
+
+/* Narrow phones: the navigation needs the whole header. */
+@media (max-width: 27rem) {
+  .header-title {
+    display: none;
+  }
+
+  .nav {
+    flex: 1;
+    justify-content: space-between;
+  }
+}
+
+/* Trap list */
+
+.list-screen {
+  align-items: stretch;
+  gap: 0.75rem;
+  width: min(100%, 44rem);
+  margin: 0 auto;
+  padding-left: max(0.75rem, env(safe-area-inset-left));
+  padding-right: max(0.75rem, env(safe-area-inset-right));
+}
+
+.list-screen .screen-title,
+.list-screen .hint {
+  padding: 0;
+  text-align: left;
+}
+
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.stage-title {
+  margin: 0.5rem 0 0;
+  color: var(--muted);
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.trap-list,
+.line-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trap-card,
+.line-button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 3.5rem;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.trap-card:active,
+.line-button:active {
+  filter: brightness(0.93);
+}
+
+.trap-card:focus-visible,
+.line-button:focus-visible,
+.move:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.trap-card-text,
+.line-button-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.trap-card-title,
+.line-button-title {
+  font-weight: 600;
+}
+
+.trap-card-meta,
+.line-button-move {
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+.side-dot {
+  display: inline-block;
+  width: 0.75rem;
+  height: 0.75rem;
+  margin-right: 0.375rem;
+  border: 1px solid #6b7280;
+  border-radius: 50%;
+  vertical-align: -0.0625rem;
+}
+
+.side-dot-white {
+  background: #ffffff;
+}
+
+.side-dot-black {
+  background: #111111;
+}
+
+.badge {
+  flex-shrink: 0;
+  padding: 0.125rem 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge-solid {
+  color: var(--ok);
+}
+
+.badge-risky {
+  color: var(--warn);
+}
+
+.badge-dubious {
+  color: var(--bad);
+}
+
+/* Trap screens: View and Learn */
+
+.trap-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  width: var(--board-size);
+  padding: 0 0.75rem;
+}
+
+.trap-head .screen-title {
+  margin-top: 0.5rem;
+}
+
+.trap-meta,
+.trap-idea {
+  margin: 0;
+}
+
+.trap-meta {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.trap-meta .badge {
+  margin-left: 0.5rem;
+}
+
+.learn-screen .status {
+  padding-top: 0;
+}
+
+.status-done {
+  color: var(--ok);
+}
+
+.movelist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.125rem 0.25rem;
+  width: var(--board-size);
+  min-height: 2.5rem;
+  margin: 0;
+  padding: 0 0.5rem;
+  list-style: none;
+  font-variant-numeric: tabular-nums;
+}
+
+.movelist-empty {
+  color: var(--muted);
+  padding: 0 0.75rem;
+}
+
+.movelist-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.move-number {
+  padding-left: 0.25rem;
+  color: var(--muted);
+}
+
+.move {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.5rem;
+  padding: 0 0.375rem;
+  border: 0;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: var(--text);
+  font: inherit;
+}
+
+button.move {
+  cursor: pointer;
+  touch-action: manipulation;
+}
+
+.move-bad {
+  color: var(--bad);
+}
+
+.move-current {
+  background: var(--accent);
+  color: var(--accent-text);
+}
+
+.button-step {
+  padding: 0;
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.controls .button-play {
+  flex: 1.6;
+}
+
+.trap-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: var(--board-size);
+  padding: 0.25rem 0.5rem 0;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  background: var(--surface);
+}
+
+.panel p {
+  margin: 0;
+}
+
+.panel-title {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.panel-title-move,
+.line-result,
+.hint-text {
+  color: var(--muted);
+}
+
+.panel-title-move {
+  font-weight: 400;
+}
+
+.hint-text {
+  font-size: 0.875rem;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.panel-actions .button {
+  flex: 1;
+}
+
+/* Fixed height, so the board does not jump when a message appears. */
+.feedback {
+  min-height: 2.8em;
+  font-weight: 600;
+}
+
+.line-button[aria-pressed='true'] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.line-button-result {
+  flex-shrink: 0;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.line-mistake .line-button-title {
+  color: var(--bad);
 }

@@ -43,6 +43,22 @@ jobs:
         run: |
           export VITE_COMMIT="${GITHUB_SHA::7}"
           npm run build -- --base="${{ steps.base.outputs.path }}"
+      # One smoke test in a phone-sized headless Chromium, against the build made above and
+      # under the same base path. A failure stops the deploy.
+      - name: Install the test browser
+        run: npx playwright install --with-deps --only-shell chromium
+      - name: Smoke test
+        env:
+          E2E_BASE: ${{ steps.base.outputs.path }}
+        run: npm run test:e2e
+      - name: Keep the trace of a failed smoke test
+        if: failure()
+        uses: actions/upload-artifact@v7
+        with:
+          name: smoke-test-results
+          path: test-results
+          if-no-files-found: ignore
+          retention-days: 7
       - uses: actions/upload-artifact@v7
         with:
           name: site

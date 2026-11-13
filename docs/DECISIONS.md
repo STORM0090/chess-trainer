@@ -27,6 +27,9 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - M2 also adds the rest of the seed traps (10 in total) so ladder steps 0 and 1 exist.
 - The trap list and ladder are proposed in `content/ROADMAP.md` and approved by the owner
   before M1b.
+- **Stage order revised (2026-11-13).** M1b delivered content only (32 verified traps), so the
+  learning modes moved to M2. The owner approved the new order M2 to M8 together with the
+  engagement, reminder, data and APK-key plans; all of it is in `docs/PLAN.md`.
 
 ## Stack (versions checked against the npm registry on 2026-11-11)
 
@@ -100,8 +103,8 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   `verification` block (engine version, node count, evaluation per leaf) into the trap file and
   is the only thing that sets `verified`. No date in the block, so re-runs produce no diff.
   CI runs it in check mode and fails on any difference.
-- One Playwright smoke test on a mobile viewport (open a trap, complete it) arrives in M1b,
-  when traps exist.
+- One Playwright smoke test on a mobile viewport (open a trap, complete it). Planned for M1b,
+  written in M2 once the Learn screen existed (see "Learning modes").
 - Piece set license is checked and recorded in `THIRD_PARTY_NOTICES.md` before shipping.
 
 ## Content and verify (step "M1b content", 2026-11-12)
@@ -155,12 +158,59 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - **Exercises from the owner's own games stay on the device.** The owner's games and user name
   never enter the repository or any public file. Progress export and import as JSON is required.
 
+## Learning modes (M2, 2026-11-13)
+
+- **`shared/`** holds pure modules used by both the Node scripts and the app (move text
+  parsing, trap file types). Imports there use the `.ts` extension because Node needs it.
+- **Trap files are bundled** into the main script with `import.meta.glob` (eager). Only
+  verified, non-draft traps are loaded. They are compiled into positions with chess.js on
+  first use. No extra requests, so everything works offline.
+- **Routes.** The start screen is the trap list; the free board moved to `#/board`.
+  `#/trap/<id>` is View, `#/trap/<id>/learn` is Learn.
+- **Learn queue.** The main line from move 1, then the other lines in the order: more trap
+  lines, decline, hold, punish, sound. Each later line starts at the move where it leaves the
+  lines before it. Lines that end with the opponent's move are skipped (View shows them).
+- **Judging a move.** The move of the line is correct. Another move that gives checkmate is
+  accepted. A move that belongs to another line of the same trap is refused without counting
+  an error. A move described by a `mistake` line gets a message with the opponent's reply and
+  the engine evaluation. Anything else is "wrong".
+- **Hint ladder.** Level 1 says what kind of move is needed (the ШВУ scan: check, capture,
+  quiet move), level 2 circles the piece, level 3 draws the move. Each wrong move in a
+  position raises the level by one; the "Подсказка" button does the same without an error.
+  M4 will reuse the ladder for puzzles.
+- **Line notes are not shown.** The `note` fields in trap files are in English and mostly
+  name the source. The UI shows one general Russian sentence per kind of line plus the engine
+  evaluation. Russian per-line explanations would be new content and are not written yet.
+- **Nothing is saved in M2** and every trap is open. Storage arrives with M3.
+- **The UI addresses the user as "вы"**, as the M1a strings already did.
+- **Header.** On screens narrower than 27rem the app title is hidden so three navigation
+  links fit on one row.
+- **Playwright smoke test.** The owner approved `@playwright/test` 1.65.0 (Apache-2.0) as a
+  dev dependency on 2026-11-13. It brings `playwright` and `playwright-core` (same version
+  and license) and nothing else.
+  - One test, `e2e/smoke.spec.ts`, run with `npm run test:e2e` against the production build
+    in `dist`: list of 32 traps, View of the Legal Trap, Learn with one wrong move and then
+    the whole main line, the next variant. It also fails on any console error and on
+    sideways scrolling.
+  - The browser is a 384 x 824 headless Chromium with touch events: the test taps squares
+    the way a finger does. This is not a replacement for the phone checklist: it is desktop
+    Chromium, not Samsung Internet or the Android WebView.
+  - Only the headless shell is installed (`--only-shell`), to keep the download small.
+  - The service worker is blocked in the test, so the "ready to work offline" banner cannot
+    move the board between two taps. Offline behaviour stays a hand check.
+  - In CI the test runs after the build, under the same GitHub Pages base path, and before
+    the deploy: a failed smoke test means nothing is published. The trace of a failed run
+    is kept as a workflow artifact for 7 days.
+  - Texts are written in the test as the user sees them (Russian), not imported from
+    `src/i18n`, so a changed UI string must be changed in the test too.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
   data for opponent mistakes yet.
-- Reproducibility of verify across machines is not confirmed yet: the full no-cache run has
-  only been done on the owner's machine.
+- Reproducibility of verify across machines: confirmed on 2026-11-13. The manual workflow
+  "Verify traps (full, no cache)" searched all 109 positions again on a GitHub Linux runner
+  (3 workers) and matched every committed result from the owner's Windows machine.
 
 - **`npm audit`: 6 advisories (2 low, 4 moderate), accepted for now; revisit in M5.**
   Recorded on 2026-11-11. All six sit in the build-time chain

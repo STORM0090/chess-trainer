@@ -4,6 +4,9 @@ import { applyUpdate, dismissPwaNotice, getPwaState, subscribePwa } from './pwa'
 import { parseRoute, routeHref, type Route } from './router';
 import { BoardScreen } from './ui/screens/BoardScreen';
 import { DiagScreen } from './ui/screens/DiagScreen';
+import { LearnScreen } from './ui/screens/LearnScreen';
+import { TrapListScreen } from './ui/screens/TrapListScreen';
+import { TrapScreen } from './ui/screens/TrapScreen';
 
 function useRoute(): Route {
   const [route, setRoute] = useState(() => parseRoute(location.hash));
@@ -38,6 +41,12 @@ function PwaNotice() {
 
 function Screen({ route }: { route: Route }) {
   switch (route.name) {
+    case 'traps':
+      return <TrapListScreen />;
+    case 'trap':
+      return <TrapScreen id={route.id} />;
+    case 'learn':
+      return <LearnScreen id={route.id} />;
     case 'board':
       return <BoardScreen />;
     case 'diag':
@@ -46,7 +55,7 @@ function Screen({ route }: { route: Route }) {
       return (
         <div class="screen">
           <h1 class="screen-title">{t.notFound.title}</h1>
-          <a class="button button-primary" href={routeHref('board')}>
+          <a class="button button-primary" href={routeHref({ name: 'traps' })}>
             {t.notFound.back}
           </a>
         </div>
@@ -56,15 +65,23 @@ function Screen({ route }: { route: Route }) {
 
 export function App() {
   const route = useRoute();
+  const inTraps = route.name === 'traps' || route.name === 'trap' || route.name === 'learn';
+  // A new screen starts at the top; without this the page keeps the scroll of the previous one.
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [route.name, 'id' in route ? route.id : '']);
   return (
     <>
       <header class="header">
         <span class="header-title">{t.appTitle}</span>
         <nav class="nav">
-          <a href={routeHref('board')} aria-current={route.name === 'board' ? 'page' : undefined}>
+          <a href={routeHref({ name: 'traps' })} aria-current={inTraps ? 'page' : undefined}>
+            {t.nav.traps}
+          </a>
+          <a href={routeHref({ name: 'board' })} aria-current={route.name === 'board' ? 'page' : undefined}>
             {t.nav.board}
           </a>
-          <a href={routeHref('diag')} aria-current={route.name === 'diag' ? 'page' : undefined}>
+          <a href={routeHref({ name: 'diag' })} aria-current={route.name === 'diag' ? 'page' : undefined}>
             {t.nav.diag}
           </a>
         </nav>

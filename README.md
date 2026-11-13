@@ -3,7 +3,8 @@
 Learn chess opening traps and basic tactics in five minutes a day.
 A phone-first PWA for beginner-level players. The UI is in Russian.
 
-**Status:** early development (stage M1a: app shell, board, engine diagnostics).
+**Status:** early development. Stage M2: 32 verified opening traps with a View mode and a
+Learn mode with hints. Progress is not saved yet. The plan is in [docs/PLAN.md](docs/PLAN.md).
 
 ## Stack
 
@@ -22,6 +23,9 @@ npm run dev
 ```
 
 Other commands: `npm run build`, `npm run typecheck`, `npm test`.
+
+Smoke test in a phone-sized browser (once: `npx playwright install --only-shell chromium`):
+`npm run build`, then `npm run test:e2e`.
 
 ## License
 

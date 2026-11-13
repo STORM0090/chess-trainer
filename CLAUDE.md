@@ -3,6 +3,7 @@
 Chess Trainer teaches opening traps and basic tactics to beginner-level players
 (target user: ~400 rapid on chess.com) in five-minute daily sessions.
 Read `docs/DECISIONS.md` before starting work: it records what was decided and why.
+`docs/PLAN.md` holds the approved stage order and the plans for engagement, reminders and the APK.
 
 ## Language
 
@@ -78,4 +79,5 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 - `npm run dev`: dev server
 - `npm run build`: production build (CI passes `--base` for GitHub Pages)
 - `npm run typecheck`, `npm test`, `npm run verify:check`: checks that CI runs
+- `npm run test:e2e`: Playwright smoke test on a phone-sized screen; needs `npm run build` first
 - `npm run verify`: verify every trap, update trap files, the cache and the ROADMAP catalogue
