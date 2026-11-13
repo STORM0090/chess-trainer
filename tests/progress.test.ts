@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { DAY_MS, localDaysBetween, startOfLocalDay, startOfNextLocalDay } from '../src/core/days';
 import {
   applyChainRun,
+  applyKnown,
   applyReview,
   dueReviews,
   emptyProgress,
@@ -159,6 +160,29 @@ describe('unlocking', () => {
     const started = applyChainRun(emptyProgress('c'), main(1), 4, CLEAN, EVENING);
     const viewed = markSeen(emptyProgress('d'), EVENING);
     expect([...unlockedIds(order, { c: started, d: viewed })]).toEqual(['a', 'c']);
+  });
+
+  it('opens the next trap at once when the player says they know one', () => {
+    const known = applyKnown(emptyProgress('a'), 3, EVENING);
+    expect(known).toMatchObject({ chainDepth: 3, learnedAt: EVENING, knownAt: EVENING, masteredAt: null });
+    expect(known.dueAt).toBe(startOfNextLocalDay(EVENING));
+    expect(trapStatus(known)).toBe('learned');
+    expect([...unlockedIds(order, { a: known })]).toEqual(['a', 'b']);
+    // Several in a row: each one opens the next.
+    const b = applyKnown(emptyProgress('b'), 5, EVENING);
+    expect([...unlockedIds(order, { a: known, b })]).toEqual(['a', 'b', 'c']);
+    // It is reviewed like any learned trap, and a good review masters it.
+    expect(trapStatus(applyReview(known, 'good', NEXT_MORNING))).toBe('mastered');
+    // A failed review keeps the next trap open.
+    const failed = applyReview(known, 'again', NEXT_MORNING);
+    expect(trapStatus(failed)).toBe('learned');
+    expect([...unlockedIds(order, { a: failed })]).toEqual(['a', 'b']);
+  });
+
+  it('does not change a trap that is already learned', () => {
+    const done = learned('a', 2, EVENING);
+    expect(applyKnown(done, 2, NEXT_MORNING)).toBe(done);
+    expect(done.knownAt).toBeNull();
   });
 
   it('lists due reviews, the longest waiting first', () => {

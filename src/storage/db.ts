@@ -1,7 +1,14 @@
 // IndexedDB through idb. Three stores; every record is a plain object from core/progress.ts.
 
 import { openDB, type DBSchema, type IDBPDatabase } from 'idb';
-import { emptyData, type AppData, type GameEntry, type Settings, type TrapProgress } from '../core/progress';
+import {
+  emptyData,
+  emptyProgress,
+  type AppData,
+  type GameEntry,
+  type Settings,
+  type TrapProgress,
+} from '../core/progress';
 
 const DB_NAME = 'chess-trainer';
 const DB_VERSION = 1;
@@ -36,7 +43,8 @@ export async function loadAll(): Promise<AppData> {
   ]);
   await tx.done;
   const data = emptyData();
-  for (const trap of traps) data.traps[trap.id] = trap;
+  // Records written by an older build may lack fields that were added later.
+  for (const trap of traps) data.traps[trap.id] = { ...emptyProgress(trap.id), ...trap };
   data.games = games.sort((a, b) => a.at - b.at);
   if (settings) data.settings = { ...data.settings, ...settings };
   return data;

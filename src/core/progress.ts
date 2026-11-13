@@ -23,8 +23,13 @@ export interface TrapProgress {
   lines: Record<string, LineStat>;
   /** Runs in chain mode, for the success rate. */
   runs: { clean: number; failed: number };
-  /** The whole main line was played from move 1 without errors and hints. */
+  /**
+   * The trap counts as learned: the whole main line was played from move 1 without errors
+   * and hints, or the player said they know it (`knownAt`).
+   */
   learnedAt: number | null;
+  /** The player pressed "Я это знаю" instead of going through the chain. */
+  knownAt: number | null;
   /** FSRS state; exists once the trap is learned. */
   card: StoredCard | null;
   /** The next review opens at this time (the start of a local day). */
@@ -72,6 +77,7 @@ export function emptyProgress(id: string): TrapProgress {
     lines: {},
     runs: { clean: 0, failed: 0 },
     learnedAt: null,
+    knownAt: null,
     card: null,
     dueAt: null,
     reviews: 0,
@@ -140,6 +146,25 @@ export function applyChainRun(
   return next;
 }
 
+/**
+ * "Я это знаю": the trap is learned without the chain and goes into the reviews like any
+ * learned trap. The next trap opens at once; the first review tomorrow shows whether the
+ * player really knows it. Does nothing for a trap that is already learned.
+ */
+export function applyKnown(progress: TrapProgress, length: number, now: number): TrapProgress {
+  if (progress.learnedAt !== null) return progress;
+  return {
+    ...progress,
+    seenAt: progress.seenAt ?? now,
+    chainDepth: Math.max(progress.chainDepth, length),
+    learnedAt: now,
+    knownAt: now,
+    card: firstCard(progress.id, now),
+    dueAt: startOfNextLocalDay(now),
+    updatedAt: now,
+  };
+}
+
 export function skipDeviation(progress: TrapProgress, key: string, now: number): TrapProgress {
   const stat = progress.lines[key] ?? { clean: 0, failed: 0, skipped: false };
   return {
@@ -179,16 +204,19 @@ export function trapStatus(progress: TrapProgress | undefined): TrapStatus {
 
 /**
  * Traps whose practice is open. The first trap of the ladder is always open; each next one
- * opens when the one before it is mastered (learned and reviewed once without a wrong move).
- * A trap that was already started stays open, whatever happens to the order later.
+ * opens when the one before it is mastered (learned and reviewed once without a wrong move)
+ * or was marked as known by the player. A trap that was already started stays open, whatever
+ * happens to the order later.
  */
 export function unlockedIds(order: string[], traps: Record<string, TrapProgress>): Set<string> {
   const open = new Set<string>();
   order.forEach((id, index) => {
     const own = trapStatus(traps[id]);
     const previous = order[index - 1];
-    const previousMastered = previous === undefined || trapStatus(traps[previous]) === 'mastered';
-    if (previousMastered || own === 'started' || own === 'learned' || own === 'mastered') open.add(id);
+    const before = previous === undefined ? undefined : traps[previous];
+    const previousDone =
+      previous === undefined || trapStatus(before) === 'mastered' || (before?.knownAt ?? null) !== null;
+    if (previousDone || own === 'started' || own === 'learned' || own === 'mastered') open.add(id);
   });
   return open;
 }

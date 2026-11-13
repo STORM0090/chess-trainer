@@ -811,6 +811,15 @@ button.move {
   opacity: 0.85;
 }
 
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--warn);
+  border-radius: 0.5rem;
+}
+
 .panel-actions-column {
   flex-direction: column;
 }

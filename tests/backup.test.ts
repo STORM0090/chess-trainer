@@ -53,6 +53,14 @@ describe('progress file', () => {
     expect(parsed.ok && Object.keys(parsed.data.traps)).toContain('future-trap');
   });
 
+  it('reads a file written before the "known" mark existed', () => {
+    const text = fileWith((file) => {
+      delete file.data.traps['fools-mate'].knownAt;
+    });
+    const parsed = parseBackup(text);
+    expect(parsed.ok && parsed.data.traps['fools-mate']?.knownAt).toBeNull();
+  });
+
   it('refuses text that is not a progress file', () => {
     expect(parseBackup('not json')).toEqual({ ok: false, problem: 'notJson' });
     expect(parseBackup('[1, 2]')).toEqual({ ok: false, problem: 'notBackup' });
@@ -73,6 +81,7 @@ describe('progress file', () => {
       (file) => (file.data.traps['fools-mate'].chainDepth = -1),
       (file) => (file.data.traps['fools-mate'].chainDepth = '2'),
       (file) => (file.data.traps['fools-mate'].id = 'legal-mate'),
+      (file) => (file.data.traps['fools-mate'].knownAt = 'yes'),
       (file) => (file.data.traps['fools-mate'].card.dueAt = 'tomorrow'),
       (file) => delete file.data.traps['fools-mate'].card.stability,
       (file) => (file.data.traps['fools-mate'].lines['0123abcd'].skipped = 'no'),

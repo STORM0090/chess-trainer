@@ -1,9 +1,10 @@
+import { useState } from 'preact/hooks';
 import { chainLength, nextChainStep, openDeviations } from '../../core/chain';
-import { gameCounts, isReviewDue, trapStatus, type GameOutcome } from '../../core/progress';
+import { applyKnown, gameCounts, isReviewDue, trapStatus, type GameOutcome } from '../../core/progress';
 import type { CompiledTrap } from '../../core/trap-model';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
-import { appNow, logGame, removeGame, useStore } from '../../storage/store';
+import { appNow, logGame, removeGame, updateTrap, useStore } from '../../storage/store';
 import type { TrapAccess } from './access';
 import { whenText } from './labels';
 
@@ -17,6 +18,12 @@ export function ProgressPanel({ trap, access }: { trap: CompiledTrap; access: Tr
   const next = nextChainStep(trap, progress);
   const deviations = openDeviations(trap, progress);
   const chainHref = routeHref({ name: 'chain', id });
+  // "Я это знаю" asks once more before it changes anything: it cannot be undone.
+  const [confirmKnown, setConfirmKnown] = useState(false);
+  const markKnown = () => {
+    setConfirmKnown(false);
+    updateTrap(id, (current) => applyKnown(current, length, appNow()));
+  };
 
   return (
     <section class="panel">
@@ -49,12 +56,35 @@ export function ProgressPanel({ trap, access }: { trap: CompiledTrap; access: Tr
               : fmt(t.progress.chainContinue, { n: next.depth, total: length })}
           </a>
           <p class="hint-text">{t.progress.chainHelp}</p>
+          {confirmKnown ? (
+            <div class="confirm" role="group" aria-label={t.progress.known}>
+              <p>{t.progress.knownConfirm}</p>
+              <div class="panel-actions">
+                <button type="button" class="button button-primary" onClick={markKnown}>
+                  {t.progress.knownYes}
+                </button>
+                <button type="button" class="button" onClick={() => setConfirmKnown(false)}>
+                  {t.progress.knownNo}
+                </button>
+              </div>
+            </div>
+          ) : (
+            <button type="button" class="button" onClick={() => setConfirmKnown(true)}>
+              {t.progress.known}
+            </button>
+          )}
         </>
       )}
 
       {unlocked && progress.learnedAt !== null && (
         <>
-          <p>{status === 'mastered' ? t.progress.masteredNote : t.progress.learnedNote}</p>
+          <p>
+            {status === 'mastered'
+              ? t.progress.masteredNote
+              : progress.knownAt !== null
+                ? t.progress.knownNote
+                : t.progress.learnedNote}
+          </p>
           {isReviewDue(progress, now) ? (
             <a class="button button-primary" href={routeHref({ name: 'review', id })}>
               {t.progress.reviewNow}

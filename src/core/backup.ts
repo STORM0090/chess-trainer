@@ -105,6 +105,8 @@ function readTrap(id: string, value: unknown): TrapProgress | undefined {
   if (
     !isTimeOrNull(value.seenAt) ||
     !isTimeOrNull(value.learnedAt) ||
+    // Added after the first files were written: a file without the field means "not marked".
+    !(value.knownAt === undefined || isTimeOrNull(value.knownAt)) ||
     !isTimeOrNull(value.dueAt) ||
     !isTimeOrNull(value.masteredAt)
   ) {
@@ -117,6 +119,7 @@ function readTrap(id: string, value: unknown): TrapProgress | undefined {
     lines,
     runs: { clean: runs.clean, failed: runs.failed },
     learnedAt: value.learnedAt,
+    knownAt: value.knownAt ?? null,
     card,
     dueAt: value.dueAt,
     reviews: value.reviews,

@@ -185,5 +185,21 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   await expect(page.getByText('Освоено 1 из 32')).toBeVisible();
   await expect(page.locator('.trap-card-locked')).toHaveCount(30);
 
+  // "Я это знаю": the second trap is learned without the chain and the third one opens.
+  // The card, not the button of the top block: that one starts the chain.
+  await page.locator('.trap-card', { hasText: 'Дурацкий мат за белых' }).tap();
+  await page.getByRole('button', { name: 'Я это знаю' }).tap();
+  await expect(page.getByText(/Отметить ловушку как знакомую/)).toBeVisible();
+  await page.getByRole('button', { name: 'Отмена' }).tap();
+  await expect(page.getByText(/Отметить ловушку как знакомую/)).toHaveCount(0);
+  await page.getByRole('button', { name: 'Я это знаю' }).tap();
+  await page.getByRole('button', { name: 'Да, знаю' }).tap();
+  await expect(page.getByText(/Вы отметили, что знаете эту ловушку/)).toBeVisible();
+  await expect(page.getByText(/Следующее повторение: завтра/)).toBeVisible();
+  await page.getByRole('link', { name: 'Ловушки' }).tap();
+  await expect(page.getByText('Освоено 1 из 32')).toBeVisible();
+  await expect(page.locator('.trap-card-locked')).toHaveCount(29);
+  await expect(page.getByRole('link', { name: /Детский мат\s*Начать цепочку/ })).toBeVisible();
+
   expect(problems, 'errors in the browser console').toEqual([]);
 });
