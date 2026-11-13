@@ -10,7 +10,7 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | --- | --- | --- | --- |
 | M1a (done) | Scaffold, CI, deploy, offline shell, board, diagnostics | `docs/QA/M1a.md` | |
 | M1b (done) | Verified trap content, verify script, two-year roadmap | `docs/QA/M1b-content.md` | |
-| M2 | Learning modes: View and Learn on all 32 traps, ШВУ hints, reliability label | Open a trap, watch it, complete it, make a mistake and get a hint | large |
+| M2 (done) | Learning modes: View and Learn on all 32 traps, ШВУ hints, reliability label | `docs/QA/M2.md` | |
 | M3 | Progression: backward chain, FSRS reviews, stages and unlocking, collection, game log, export and import | Chain a trap, close the app, the stage is still saved; export and import the progress file | large |
 | M4 | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder | Take the test; solve 5 puzzles in three themes with the network off | medium |
 | M5 | Daily session, trap of the day, soft streak, settings, `.ics` reminder | A week of sessions; add the calendar reminder | medium |
@@ -19,9 +19,37 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M8 | More content: basic mates, simple endgames, opening principles, PGN import, new trap batches | Per batch | open-ended |
 
 Dependencies that need the owner's approval when their stage starts: `@playwright/test` (M2,
-the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3), the Capacitor packages including
+the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3; approved and added on
+2026-11-14), the Capacitor packages including
 `@capacitor/local-notifications`, `@capacitor/filesystem` and `@capacitor/share` (M7), and a JDK
 for `keytool` (M7).
+
+## Owner's requests of 2026-11-14
+
+- **Backward chain** ("откат на ход назад", the owner's main idea) is M3 and is built there:
+  see "Progression (M3)" in `docs/DECISIONS.md`.
+- **"Skip variant" button** in Learn: done in M3. Deviation steps of the chain can be skipped
+  too; the main steps of the chain cannot.
+- **Russian explanations for every line.** Proposed, waiting for the owner's "ok":
+  - Written by the developer, from the first ladder stages on, as content: a new text field
+    per line in the trap file, shown in View, Learn and after a chain step.
+  - No invention: a sentence may state only what can be checked on the board (what is
+    attacked, what is pinned, where the mate is), what the stored engine result says (the
+    evaluation and the best move from verify), or what a listed source says. Every trap keeps
+    its `sources`; an explanation that leans on a source names it. History and names stay
+    as they are in the file.
+  - Batches of at most five traps, one ladder stage at a time, each batch read by the owner
+    before it is merged:
+
+    | With stage | Traps | Lines to explain |
+    | --- | --- | --- |
+    | M4 | Stage 0 (4 traps), then stage 1 (5 traps) | 23 + 26 |
+    | M5 | Stage 2 (3 traps) and stage 3 (2 traps) | 24 + 13 |
+    | M6 | Stage 4 (3 traps), then stage 5 (6 traps, two batches) | 12 + 20 |
+    | M8 | Stage 6 (9 traps, two batches) | 27 |
+
+  - At one new trap in about two days the owner reaches stage 1 after roughly a week and
+    stage 2 after two to three weeks, so the batches stay ahead of the practice.
 
 ## Engagement
 

@@ -204,6 +204,81 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   - Texts are written in the test as the user sees them (Russian), not imported from
     `src/i18n`, so a changed UI string must be changed in the test too.
 
+## Progression (M3, 2026-11-14)
+
+- **Dependencies.** The owner approved `idb` 8.0.4 (ISC) and `ts-fsrs` 6.0.0 (MIT) on
+  2026-11-14. ts-fsrs brings one package of its own, `@open-spaced-repetition/srs-kit` 1.0.0
+  (BSD-3-Clause). All three licenses are compatible with GPL-3.0-or-later.
+- **ts-fsrs 6 is not the 5.x API.** The scheduler is created with `await DefaultScheduler()`
+  (asynchronous), cards have `dueAt` and `lastReviewAt` as `Date`, and the default model is
+  FSRS-7. `src/core/schedule.ts` is the only module that imports the library. It pins
+  `version: 'FSRS-7'`, retention 0.9, no learning steps in minutes, no fuzz. The build emits
+  small chunks for FSRS 3 to 6 as well (about 20 kB in total); only FSRS-7 is loaded.
+- **Backward chain, one player move at a time.** Depth 1 is the last move of the main line
+  alone, depth 2 the last two moves of the player, and so on; the last depth starts at move 1.
+  The owner's words were "one move before the blow, then two": the chain goes finer than
+  that and also splits the blow itself, so a three-move combination is learned as mate in 1,
+  then 2, then 3. The screen says whether the step is inside the blow or adds setup moves
+  (`blowMoves` from verify). To be confirmed by the owner on the phone.
+- **A step counts only when it is clean:** no wrong move and no hint. Otherwise the same step
+  is repeated. This is the "help, then do it yourself" rule from the first plan.
+- **Deviations are woven into the chain.** After each depth come the lines in which the
+  opponent plays another move inside the part of the main line that this depth added. The run
+  starts where the depth started, so the deviation is a surprise. A deviation can be skipped;
+  a main step cannot. Lines where the player has a second good move, and lines that end with
+  the opponent's move, are not chain steps (Learn and View show them).
+- **Following another good line.** In chain and review runs a good move that belongs to
+  another line with the same moves so far is accepted and the run goes on along that line.
+  Learn mode still asks for the move of its own line.
+- **Learned, mastered, unlocked.** A trap is *learned* when the last depth is passed. Its
+  first review opens the next calendar day (FSRS alone would wait almost five days). It is
+  *mastered* after the first review without a wrong move; hints are allowed there. Mastering a
+  trap opens the next one in the order of the list (stage, then file name). A trap that was
+  started stays open whatever happens to the order. Mastery is not taken away by a later
+  failed review.
+- **One new trap a day** is not a rule of its own yet: it follows from the next-day review.
+  The explicit limit comes with the daily session in M5.
+- **Reviews.** One line from move 1: the main line half of the time, otherwise one of the
+  deviations, chosen at random. Grade: no errors and no hints is "good", hints only is
+  "hard", any wrong move is "again". "Easy" is not used. Reviews open at midnight of the day
+  FSRS chose and never on the day of the previous review, so a failed one comes back tomorrow.
+- **Learn mode stays** as free practice of all lines in a row. It saves nothing and is closed
+  together with the trap. It got the "Пропустить вариант" button.
+- **Storage.** IndexedDB database `chess-trainer`, version 1, stores `traps`, `games`,
+  `settings`. The whole state is read once before the first render and every change is
+  written immediately. If the database cannot be opened the app works from memory and says so
+  in a banner; a failed write is reported the same way. After the first write the app asks
+  the browser for persistent storage (`navigator.storage.persist()`); nothing depends on the
+  answer. `main.tsx` uses top-level `await` for the load.
+- **Saved progress per line** is keyed by a hash of the line's moves, not by its position in
+  the file, so reordering lines keeps progress and a changed line starts again.
+- **Export and import.** One JSON file, `format: 1`, named `chess-trainer-YYYY-MM-DD.json`.
+  It holds trap progress, the game log and settings, and nothing that identifies the owner.
+  Import checks every field, refuses a damaged or newer file as a whole, and *replaces* the
+  data on the device in one transaction. Merging two devices is not supported. Progress for
+  trap ids this version does not know is kept.
+- **Collection is the trap list.** Every card shows the status (viewed, in progress, learned,
+  mastered), a "closed" mark and "worked in a game"; the counter "Освоено N из 32" sits on
+  top. A separate grid screen would repeat the list.
+- **Game log.** Three outcomes per trap with the time of the tap; nothing about the game.
+  The last record can be removed. Doubtful traps show how many records exist out of the 25
+  after which the trap should be reconsidered; the app does not decide anything by itself.
+- **Navigation.** The third header link is "Данные" (export, import, test clock);
+  "Диагностика" is opened from there.
+- **Test clock.** "Данные" can move the app's clock forward by whole days so reviews can be
+  checked without waiting. It is a setting like any other and is marked on the screen while
+  it is on. Dates written while it is on stay shifted.
+- **License texts.** `THIRD_PARTY_NOTICES.md` names every shipped package with its license
+  and, for the M3 additions, the copyright line. The full texts of the permissive licenses
+  (MIT, ISC, BSD) are not copied into the built site. To do before the first APK release:
+  generate a file with the full texts and link it from the app.
+- **Not done in M3:** the adaptive part beyond the hint ladder (runs are counted per trap but
+  the success rate is not used yet), the monthly backup reminder (needs the settings screen of
+  M5), an explicit position of a trap inside its stage.
+- **M2 phone check.** The owner reported section A as passed on 2026-11-14 with the remark
+  field and the three "by feel" answers left as unfilled template text. The merge went ahead
+  on the explicit instruction; the three questions are repeated in `docs/QA/M3.md`.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
