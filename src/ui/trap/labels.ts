@@ -2,7 +2,17 @@
 
 import type { LineResult } from '../../../shared/trap-types.ts';
 import { commonPrefix, type CompiledLine, type CompiledTrap, type Step } from '../../core/trap-model';
+import { localDaysBetween } from '../../core/days';
 import { fmt, t } from '../../i18n';
+
+const DAY_AND_MONTH = new Intl.DateTimeFormat('ru', { day: 'numeric', month: 'long' });
+
+/** When something opens: "сегодня", "завтра" or a date such as "19 ноября". */
+export function whenText(at: number, now: number): string {
+  const days = localDaysBetween(now, at);
+  if (days <= 0) return t.progress.when.today;
+  return days === 1 ? t.progress.when.tomorrow : DAY_AND_MONTH.format(at);
+}
 
 /** Centipawns from the player's point of view as "+2.4" or "−0.3". */
 export function formatEval(cp: number): string {
