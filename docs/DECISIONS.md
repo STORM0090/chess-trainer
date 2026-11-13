@@ -103,8 +103,8 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   `verification` block (engine version, node count, evaluation per leaf) into the trap file and
   is the only thing that sets `verified`. No date in the block, so re-runs produce no diff.
   CI runs it in check mode and fails on any difference.
-- One Playwright smoke test on a mobile viewport (open a trap, complete it) arrives in M1b,
-  when traps exist.
+- One Playwright smoke test on a mobile viewport (open a trap, complete it). Planned for M1b,
+  written in M2 once the Learn screen existed (see "Learning modes").
 - Piece set license is checked and recorded in `THIRD_PARTY_NOTICES.md` before shipping.
 
 ## Content and verify (step "M1b content", 2026-11-12)
@@ -185,10 +185,24 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - **The UI addresses the user as "вы"**, as the M1a strings already did.
 - **Header.** On screens narrower than 27rem the app title is hidden so three navigation
   links fit on one row.
-- **Playwright smoke test: postponed.** `@playwright/test` (1.65.0, Apache-2.0, checked on
-  2026-11-13) is a new dependency and needs a browser download in CI, so it waits for the
-  owner's approval. Until then the logic is covered by unit tests, including one that plays
-  every practice line of every trap.
+- **Playwright smoke test.** The owner approved `@playwright/test` 1.65.0 (Apache-2.0) as a
+  dev dependency on 2026-11-13. It brings `playwright` and `playwright-core` (same version
+  and license) and nothing else.
+  - One test, `e2e/smoke.spec.ts`, run with `npm run test:e2e` against the production build
+    in `dist`: list of 32 traps, View of the Legal Trap, Learn with one wrong move and then
+    the whole main line, the next variant. It also fails on any console error and on
+    sideways scrolling.
+  - The browser is a 384 x 824 headless Chromium with touch events: the test taps squares
+    the way a finger does. This is not a replacement for the phone checklist: it is desktop
+    Chromium, not Samsung Internet or the Android WebView.
+  - Only the headless shell is installed (`--only-shell`), to keep the download small.
+  - The service worker is blocked in the test, so the "ready to work offline" banner cannot
+    move the board between two taps. Offline behaviour stays a hand check.
+  - In CI the test runs after the build, under the same GitHub Pages base path, and before
+    the deploy: a failed smoke test means nothing is published. The trace of a failed run
+    is kept as a workflow artifact for 7 days.
+  - Texts are written in the test as the user sees them (Russian), not imported from
+    `src/i18n`, so a changed UI string must be changed in the test too.
 
 ## Known open points
 

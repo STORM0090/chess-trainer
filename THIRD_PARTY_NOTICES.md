@@ -30,6 +30,11 @@ third-party work. Versions are the exact versions pinned in `package.json`.
 | vite-plugin-pwa | 2.0.0 | MIT |
 | workbox-build | 7.4.1 | MIT |
 | Vitest | 5.1.0 | MIT |
+| @playwright/test (with `playwright` and `playwright-core`) | 1.65.0 | Apache-2.0 |
+
+Playwright downloads a headless Chromium build to the machine that runs the smoke test
+(`npx playwright install --only-shell chromium`). The browser is not stored in this
+repository and is not part of the application.
 
 ## Source code offer
 

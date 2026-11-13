@@ -24,6 +24,9 @@ npm run dev
 
 Other commands: `npm run build`, `npm run typecheck`, `npm test`.
 
+Smoke test in a phone-sized browser (once: `npx playwright install --only-shell chromium`):
+`npm run build`, then `npm run test:e2e`.
+
 ## License
 
 GPL-3.0-or-later. See [LICENSE](LICENSE) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

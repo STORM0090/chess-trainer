@@ -19,7 +19,7 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M8 | More content: basic mates, simple endgames, opening principles, PGN import, new trap batches | Per batch | open-ended |
 
 Dependencies that need the owner's approval when their stage starts: `@playwright/test` (M2,
-the smoke test), `idb` and `ts-fsrs` (M3), the Capacitor packages including
+the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3), the Capacitor packages including
 `@capacitor/local-notifications`, `@capacitor/filesystem` and `@capacitor/share` (M7), and a JDK
 for `keytool` (M7).
 
