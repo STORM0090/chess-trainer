@@ -158,6 +158,38 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - **Exercises from the owner's own games stay on the device.** The owner's games and user name
   never enter the repository or any public file. Progress export and import as JSON is required.
 
+## Learning modes (M2, 2026-11-13)
+
+- **`shared/`** holds pure modules used by both the Node scripts and the app (move text
+  parsing, trap file types). Imports there use the `.ts` extension because Node needs it.
+- **Trap files are bundled** into the main script with `import.meta.glob` (eager). Only
+  verified, non-draft traps are loaded. They are compiled into positions with chess.js on
+  first use. No extra requests, so everything works offline.
+- **Routes.** The start screen is the trap list; the free board moved to `#/board`.
+  `#/trap/<id>` is View, `#/trap/<id>/learn` is Learn.
+- **Learn queue.** The main line from move 1, then the other lines in the order: more trap
+  lines, decline, hold, punish, sound. Each later line starts at the move where it leaves the
+  lines before it. Lines that end with the opponent's move are skipped (View shows them).
+- **Judging a move.** The move of the line is correct. Another move that gives checkmate is
+  accepted. A move that belongs to another line of the same trap is refused without counting
+  an error. A move described by a `mistake` line gets a message with the opponent's reply and
+  the engine evaluation. Anything else is "wrong".
+- **Hint ladder.** Level 1 says what kind of move is needed (the ШВУ scan: check, capture,
+  quiet move), level 2 circles the piece, level 3 draws the move. Each wrong move in a
+  position raises the level by one; the "Подсказка" button does the same without an error.
+  M4 will reuse the ladder for puzzles.
+- **Line notes are not shown.** The `note` fields in trap files are in English and mostly
+  name the source. The UI shows one general Russian sentence per kind of line plus the engine
+  evaluation. Russian per-line explanations would be new content and are not written yet.
+- **Nothing is saved in M2** and every trap is open. Storage arrives with M3.
+- **The UI addresses the user as "вы"**, as the M1a strings already did.
+- **Header.** On screens narrower than 27rem the app title is hidden so three navigation
+  links fit on one row.
+- **Playwright smoke test: postponed.** `@playwright/test` (1.65.0, Apache-2.0, checked on
+  2026-11-13) is a new dependency and needs a browser download in CI, so it waits for the
+  owner's approval. Until then the logic is covered by unit tests, including one that plays
+  every practice line of every trap.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
