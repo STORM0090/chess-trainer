@@ -1,0 +1,22 @@
+name: Verify traps (full, no cache)
+
+# Searches every position again with the engine and fails if any committed result differs.
+# Run by hand after changing the engine version, the node count or many trap files.
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: node scripts/verify.ts --no-cache --check

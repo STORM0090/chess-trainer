@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "id": "damiano-defence",
+  "kind": "trap",
+  "title": {
+    "ru": "Защита Дамиано",
+    "en": "Damiano Defence"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 1,
+  "stageReason": "Four moves, all checks and captures, with a knight sacrifice.",
+  "idea": {
+    "ru": "Ход f6 открыл короля: жертва коня, шах с h5 и ферзь забирает ладью.",
+    "en": "The move f6 exposed the king: a knight sacrifice, a check from h5, and the queen collects the rook."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "fork"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 fxe5? 4.Qh5+ g6 5.Qxe5+ Qe7 6.Qxh8",
+      "result": {
+        "cp": 559,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 fxe5? 4.Qh5+ Ke7 5.Qxe5+ Kf7 6.Bc4+ d5 7.Bxd5+ Kg6 8.h4",
+      "result": {
+        "cp": 426,
+        "best": "h7h6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Nf3 Qxe4+ 5.Be2",
+      "note": "Wikipedia: 3...Qe7 is the only way to regain the pawn.",
+      "result": {
+        "cp": 246,
+        "best": "d7d5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Nf3 d5 5.d3 dxe4 6.dxe4",
+      "result": {
+        "cp": 196,
+        "best": "e7e4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Qh5+? g6 5.Nxg6 Qxe4+ 6.Be2 Qxg6",
+      "result": {
+        "cp": -451,
+        "best": "b1c3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Damiano Defence (revision 1371784700)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Damiano_Defence&oldid=1371784700"
+    },
+    {
+      "label": "Lichess opening name: King's Pawn Game: Damiano Defense, Damiano Gambit (C40)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 2,
+    "blowMoves": 4,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 196,
+    "reliability": "solid",
+    "problems": []
+  }
+}

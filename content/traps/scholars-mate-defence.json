@@ -1,0 +1,110 @@
+{
+  "schema": 1,
+  "id": "scholars-mate-defence",
+  "kind": "defence",
+  "title": {
+    "ru": "Защита от детского мата",
+    "en": "Scholar's Mate: the defence"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 0,
+  "stageReason": "Each move answers a one-move threat; learned right after the attack it stops.",
+  "idea": {
+    "ru": "Сначала защитить e5 конём, потом закрыть f7 ходами g6 и Nf6.",
+    "en": "First guard e5 with the knight, then block f7 with g6 and Nf6."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "hold",
+      "main": true,
+      "expect": "hold",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6",
+      "result": {
+        "cp": 24,
+        "best": "g1e2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "hold",
+      "expect": "hold",
+      "moves": "1.e4 e5 2.Bc4 Nc6 3.Qf3 Nf6",
+      "result": {
+        "cp": 0,
+        "best": "g1e2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "hold",
+      "expect": "hold",
+      "moves": "1.e4 e5 2.Bc4 Bc5 3.Qh5 Qe7",
+      "result": {
+        "cp": 14,
+        "best": "h5e2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "punish",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6 5.Qb3? Nd4 6.Bxf7+ Ke7 7.Qc4 b5",
+      "note": "Engine-checked only; no written source found.",
+      "result": {
+        "cp": 593,
+        "best": "c4d3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Qh5 g6?? 3.Qxe5+",
+      "result": {
+        "cp": -726,
+        "best": "d8e7",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#",
+      "result": {
+        "end": "checkmated",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Scholar's mate (revision 1356335449)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Scholar's_mate&oldid=1356335449"
+    },
+    {
+      "label": "Wikipedia: Danvers Opening (revision 1372017778)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Danvers_Opening&oldid=1372017778"
+    }
+  ],
+  "notes": "A defence, not a trap. Wikipedia: games ending in scholar's mate are quite common among beginners.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 4,
+    "blowMoves": 0,
+    "firstBlowMove": "none",
+    "worstCorrectPlayCp": 0,
+    "reliability": "solid",
+    "problems": []
+  }
+}

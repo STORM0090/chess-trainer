@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "id": "caro-kann-smothered",
+  "kind": "trap",
+  "title": {
+    "ru": "Каро-Канн: спёртый мат на d6",
+    "en": "Caro-Kann: the smothered mate on d6"
+  },
+  "side": "white",
+  "repertoire": "branch",
+  "stage": 5,
+  "stageReason": "Only against the Caro-Kann with 4...Nd7; a one-move mate after five setup moves.",
+  "idea": {
+    "ru": "Ферзь на e2 связал пешку e7, поэтому конь матует с d6.",
+    "en": "The queen on e2 pins the e7-pawn, so the knight mates from d6."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ngf6?? 6.Nd6#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ndf6",
+      "note": "Wikipedia: after 5...Ndf6 Black is solid.",
+      "result": {
+        "cp": 24,
+        "best": "g1f3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Caro–Kann Defence (revision 1381151588)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Caro%E2%80%93Kann_Defence&oldid=1381151588"
+    },
+    {
+      "label": "Wikipedia: Smothered mate (revision 1356335772)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Smothered_mate&oldid=1356335772"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 5,
+    "blowMoves": 1,
+    "firstBlowMove": "mate",
+    "worstCorrectPlayCp": 24,
+    "reliability": "solid",
+    "problems": []
+  }
+}

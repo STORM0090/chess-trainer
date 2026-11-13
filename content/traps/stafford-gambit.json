@@ -1,0 +1,95 @@
+{
+  "schema": 1,
+  "id": "stafford-gambit",
+  "kind": "trap",
+  "title": {
+    "ru": "Стаффордский гамбит",
+    "en": "Stafford Gambit"
+  },
+  "side": "black",
+  "repertoire": "branch",
+  "stage": 5,
+  "stageReason": "A second reply to 2.Nf3; a queen sacrifice and a two-bishop mate.",
+  "idea": {
+    "ru": "Слон связал коня, но конь бьёт на e4: взятие ферзя ведёт к мату двумя слонами.",
+    "en": "The bishop pins the knight, but the knight takes on e4: capturing the queen allows mate by the two bishops."
+  },
+  "sacrifice": "queen",
+  "prerequisites": [
+    "pin",
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5? Nxe4 7.Bxd8?? Bxf2+ 8.Ke2 Bg4#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5? Nxe4 7.Be3 Bxe3 8.fxe3 Qh4+",
+      "result": {
+        "cp": 604,
+        "best": "g2g3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.e5 Ne4 6.d3?? Bc5 7.dxe4 Bxf2+ 8.Ke2 Bg4+",
+      "result": {
+        "cp": 748,
+        "best": "e2f2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Be2 h5 7.h3",
+      "note": "Wikipedia: Black has insufficient compensation for the pawn.",
+      "result": {
+        "cp": -251,
+        "best": "d8d4",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Stafford Gambit (revision 1368550067)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Stafford_Gambit&oldid=1368550067"
+    },
+    {
+      "label": "Wikipedia: Petrov's Defence (revision 1382022050)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Petrov's_Defence&oldid=1382022050"
+    },
+    {
+      "label": "Lichess opening name: Petrov's Defense: Stafford Gambit (C42)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "A second reply to 2.Nf3, next to 2...Nc6. Wikipedia: considered dubious; popular online since the early 2020s.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 5,
+    "blowMoves": 3,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": -251,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

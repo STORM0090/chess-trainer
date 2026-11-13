@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "id": "mortimer-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Мортимера",
+    "en": "Mortimer Trap"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 2,
+  "stageReason": "The key move is quiet (c6); the win itself is a simple fork.",
+  "idea": {
+    "ru": "Белые взяли пешку e5; пешка c6 гонит слона, а шах ферзём с a5 забирает коня.",
+    "en": "White took the e5-pawn; the c6-pawn hits the bishop, and a queen check from a5 picks up the knight."
+  },
+  "sacrifice": "pawn",
+  "prerequisites": [
+    "fork"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Ba4?? Qa5+ 7.Nc3 Qxe5",
+      "result": {
+        "cp": 302,
+        "best": "e1g1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Bc4?? Qa5+ 7.Nc3 Qxe5",
+      "result": {
+        "cp": 305,
+        "best": "d3d4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Nc4 Ng6 7.Ba4 b5",
+      "note": "Wikipedia: 6.Nc4 is the best try; Black still wins material.",
+      "result": {
+        "cp": 339,
+        "best": "e4e5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Bc4 c6 6.Nc3 Ng6",
+      "note": "Wikipedia: White has the upper hand after 5.Bc4.",
+      "result": {
+        "cp": -65,
+        "best": "h2h4",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Ruy Lopez, Mortimer Trap (revision 1356337121)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Mortimer_Trap&oldid=1356337121"
+    },
+    {
+      "label": "Lichess opening name: Ruy Lopez: Berlin Defense, Anti-Berlin Variation, Mortimer Trap (C65)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after James Mortimer. Wikipedia: Black deliberately plays an inferior move to set it.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 4,
+    "blowMoves": 3,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": -65,
+    "reliability": "risky",
+    "problems": []
+  }
+}

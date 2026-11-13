@@ -1,0 +1,144 @@
+{
+  "schema": 1,
+  "id": "legal-mate",
+  "kind": "trap",
+  "title": {
+    "ru": "Мат Легаля",
+    "en": "Legal Trap"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 2,
+  "stageReason": "A queen sacrifice, then two forcing moves to mate.",
+  "idea": {
+    "ru": "Связанный конь уходит и подставляет ферзя, а три лёгкие фигуры матуют короля.",
+    "en": "The pinned knight moves and offers the queen, and three minor pieces mate the king."
+  },
+  "sacrifice": "queen",
+  "prerequisites": [
+    "pin",
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5 Bxd1?? 6.Bxf7+ Ke7 7.Nd5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 h6? 5.Nxe5 Bxd1?? 6.Bxf7+ Ke7 7.Nd5#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bh5? 6.Nxe5 Bxd1?? 7.Bxf7+ Ke7 8.Nd5#",
+      "note": "The natural move order given on Wikipedia.",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5 dxe5 6.Qxg4",
+      "result": {
+        "cp": 238,
+        "best": "b8c6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bh5? 6.Nxe5 Nxe5 7.Qxh5 Nxc4 8.Qb5+ c6 9.Qxc4",
+      "result": {
+        "cp": 222,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nf6 5.h3",
+      "result": {
+        "cp": 41,
+        "best": "g4f3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nc6 5.h3",
+      "result": {
+        "cp": 57,
+        "best": "g4f3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bxf3 6.Qxf3",
+      "result": {
+        "cp": 45,
+        "best": "g8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.Nxe5?? Nxe5",
+      "note": "With a knight on c6 and the bishop still on g4 the sacrifice does not work.",
+      "result": {
+        "cp": -486,
+        "best": "c4e2",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Legal Trap (revision 1380541817)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Legal_Trap&oldid=1380541817"
+    },
+    {
+      "label": "Lichess opening name: Philidor Defense (C41)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    },
+    {
+      "label": "Lichess opening name: Italian Game: Paris Defense (C50)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Sire de Legall. The game against Saint Brie is usually dated Paris 1750; Wikipedia reports research pointing to 1787 and a different, flawed move order.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 4,
+    "blowMoves": 3,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 41,
+    "reliability": "solid",
+    "problems": []
+  }
+}

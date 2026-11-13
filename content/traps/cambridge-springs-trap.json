@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "cambridge-springs-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Кембридж-спрингская защита: ловушка",
+    "en": "Cambridge Springs Defense: the Bd3 trap"
+  },
+  "side": "black",
+  "repertoire": "outside",
+  "stage": 6,
+  "stageReason": "Needs 1...d5 as Black; eight setup moves.",
+  "idea": {
+    "ru": "Пешка бьёт на c4 с нападением на слона d3 и открывает ферзя на слона g5.",
+    "en": "The pawn takes on c4, attacking the d3-bishop and uncovering the queen against the g5-bishop."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "discoveredAttack",
+    "fork"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nf3 Qa5 7.Nd2 Bb4 8.Qc2 O-O 9.Bd3?? dxc4 10.Bxf6 cxd3 11.Qxd3 Nxf6",
+      "result": {
+        "cp": 715,
+        "best": "e1g1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nf3 Qa5 7.Nd2 Bb4 8.Qc2 O-O 9.Be2",
+      "result": {
+        "cp": -20,
+        "best": "d5c4",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Queen's Gambit Declined (revision 1382050090)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined&oldid=1382050090"
+    },
+    {
+      "label": "Lichess opening name: Queen's Gambit Declined: Cambridge Springs Defense, Bogoljubow Variation (D52)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "The opening and its name are from the sources. The 9.Bd3 punishment is engine-checked only. Needs 1...d5 as Black.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 8,
+    "blowMoves": 3,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": -20,
+    "reliability": "solid",
+    "problems": []
+  }
+}

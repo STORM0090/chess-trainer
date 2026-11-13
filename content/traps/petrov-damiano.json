@@ -1,0 +1,130 @@
+{
+  "schema": 1,
+  "id": "petrov-damiano",
+  "kind": "trap",
+  "title": {
+    "ru": "Русская партия: вскрытый шах",
+    "en": "Petrov's Defence: the discovered check"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 1,
+  "stageReason": "Two forcing moves: a discovered check wins the queen.",
+  "idea": {
+    "ru": "Конь уходит с линии e с шахом от ферзя и забирает чёрного ферзя.",
+    "en": "The knight leaves the e-file with check from the queen and takes the black queen."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "discoveredAttack"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nf6?? 5.Nc6+ Qe7 6.Nxe7 Bxe7",
+      "result": {
+        "cp": 798,
+        "best": "e2d1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nf6?? 5.Nc6+ Be7 6.Nxd8",
+      "result": {
+        "cp": 828,
+        "best": "e8d8",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nd6?? 5.Nc6+ Qe7 6.Nxe7",
+      "result": {
+        "cp": 834,
+        "best": "f8e7",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Qe7 5.Qxe4 d6 6.d4 dxe5 7.dxe5",
+      "note": "Wikipedia: best for Black; White keeps a moderate advantage.",
+      "result": {
+        "cp": 63,
+        "best": "b8c6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 d5 5.d3 Qe7 6.dxe4 Qxe5 7.exd5",
+      "result": {
+        "cp": 167,
+        "best": "f8d6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4",
+      "result": {
+        "cp": 44,
+        "best": "d2d4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Be2",
+      "note": "Stafford Gambit.",
+      "result": {
+        "cp": 216,
+        "best": "f6g4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "mistake",
+      "expect": "loss",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5?? Nxe4 7.Bxd8 Bxf2+ 8.Ke2 Bg4#",
+      "result": {
+        "end": "checkmated",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Petrov's Defence (revision 1382022050)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Petrov's_Defence&oldid=1382022050"
+    },
+    {
+      "label": "Lichess opening name: Petrov's Defense: Damiano Variation (C42)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 4,
+    "blowMoves": 2,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": 44,
+    "reliability": "solid",
+    "problems": []
+  }
+}

@@ -1,0 +1,77 @@
+{
+  "schema": 1,
+  "id": "halosar-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Халосара",
+    "en": "Halosar Trap"
+  },
+  "side": "white",
+  "repertoire": "outside",
+  "stage": 6,
+  "stageReason": "Needs 1.d4 and the Blackmar-Diemer Gambit as White.",
+  "idea": {
+    "ru": "Конь идёт на b5 с угрозой мата на c7, а взять его нельзя из-за шаха слоном.",
+    "en": "The knight jumps to b5 threatening mate on c7, and it cannot be taken because of a bishop check."
+  },
+  "sacrifice": "queen",
+  "prerequisites": [
+    "mateIn1",
+    "deflection"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3 Qxd4 6.Be3 Qb4 7.O-O-O Bg4? 8.Nb5 Bxf3?? 9.Nxc7#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3 Qxd4 6.Be3 Qb4 7.O-O-O Bg4? 8.Nb5 Na6 9.Qxb7 Qe4 10.Qxa6 Qxe3+ 11.Kb1 Qc5 12.Nf3",
+      "note": "Wikipedia (Burgess): White has some advantage, Black has avoided instant loss.",
+      "result": {
+        "cp": 332,
+        "best": "a8b8",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3 Qxd4 6.Be3 Qg4",
+      "result": {
+        "cp": -141,
+        "best": "f3f2",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Blackmar–Diemer Gambit (revision 1381541710)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Blackmar%E2%80%93Diemer_Gambit&oldid=1381541710"
+    }
+  ],
+  "notes": "Named after Hermann Halosar (Diemer-Halosar, Baden-Baden 1934). Needs 1.d4 and the Ryder Gambit as White.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 2,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": -141,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

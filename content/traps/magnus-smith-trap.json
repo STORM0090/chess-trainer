@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "id": "magnus-smith-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Магнуса Смита",
+    "en": "Magnus Smith Trap"
+  },
+  "side": "white",
+  "repertoire": "branch",
+  "stage": 5,
+  "stageReason": "Needs the Open Sicilian with 6.Bc4 as White; eight setup moves.",
+  "idea": {
+    "ru": "Пешка e5 вынуждает взятие, слон жертвуется на f7 и отвлекает короля от ферзя.",
+    "en": "The e5-pawn forces a capture, and the bishop sacrifice on f7 pulls the king away from the queen."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "deflection",
+    "discoveredAttack"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 g6?! 7.Nxc6 bxc6 8.e5 dxe5?? 9.Bxf7+ Kxf7 10.Qxd8",
+      "result": {
+        "cp": 818,
+        "best": "f8g7",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 g6?! 7.Nxc6 bxc6 8.e5 Ng4 9.Bf4",
+      "note": "Wikipedia: 8...Ng4 is correct (Fischer); White is still better.",
+      "result": {
+        "cp": 53,
+        "best": "d6d5",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 e6",
+      "result": {
+        "cp": 28,
+        "best": "c1e3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Sicilian Defence, Magnus Smith Trap (revision 1380207873)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Sicilian_Defence%2C_Magnus_Smith_Trap&oldid=1380207873"
+    },
+    {
+      "label": "Lichess opening name: Sicilian Defense: Magnus Smith Trap (B57)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Needs the Open Sicilian with 6.Bc4 as White. Wikipedia quotes Edward Winter: the name is probably a misnomer.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 8,
+    "blowMoves": 2,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": 28,
+    "reliability": "solid",
+    "problems": []
+  }
+}

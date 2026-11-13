@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "id": "siberian-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Сибирская ловушка",
+    "en": "Siberian Trap"
+  },
+  "side": "black",
+  "repertoire": "outside",
+  "stage": 6,
+  "stageReason": "Needs the Sicilian as Black.",
+  "idea": {
+    "ru": "Конь на g4 и ферзь на c7 целятся на h2: конь d4 отвлекает защитника, и ферзь матует.",
+    "en": "Knight on g4 and queen on c7 aim at h2: the d4-knight removes the defender and the queen mates."
+  },
+  "sacrifice": "none",
+  "prerequisites": [
+    "mateIn1",
+    "deflection"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 Qc7 7.O-O Nf6 8.Qe2 Ng4 9.h3?? Nd4 10.Nxd4 Qh2#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 Qc7 7.O-O Nf6 8.Qe2 Ng4 9.h3?? Nd4 10.hxg4 Nxe2+",
+      "result": {
+        "cp": 469,
+        "best": "c4e2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 Qc7 7.O-O Nf6 8.Qe2 Ng4 9.Nb5 Qb8 10.h3 h5",
+      "note": "Wikipedia (MCO-14): roughly equal chances.",
+      "result": {
+        "cp": 0,
+        "best": "e4e5",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Sicilian Defence, Smith–Morra Gambit, Siberian Trap (revision 1317188806)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Sicilian_Defence%2C_Smith%E2%80%93Morra_Gambit%2C_Siberian_Trap&oldid=1317188806"
+    },
+    {
+      "label": "Lichess opening name: Sicilian Defense: Smith-Morra Gambit Accepted, Siberian Variation, Siberian Trap (B21)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Needs the Sicilian as Black. The name comes from Boris Schipkov of Novosibirsk.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 8,
+    "blowMoves": 2,
+    "firstBlowMove": "quiet",
+    "worstCorrectPlayCp": 0,
+    "reliability": "solid",
+    "problems": []
+  }
+}

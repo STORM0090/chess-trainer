@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "id": "marshall-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Маршалла",
+    "en": "Marshall Trap"
+  },
+  "side": "black",
+  "repertoire": "branch",
+  "stage": 5,
+  "stageReason": "A second reply to 2.Nf3; nine setup moves and a six-move combination.",
+  "idea": {
+    "ru": "Слон жертвуется на h2, конь бьёт на f2 с вилкой, и шах ферзём забирает ладью.",
+    "en": "The bishop is sacrificed on h2, the knight forks from f2, and a queen check wins the rook."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "fork",
+    "deflection"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4 5.d4 d5 6.Bd3 Bd6 7.O-O O-O 8.c4 Bg4 9.cxd5 f5 10.Re1? Bxh2+ 11.Kxh2 Nxf2 12.Qe2 Nxd3 13.Qxd3 Bxf3 14.Qxf3 Qh4+ 15.Kg1 Qxe1+",
+      "result": {
+        "cp": 647,
+        "best": "f3f1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4 5.d4 d5 6.Bd3 Bd6 7.O-O O-O 8.c4 Bg4 9.cxd5 f5 10.Re1? Bxh2+ 11.Nxh2 Bxd1",
+      "result": {
+        "cp": 405,
+        "best": "e1d1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4 5.d4 d5 6.Bd3 Bd6 7.O-O O-O 8.c4 Bg4 9.cxd5 f5 10.Nc3",
+      "note": "Wikipedia: White should play 10.Nc3.",
+      "result": {
+        "cp": -139,
+        "best": "d8e8",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Petrov's Defence, Marshall Trap (revision 1356337237)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Petrov's_Defence%2C_Marshall_Trap&oldid=1356337237"
+    },
+    {
+      "label": "Lichess opening name: Petrov's Defense: Classical Attack, Marshall Trap (C42)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Frank Marshall. Needs the Petrov as Black, a second reply to 2.Nf3.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 9,
+    "blowMoves": 6,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": -139,
+    "reliability": "dubious",
+    "problems": []
+  }
+}

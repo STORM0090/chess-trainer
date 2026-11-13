@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "id": "fried-liver",
+  "kind": "trap",
+  "title": {
+    "ru": "Атака жареной печени",
+    "en": "Fried Liver Attack"
+  },
+  "side": "white",
+  "repertoire": "core",
+  "stage": 4,
+  "stageReason": "Seven setup moves and an attack that is not a forced win.",
+  "idea": {
+    "ru": "Конь жертвуется на f7, король выходит в центр, и связка на d5 решает, если король отступит назад.",
+    "en": "The knight is sacrificed on f7, the king comes out, and the pin on d5 decides if the king steps back."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "fork",
+    "pin",
+    "mateIn2"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Kg8?? 8.Bxd5+ Qxd5 9.Qxd5+ Be6 10.Qxe6#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Kg8?? 8.Bxd5+ Be6 9.Bxe6#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Ke8? 8.Bxd5",
+      "result": {
+        "cp": 343,
+        "best": "d8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Ke6 8.Nc3 Nb4 9.O-O c6 10.d4",
+      "note": "The real Fried Liver. Wikipedia: a strong attack, not proven decisive.",
+      "result": {
+        "cp": 91,
+        "best": "d8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3",
+      "result": {
+        "cp": 16,
+        "best": "f6d5",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Fried Liver Attack (revision 1378760215)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Fried_Liver_Attack&oldid=1378760215"
+    },
+    {
+      "label": "Lichess opening name: Italian Game: Two Knights Defense, Fried Liver Attack (C57)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Honest status: after the correct 7...Ke6 this is an attack, not a forced win. Only the 7...Kg8 and 7...Ke8 errors lose by force.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 7,
+    "blowMoves": 3,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": 16,
+    "reliability": "solid",
+    "problems": []
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "id": "fishing-pole-exchange",
+  "kind": "trap",
+  "title": {
+    "ru": "Удочка в разменном варианте",
+    "en": "Fishing Pole Trap, Exchange Variation"
+  },
+  "side": "black",
+  "repertoire": "core",
+  "stage": 3,
+  "stageReason": "Five moves with two quiet ones (Qh4, g3) and a piece left hanging.",
+  "idea": {
+    "ru": "Слон на g4 это наживка: если белые берут, открывается линия h и ферзь с ладьёй матуют.",
+    "en": "The bishop on g4 is the bait: if White takes, the h-file opens and queen and rook mate."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "mateIn2",
+    "pin"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "mate",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.hxg4?? hxg4 8.Nxe5 Qh4 9.f4 g3 10.Qh5 Rxh5 11.Rf3 Qh1#",
+      "result": {
+        "end": "checkmate",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.hxg4?? hxg4 8.Nh2 Qh4",
+      "result": {
+        "cp": 835,
+        "best": "f1e1",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.d3",
+      "note": "Wikipedia: White should play 7.d3.",
+      "result": {
+        "cp": 3,
+        "best": "d8f6",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.c3",
+      "result": {
+        "cp": 0,
+        "best": "d8d3",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Fishing Pole Trap (revision 1377229184)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Fishing_Pole_Trap&oldid=1377229184"
+    },
+    {
+      "label": "Lichess opening name: Ruy Lopez: Exchange Variation (C68)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 6,
+    "blowMoves": 5,
+    "firstBlowMove": "capture",
+    "worstCorrectPlayCp": 0,
+    "reliability": "solid",
+    "problems": []
+  }
+}

@@ -1,0 +1,92 @@
+{
+  "schema": 1,
+  "id": "lasker-trap",
+  "kind": "trap",
+  "title": {
+    "ru": "Ловушка Ласкера",
+    "en": "Lasker Trap"
+  },
+  "side": "black",
+  "repertoire": "outside",
+  "stage": 6,
+  "stageReason": "Needs the Albin Countergambit as Black; an underpromotion.",
+  "idea": {
+    "ru": "Пешка доходит до g1 и превращается в коня с шахом: превращение в ферзя ничего не даёт.",
+    "en": "The pawn reaches g1 and promotes to a knight with check: promoting to a queen would achieve nothing."
+  },
+  "sacrifice": "minor",
+  "prerequisites": [
+    "discoveredAttack",
+    "skewer"
+  ],
+  "lines": [
+    {
+      "tag": "trap",
+      "main": true,
+      "expect": "win",
+      "moves": "1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+ 8.Ke1 Qh4+ 9.Kd2 Nc6",
+      "result": {
+        "cp": 767,
+        "best": "d2c3",
+        "ok": true
+      }
+    },
+    {
+      "tag": "trap",
+      "expect": "win",
+      "moves": "1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+ 8.Rxg1 Bg4+",
+      "result": {
+        "cp": 1019,
+        "best": "e2f2",
+        "ok": true
+      }
+    },
+    {
+      "tag": "decline",
+      "expect": "eval",
+      "moves": "1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3 6.fxe3",
+      "note": "Wikipedia: best; Black gets a slight advantage.",
+      "result": {
+        "cp": 13,
+        "best": "d8h4",
+        "ok": true
+      }
+    },
+    {
+      "tag": "sound",
+      "expect": "eval",
+      "moves": "1.d4 d5 2.c4 e5 3.dxe5 d4 4.Nf3",
+      "result": {
+        "cp": -71,
+        "best": "b8c6",
+        "ok": true
+      }
+    }
+  ],
+  "sources": [
+    {
+      "label": "Wikipedia: Albin Countergambit, Lasker Trap (revision 1356337160)",
+      "url": "https://en.wikipedia.org/w/index.php?title=Albin_Countergambit%2C_Lasker_Trap&oldid=1356337160"
+    },
+    {
+      "label": "Lichess opening name: Queen's Gambit Declined: Albin Countergambit, Lasker Trap (D08)",
+      "url": "https://github.com/lichess-org/chess-openings"
+    }
+  ],
+  "notes": "Named after Emanuel Lasker; first noted by Serafino Dubois. Needs 1...d5 and 2...e5 as Black.",
+  "verified": true,
+  "verification": {
+    "engine": "stockfish 19.0.1 (single, full network)",
+    "nodes": 2000000,
+    "hashMb": 64,
+    "winCp": 200,
+    "holdCp": -50,
+    "lossCp": -100,
+    "setupMoves": 3,
+    "blowMoves": 6,
+    "firstBlowMove": "check",
+    "worstCorrectPlayCp": -71,
+    "reliability": "risky",
+    "problems": []
+  }
+}
