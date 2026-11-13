@@ -15,6 +15,22 @@ describe('trap content in the app', () => {
     expect(traps.length).toBeGreaterThanOrEqual(32);
     const stages = traps.map((file) => file.stage);
     expect(stages).toEqual([...stages].sort((a, b) => a - b));
+    // Inside a stage the `order` field decides: 1, 2, 3 with no gaps and no repeats.
+    for (const stage of new Set(stages)) {
+      const orders = traps.filter((file) => file.stage === stage).map((file) => file.order);
+      expect(orders, `stage ${stage}`).toEqual(orders.map((_, index) => index + 1));
+    }
+    expect(traps.slice(0, 4).map((file) => file.id)).toEqual([
+      'fools-mate',
+      'fools-mate-white',
+      'scholars-mate',
+      'scholars-mate-defence',
+    ]);
+    expect(traps.filter((file) => file.stage === 2).map((file) => file.id)).toEqual([
+      'legal-mate',
+      'mortimer-trap',
+      'englund-trap',
+    ]);
     expect(getTrap('no-such-trap')).toBeUndefined();
   });
 

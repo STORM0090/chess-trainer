@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "outside",
   "stage": 6,
+  "order": 6,
   "stageReason": "Needs 1...d5 as Black; eight setup moves.",
   "idea": {
     "ru": "Пешка бьёт на c4 с нападением на слона d3 и открывает ферзя на слона g5.",

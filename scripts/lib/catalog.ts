@@ -103,13 +103,14 @@ export function renderCatalog(traps: TrapFile[], backlog: BacklogEntry[]): strin
     '',
     '### Stage overview',
     '',
-    'The stage of a trap is the `stage` field of its file. Moving a trap is a data change.',
+    'The stage of a trap is the `stage` field of its file and its place inside the stage is the ' +
+      '`order` field. Moving a trap is a data change. Practice opens in the order of this table.',
     '',
-    '| Trap | Stage | Why |',
-    '| --- | --- | --- |',
+    '| Trap | Stage | Order | Why |',
+    '| --- | --- | --- | --- |',
   );
   for (const trap of traps) {
-    out.push(`| ${trap.title.en} (\`${trap.id}\`) | ${trap.stage} | ${trap.stageReason} |`);
+    out.push(`| ${trap.title.en} (\`${trap.id}\`) | ${trap.stage} | ${trap.order} | ${trap.stageReason} |`);
   }
 
   const stages = [...new Set(traps.map((trap) => trap.stage))].sort((a, b) => a - b);

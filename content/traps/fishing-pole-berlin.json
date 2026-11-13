@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 4,
+  "order": 1,
   "stageReason": "Same idea as the Exchange version, but the setup itself is dubious.",
   "idea": {
     "ru": "Конь на g4 это наживка под пешку h5: взятие открывает линию h для мата.",

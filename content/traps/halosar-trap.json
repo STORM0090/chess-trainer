@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "order": 1,
   "stageReason": "Needs 1.d4 and the Blackmar-Diemer Gambit as White.",
   "idea": {
     "ru": "Конь идёт на b5 с угрозой мата на c7, а взять его нельзя из-за шаха слоном.",

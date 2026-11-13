@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "branch",
   "stage": 5,
+  "order": 1,
   "stageReason": "Only against the Caro-Kann with 4...Nd7; a one-move mate after five setup moves.",
   "idea": {
     "ru": "Ферзь на e2 связал пешку e7, поэтому конь матует с d6.",

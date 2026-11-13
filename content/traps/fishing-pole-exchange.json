@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 3,
+  "order": 2,
   "stageReason": "Five moves with two quiet ones (Qh4, g3) and a piece left hanging.",
   "idea": {
     "ru": "Слон на g4 это наживка: если белые берут, открывается линия h и ферзь с ладьёй матуют.",

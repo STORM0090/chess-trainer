@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 2,
+  "order": 3,
   "stageReason": "The key move is a quiet pin (Bb4) before the mate.",
   "idea": {
     "ru": "Шах с b4 с вилкой на b2; если слон встал на c3, его связывают, меняют и ферзь матует на c1.",
