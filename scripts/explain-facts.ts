@@ -169,7 +169,11 @@ function lineFacts(trap: TrapFile, index: number): string[] {
     }
     if (targets.length > 0) notes.push(`from ${move.to} it attacks: ${targets.join(', ')}`);
     if (chess.isCheckmate()) notes.push('checkmate');
-    else if (chess.isCheck()) notes.push('check');
+    else if (chess.isCheck()) {
+      // Names the checking piece: a discovered check comes from a piece that did not move.
+      const checkers = chess.attackers(kingSquare(chess, other(mover)), mover);
+      notes.push(`check from ${checkers.map((square) => pieceAt(chess, square)).join(', ')}`);
+    }
     if (move.promotion) notes.push(`promotes to a ${PIECE_NAME[move.promotion]}`);
     // Was the moved piece left where the other side can take it, and is it defended?
     const takers = chess.attackers(move.to, other(mover));
