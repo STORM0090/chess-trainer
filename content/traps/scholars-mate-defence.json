@@ -25,6 +25,13 @@
       "main": true,
       "expect": "hold",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6",
+      "explanation": {
+        "ru": "Сначала конь с c6 защищает пешку e5, на которую напал ферзь. Потом g6 прогоняет ферзя с h5, а конь на f6 закрывает ему путь к f7: мата нет, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 24,
         "best": "g1e2",
@@ -35,6 +42,12 @@
       "tag": "hold",
       "expect": "hold",
       "moves": "1.e4 e5 2.Bc4 Nc6 3.Qf3 Nf6",
+      "explanation": {
+        "ru": "Ферзь вышел на f3: конь на f6 сразу закрывает ему путь к f7.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 0,
         "best": "g1e2",
@@ -45,6 +58,12 @@
       "tag": "hold",
       "expect": "hold",
       "moves": "1.e4 e5 2.Bc4 Bc5 3.Qh5 Qe7",
+      "explanation": {
+        "ru": "Ферзь с e7 защищает сразу и f7, и e5.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 14,
         "best": "h5e2",
@@ -56,6 +75,13 @@
       "expect": "win",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6 5.Qb3? Nd4 6.Bxf7+ Ke7 7.Qc4 b5",
       "note": "Engine-checked only; no written source found.",
+      "explanation": {
+        "ru": "Белые упрямо бьют на f7, но теперь их ферзь защищает слона f7 и сам стоит под ударом пешки b5. Отойти, не бросив слона, ферзю некуда: поля b3, d5 и e6 биты чёрными. По оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 593,
         "best": "c4d3",
@@ -66,6 +92,12 @@
       "tag": "mistake",
       "expect": "loss",
       "moves": "1.e4 e5 2.Qh5 g6?? 3.Qxe5+",
+      "explanation": {
+        "ru": "Так нельзя: пешка e5 осталась без защиты, ферзь берёт её с шахом и нападает на ладью h8.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": -726,
         "best": "d8e7",
@@ -76,6 +108,12 @@
       "tag": "mistake",
       "expect": "loss",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#",
+      "explanation": {
+        "ru": "Так нельзя: конь напал на ферзя, но не защитил f7, и ферзь ставит там мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmated",
         "ok": true

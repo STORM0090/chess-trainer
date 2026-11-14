@@ -25,6 +25,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#",
+      "explanation": {
+        "ru": "Ферзь и слон вдвоём нападают на пешку f7, а защищает её только король. Конь с f6 напал на ферзя, но f7 не прикрыл: ферзь берёт на f7 под защитой слона, и это мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -34,6 +40,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Bc4 Nc6 3.Qh5 Nf6?? 4.Qxf7#",
+      "explanation": {
+        "ru": "Слон и ферзь выходят в другом порядке: удар по f7 тот же.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -43,6 +55,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nd4?? 5.Qxf7#",
+      "explanation": {
+        "ru": "Чёрные прогнали ферзя ходом g6, но с f3 он снова бьёт на f7: конь на d4 напал на ферзя и не защитил f7, мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -52,6 +70,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Qh5 g6?? 3.Qxe5+ Qe7 4.Qxh8",
+      "explanation": {
+        "ru": "Чёрные прогоняют ферзя, не защитив пешку e5: ферзь берёт её с шахом, нападает на ладью h8 и следующим ходом забирает её.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 704,
         "best": "d7d5",
@@ -62,6 +86,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Qh5 Ke7?? 3.Qxe5#",
+      "explanation": {
+        "ru": "Король вышел на e7, а пешка e5 осталась без защиты: ферзь берёт её с матом.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -72,6 +102,12 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Qh5 Nf6 3.Qxe5+ Be7",
       "note": "White wins a pawn but falls behind in development.",
+      "explanation": {
+        "ru": "Чёрные отдали пешку e5: у вас лишняя пешка, но по оценке позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -13,
         "best": "e5f4",
@@ -82,6 +118,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6",
+      "explanation": {
+        "ru": "Правильная защита: g6 прогоняет ферзя, конь на f6 закрывает ему путь к f7. Позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -24,
         "best": "g1e2",
@@ -92,6 +135,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Qh5 Nc6 3.Bc4 Qe7",
+      "explanation": {
+        "ru": "Ферзь с e7 защищает f7 второй раз: мата нет, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -3,
         "best": "d2d3",

@@ -25,6 +25,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 g5 2.d4 f6?? 3.Qh5#",
+      "explanation": {
+        "ru": "Чёрные двинули пешки g и f и открыли диагональ от h5 к королю: ферзь с h5 ставит мат. Король зажат своими фигурами, f7 бьёт ферзь, а взять ферзя или закрыться от шаха нечем.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -34,6 +40,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 f6 2.d4 g5?? 3.Qh5#",
+      "explanation": {
+        "ru": "Те же два хода пешками в другом порядке: мат тот же.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -43,6 +55,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 g5 2.d4 h6",
+      "explanation": {
+        "ru": "Чёрные не трогают пешку f: мата нет, но у вас большой перевес.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 215,
         "best": "h2h4",
@@ -53,6 +71,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 f6 2.d4 e6",
+      "explanation": {
+        "ru": "Чёрные не двигают пешку g: мата нет, но у вас лучше.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 151,
         "best": "a2a3",

@@ -25,6 +25,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.f3 e5 2.g4?? Qh4#",
+      "explanation": {
+        "ru": "Ходы f3 и g4 открыли диагональ от h4 к королю, и ферзь с h4 ставит мат. Королю некуда уйти: поля вокруг заняты своими фигурами, f2 бьёт ферзь, а взять ферзя или закрыться от шаха нечем.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -34,6 +40,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.g4 e5 2.f3?? Qh4#",
+      "explanation": {
+        "ru": "Те же два хода пешками в другом порядке: мат тот же.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -43,6 +55,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.f3 e5 2.h3? Qh4+ 3.g3 Qxg3#",
+      "explanation": {
+        "ru": "Белые сыграли h3 вместо g4: после шаха с h4 у них единственный ход g3, и ферзь берёт эту пешку с матом.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -52,6 +70,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.f3 e5 2.e4",
+      "explanation": {
+        "ru": "Белые не двигают пешку g: мата нет, но у вас лучше.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 80,
         "best": "f8c5",
@@ -62,6 +86,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.f3 e5 2.Nc3",
+      "explanation": {
+        "ru": "Белые выводят коня: мата нет, но у вас лучше.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 72,
         "best": "g8f6",
