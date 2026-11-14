@@ -417,6 +417,77 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   of another attacked piece, `explain:facts` lists the moves that keep the defence and who
   attacks each of those squares. Text 21 rests on it.
 
+## Daily session, streak, settings (M5, 2026-11-14, autonomous mode)
+
+Built without the owner; every item here is the developer's decision unless it says "plan".
+
+- **Navigation.** The start screen is "Сегодня". The header has four links: "Сегодня",
+  "Ловушки" (now `#/traps`), "Задачи", "Ещё". The free board, the data screen, the settings
+  and the diagnostics are under "Ещё": they are not daily things. The bar stays at the top; a
+  bottom bar would be more usual on a phone but cannot be judged without the device (safe
+  areas, the gesture bar), so it is left as a question for the owner.
+- **The daily log** is a record per local calendar date (`YYYY-MM-DD`): how many exercises,
+  when the norm was met, the trap started that day, the plan of the session. Every finished
+  exercise counts, inside the session or outside it: a puzzle, a chain step, a review.
+- **Local dates.** A day is the device's calendar date. All arithmetic is done on the date
+  (`addDays`, `daysBetweenKeys`), never by adding 24 hours. A property test walks every day
+  of 2026 in nine time zones, including zones that change the clock at midnight and by half
+  an hour. It found a real bug in the M3 code: where midnight is skipped (Chile, Egypt), the
+  next day began an hour late. Fixed.
+- **Streak (plan: soft, no punishments).** Worked out from the log every time, so there is
+  no counter that an import or a clock change could leave wrong. The big number is "Дней
+  занятий" (days with the norm met, never goes down); the streak is the small one. A missed
+  day spends a freeze by itself; without a freeze the streak starts again without a word.
+  One freeze per seven active days (counted over all time, not per streak), two at most.
+  Today never breaks anything while it lasts.
+- **Travel.** A flight east can skip a local date without a missed day. One date without a
+  record is not "missed" when the sessions on both sides are less than 36 hours apart.
+- **Clock set back or forward by hand.** Records are taken as they are. If the log has days
+  after "today", the streak is counted up to the last of them. The worst case is a streak
+  that is a little too kind.
+- **The norm** is 1, 3 or 5 exercises a day (plan: one puzzle; default 1). A day that met
+  the norm stays met when the norm is raised later.
+- **Session (plan: a trap step, three puzzles, due reviews).** About six items: a warm-up
+  puzzle from the easy third of the band; what is due (one trap review, up to two failed
+  puzzles); up to two chain steps of the trap in progress; then new puzzles of different
+  themes from easy to hard, at least two. The plan is made when the session is first opened
+  that day and stays the same all day; it survives leaving and a restart. What the day holds
+  decides its shape and its title: "ловушка и задачи", "повторение и задачи", "задачи от
+  простой к сложной". An item that was done outside the session meanwhile is skipped.
+- **Theme names are hidden in the session** and in the entry test (owner's default of
+  2026-11-14); the theme screen shows them.
+- **A chain step in the session** that was not clean can be repeated at once or left: the
+  session goes on either way, the step stays the next step of the trap.
+- **One new trap a day (plan).** A trap whose chain has never been run cannot be started on
+  a day when another trap was started. "Я это знаю" is not a start. Traps in progress are
+  never held back. The chain screen says "Новая ловушка откроется завтра." and the session
+  does not offer the trap.
+- **FSRS for failed puzzles (owner's request).** A puzzle that was not solved cleanly gets an
+  FSRS card (first answer "again" for a wrong move, "hard" for hints only) and is due the
+  next day at the earliest. When due, it is graded like a trap review. An extra try before
+  its day changes nothing. A puzzle solved cleanly at once is never scheduled: there are
+  1,896 of them and more to come. Only the first attempt at a puzzle counts for the level.
+  Records of the M4 build are converted when read: failed last time means a card that is due
+  the day after that attempt, which is when the old rule brought the puzzle back.
+- **Storage.** IndexedDB version 3 adds the store `days`. Progress file format 3 adds the
+  daily log, the puzzle cards and the new settings. Files of formats 1 and 2, as the M3 and
+  M4 builds wrote them, are kept in `tests/fixtures` and must open; an e2e test builds an
+  M4 database by hand and checks the app carries it over.
+- **Calendar reminder (plan: an `.ics` file).** One daily event at a local "floating" time,
+  five minutes long, with an alarm at its start and a fixed identifier per app address, so a
+  second import should replace the first. Folding at 75 bytes never cuts a Cyrillic letter.
+  **Not checked on any device**: how Samsung Calendar, Google Calendar and iOS open it.
+- **Backup hint (plan: once a month).** One quiet block on the home screen when the last
+  saved file is 30 days old (or, if there never was one, after 30 days of practice).
+  "Позже" hides it for 30 days. Saving a file records the time.
+- **Size budget** is checked in CI by `npm run check:size`: precache 619 KiB of 1,200,
+  largest script 88 kB gzipped of 130, start-up scripts 89 kB of 130.
+- **E2E.** Seven tests: the three older ones, the daily session over two days with the
+  settings and the calendar file, one new trap a day, the M4 data upgrade, and one run with
+  the service worker on and the network off.
+- **Not done in M5:** an optional bot game in the session (M6), notifications (M7), a
+  bottom navigation bar, weekly or monthly summaries.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
