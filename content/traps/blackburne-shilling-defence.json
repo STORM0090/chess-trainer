@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 1,
+  "order": 5,
   "stageReason": "A single safe choice: trade knights instead of taking on e5.",
   "idea": {
     "ru": "Не брать на e5: разменять коня на d4 и остаться с лучшей игрой.",

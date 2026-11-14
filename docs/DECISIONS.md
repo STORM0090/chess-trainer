@@ -204,6 +204,137 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   - Texts are written in the test as the user sees them (Russian), not imported from
     `src/i18n`, so a changed UI string must be changed in the test too.
 
+## Progression (M3, 2026-11-14)
+
+- **Dependencies.** The owner approved `idb` 8.0.4 (ISC) and `ts-fsrs` 6.0.0 (MIT) on
+  2026-11-14. ts-fsrs brings one package of its own, `@open-spaced-repetition/srs-kit` 1.0.0
+  (BSD-3-Clause). All three licenses are compatible with GPL-3.0-or-later.
+- **ts-fsrs 6 is not the 5.x API.** The scheduler is created with `await DefaultScheduler()`
+  (asynchronous), cards have `dueAt` and `lastReviewAt` as `Date`, and the default model is
+  FSRS-7. `src/core/schedule.ts` is the only module that imports the library. It pins
+  `version: 'FSRS-7'`, retention 0.9, no learning steps in minutes, no fuzz. The build emits
+  small chunks for FSRS 3 to 6 as well (about 20 kB in total); only FSRS-7 is loaded.
+- **Backward chain, one player move at a time.** Depth 1 is the last move of the main line
+  alone, depth 2 the last two moves of the player, and so on; the last depth starts at move 1.
+  The owner's words were "one move before the blow, then two": the chain goes finer than
+  that and also splits the blow itself, so a three-move combination is learned as mate in 1,
+  then 2, then 3. The screen says whether the step is inside the blow or adds setup moves
+  (`blowMoves` from verify). To be confirmed by the owner on the phone.
+- **A step counts only when it is clean:** no wrong move and no hint. Otherwise the same step
+  is repeated. This is the "help, then do it yourself" rule from the first plan.
+- **Deviations are woven into the chain.** After each depth come the lines in which the
+  opponent plays another move inside the part of the main line that this depth added. The run
+  starts where the depth started, so the deviation is a surprise. A deviation can be skipped;
+  a main step cannot. Lines where the player has a second good move, and lines that end with
+  the opponent's move, are not chain steps (Learn and View show them).
+- **Following another good line.** In chain and review runs a good move that belongs to
+  another line with the same moves so far is accepted and the run goes on along that line.
+  Learn mode still asks for the move of its own line.
+- **Learned, mastered, unlocked.** A trap is *learned* when the last depth is passed. Its
+  first review opens the next calendar day (FSRS alone would wait almost five days). It is
+  *mastered* after the first review without a wrong move; hints are allowed there. Mastering a
+  trap opens the next one in the order of the list (stage, then the `order` field). A trap
+  that was started stays open whatever happens to the order. Mastery is not taken away by a later
+  failed review.
+- **One new trap a day** is not a rule of its own yet: it follows from the next-day review.
+  The explicit limit comes with the daily session in M5.
+- **Reviews.** One line from move 1: the main line half of the time, otherwise one of the
+  deviations, chosen at random. Grade: no errors and no hints is "good", hints only is
+  "hard", any wrong move is "again". "Easy" is not used. Reviews open at midnight of the day
+  FSRS chose and never on the day of the previous review, so a failed one comes back tomorrow.
+- **Learn mode stays** as free practice of all lines in a row. It saves nothing and is closed
+  together with the trap. It got the "Пропустить вариант" button.
+- **Storage.** IndexedDB database `chess-trainer`, version 1, stores `traps`, `games`,
+  `settings`. The whole state is read once before the first render and every change is
+  written immediately. If the database cannot be opened the app works from memory and says so
+  in a banner; a failed write is reported the same way. After the first write the app asks
+  the browser for persistent storage (`navigator.storage.persist()`); nothing depends on the
+  answer. `main.tsx` uses top-level `await` for the load.
+- **Saved progress per line** is keyed by a hash of the line's moves, not by its position in
+  the file, so reordering lines keeps progress and a changed line starts again.
+- **Export and import.** One JSON file, `format: 1`, named `chess-trainer-YYYY-MM-DD.json`.
+  It holds trap progress, the game log and settings, and nothing that identifies the owner.
+  Import checks every field, refuses a damaged or newer file as a whole, and *replaces* the
+  data on the device in one transaction. Merging two devices is not supported. Progress for
+  trap ids this version does not know is kept.
+- **Collection is the trap list.** Every card shows the status (viewed, in progress, learned,
+  mastered), a "closed" mark and "worked in a game"; the counter "Освоено N из 32" sits on
+  top. A separate grid screen would repeat the list.
+- **Game log.** Three outcomes per trap with the time of the tap; nothing about the game.
+  The last record can be removed. Doubtful traps show how many records exist out of the 25
+  after which the trap should be reconsidered; the app does not decide anything by itself.
+- **Navigation.** The third header link is "Данные" (export, import, test clock);
+  "Диагностика" is opened from there.
+- **Test clock.** "Данные" can move the app's clock forward by whole days so reviews can be
+  checked without waiting. It is a setting like any other and is marked on the screen while
+  it is on. Dates written while it is on stay shifted.
+- **License texts.** `THIRD_PARTY_NOTICES.md` names every shipped package with its license
+  and, for the M3 additions, the copyright line. The full texts of the permissive licenses
+  (MIT, ISC, BSD) are not copied into the built site. The owner put this into stage M7: a
+  generated file with the full texts, linked from the app, before the first APK.
+- **Order inside a stage is a field** (`order`, from 1) in every trap file, at the owner's
+  request; file names no longer decide. `shared/ladder.ts` sorts by stage, then order, for
+  the app and for the ROADMAP catalogue alike. verify requires the field and a unit test
+  requires 1, 2, 3 without gaps in every stage. The numbers were proposed by one rule and
+  confirmed by the owner on 2026-11-14: shorter blow first, then shorter setup, then a forcing
+  first move before a quiet one; a defence after the attacks of its stage.
+  - Stage 0: Fool's Mate, Fool's Mate (White), Scholar's Mate, the defence against it.
+  - Stage 1: King's Gambit Declined Qh4, Knight Attack on f7, Petrov discovered check,
+    Damiano Defence, Blackburne Shilling refutation.
+  - Stage 2: Legal Trap, Mortimer Trap, Englund Trap.
+  - Stage 3: Blackburne Shilling, Fishing Pole (Exchange).
+  - Stage 4: Fishing Pole (Berlin), Fried Liver, Noah's Ark.
+  - Stage 5: Caro-Kann smothered mate, Budapest Kieninger, Magnus Smith, Stafford, Owen Greco
+    mate, Marshall.
+  - Stage 6: Halosar, Siberian, Tarrasch, Sea Cadet, Smith-Morra queen trap, Cambridge
+    Springs, QGA b5, Elephant, Lasker.
+- **"Я это знаю"** (owner's request: stage 0 would otherwise take days of mates he knows).
+  On the page of an open trap that is not learned yet. After a confirmation the trap becomes
+  learned without the chain, its first review is tomorrow like for any learned trap, and the
+  next trap opens at once. It is "mastered" only after that review goes without a wrong move;
+  a failed review brings it back more often but closes nothing. Not offered for closed traps,
+  so the ladder cannot be jumped in the middle. It cannot be undone. Saved as `knownAt`;
+  files and records written before the field existed read as "not marked".
+- **Russian explanations: the owner's rules** (2026-11-14) are in `docs/PLAN.md`: one or two
+  sentences for the main line, one phrase for the others, a source mark on every text, claims
+  checked by program, batches of at most five traps published as a file before merge.
+- **Not done in M3:** the adaptive part beyond the hint ladder (runs are counted per trap but
+  the success rate is not used yet), the monthly backup reminder (needs the settings screen of
+  M5), an explicit position of a trap inside its stage.
+- **M2 phone check.** The owner reported section A as passed on 2026-11-14 with the remark
+  field and the three "by feel" answers left as unfilled template text. The merge went ahead
+  on the explicit instruction; the three questions are repeated in `docs/QA/M3.md`.
+
+## M3 accepted (2026-11-14)
+
+- The owner reported section A of `docs/QA/M3.md` as passed on the S24 Ultra and confirmed
+  the merge. As worded, the report says the ШВУ hints are clear, 8 to 10 variants per trap
+  are not too many, and a chain step of one player move is convenient. Nothing was said about
+  the 0.65 s pause before the opponent's move; it stays.
+- Merged into `main` as `v0.4.0-m3`.
+
+## Privacy check (2026-11-14)
+
+- **`npm run check:privacy`** (owner's request) scans every file tracked by git and fails the
+  build on a Windows path with a user name (also the Git Bash and WSL spellings), an e-mail
+  address that is not a noreply or `example.*` address, or a token-like string (GitHub, "sk-"
+  keys, AWS, Google, Slack, Lichess, private key headers). CI runs it right after `npm ci`,
+  so nothing is built or published when it fails.
+- **Not scanned:** `package-lock.json` and the Stockfish build (`public/engine/`, published
+  as `engine/`): they hold other people's addresses and paths. The project's own code in
+  `src/engine/` is scanned. Device models are not checked; they are in the documents on
+  purpose.
+- **The report never prints the match**, only file, line and kind: CI logs of a public
+  repository are public.
+- **Added on the developer's initiative:** the author and committer address of the checked
+  commit must be a noreply address, the same rule `CLAUDE.md` has for history.
+- **Limits.** It checks the pushed commit, not every commit between two pushes, and not the
+  built site on the `gh-pages` branch. A full scan of all 50 commits on all branches and tags
+  was done by hand on 2026-11-14 and found nothing personal.
+- **Chat exports** and other files with personal data are not created inside the project
+  folder (rule in `CLAUDE.md`). `.claude/` has been git-ignored from the first commit and no
+  commit ever touched it.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency

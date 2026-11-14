@@ -3,11 +3,15 @@ import { Chess, type Square } from 'chess.js';
 import { turnColor, type Dests } from '../../core/chess-helpers';
 import { getTrap } from '../../content/traps';
 import { commonPrefix, fenAtPly, type CompiledTrap } from '../../core/trap-model';
+import { markSeen } from '../../core/progress';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
+import { appNow, updateTrap } from '../../storage/store';
 import { Board } from '../board/Board';
 import { MoveList } from '../trap/MoveList';
+import { GamesPanel, ProgressPanel } from '../trap/ProgressPanel';
 import { ReliabilityBadge } from '../trap/ReliabilityBadge';
+import { useTrapAccess } from '../trap/access';
 import {
   divergenceLabel,
   formatEval,
@@ -44,6 +48,12 @@ function TrapView({ trap }: { trap: CompiledTrap }) {
   const [playing, setPlaying] = useState(false);
   const line = trap.lines[lineIndex] ?? trap.main;
   const total = line.steps.length;
+  const access = useTrapAccess(trap.file.id);
+
+  // Opening the trap is what "seen" means in the collection.
+  useEffect(() => {
+    updateTrap(trap.file.id, (progress) => markSeen(progress, appNow()));
+  }, [trap.file.id]);
 
   useEffect(() => {
     if (!playing) return;
@@ -144,9 +154,7 @@ function TrapView({ trap }: { trap: CompiledTrap }) {
           <p class="line-result">{resultText(line.result)}</p>
         </section>
 
-        <a class="button button-primary button-wide" href={routeHref({ name: 'learn', id: trap.file.id })}>
-          {t.traps.learn}
-        </a>
+        <ProgressPanel trap={trap} access={access} />
 
         <section class="panel">
           <h2 class="panel-title">{t.traps.lines}</h2>
@@ -185,6 +193,8 @@ function TrapView({ trap }: { trap: CompiledTrap }) {
             )}
           </section>
         )}
+
+        <GamesPanel trap={trap} />
 
         <a class="button button-quiet" href={routeHref({ name: 'traps' })}>
           {t.traps.toList}

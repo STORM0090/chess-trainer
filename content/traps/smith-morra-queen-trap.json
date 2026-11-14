@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "outside",
   "stage": 6,
+  "order": 5,
   "stageReason": "Needs the Smith-Morra Gambit as White.",
   "idea": {
     "ru": "Пешка e5 вскрывает линию d, слон жертвуется на f7 и король уходит от своего ферзя.",

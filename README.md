@@ -3,8 +3,10 @@
 Learn chess opening traps and basic tactics in five minutes a day.
 A phone-first PWA for beginner-level players. The UI is in Russian.
 
-**Status:** early development. Stage M2: 32 verified opening traps with a View mode and a
-Learn mode with hints. Progress is not saved yet. The plan is in [docs/PLAN.md](docs/PLAN.md).
+**Status:** early development. Stage M3 is done: 32 verified opening traps with a View mode, a
+Learn mode with hints and a backward chain; progress is saved on the device, learned traps
+come back in spaced reviews, and the progress file can be exported and imported.
+The plan is in [docs/PLAN.md](docs/PLAN.md).
 
 ## Stack
 

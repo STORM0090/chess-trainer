@@ -149,42 +149,42 @@ Evaluations are from the player's point of view, in pawns. "decline": the oppone
 
 ### Stage overview
 
-The stage of a trap is the `stage` field of its file. Moving a trap is a data change.
+The stage of a trap is the `stage` field of its file and its place inside the stage is the `order` field. Moving a trap is a data change. Practice opens in the order of this table.
 
-| Trap | Stage | Why |
-| --- | --- | --- |
-| Fool's Mate (`fools-mate`) | 0 | One move: the queen mates on h4. |
-| Fool's Mate, White's version (`fools-mate-white`) | 0 | One move: the queen mates on h5. |
-| Scholar's Mate (`scholars-mate`) | 0 | One blow on f7 after three setup moves. |
-| Scholar's Mate: the defence (`scholars-mate-defence`) | 0 | Each move answers a one-move threat; learned right after the attack it stops. |
-| Blackburne Shilling Gambit: the refutation (`blackburne-shilling-defence`) | 1 | A single safe choice: trade knights instead of taking on e5. |
-| Damiano Defence (`damiano-defence`) | 1 | Four moves, all checks and captures, with a knight sacrifice. |
-| King's Gambit Declined: the check on h4 (`kings-gambit-declined-qh4`) | 1 | Two forcing moves: a check, then mate or the rook. |
-| Knight Attack: the fork on f7 (`knight-attack-f7`) | 1 | One capture that forks queen and rook; needs the fork theme first. |
-| Petrov's Defence: the discovered check (`petrov-damiano`) | 1 | Two forcing moves: a discovered check wins the queen. |
-| Englund Gambit: the trap (`englund-trap`) | 2 | The key move is a quiet pin (Bb4) before the mate. |
-| Legal Trap (`legal-mate`) | 2 | A queen sacrifice, then two forcing moves to mate. |
-| Mortimer Trap (`mortimer-trap`) | 2 | The key move is quiet (c6); the win itself is a simple fork. |
-| Blackburne Shilling Gambit (`blackburne-shilling`) | 3 | Quiet first move (Qg5), a rook left hanging, four moves. |
-| Fishing Pole Trap, Exchange Variation (`fishing-pole-exchange`) | 3 | Five moves with two quiet ones (Qh4, g3) and a piece left hanging. |
-| Fishing Pole Trap, Berlin Defence (`fishing-pole-berlin`) | 4 | Same idea as the Exchange version, but the setup itself is dubious. |
-| Fried Liver Attack (`fried-liver`) | 4 | Seven setup moves and an attack that is not a forced win. |
-| Noah's Ark Trap (`noahs-ark`) | 4 | Seven setup moves; the win comes from quiet pawn moves. |
-| Budapest Gambit: Kieninger Trap (`budapest-kieninger`) | 5 | A second answer to 1.d4; seven setup moves before a one-move mate. |
-| Caro-Kann: the smothered mate on d6 (`caro-kann-smothered`) | 5 | Only against the Caro-Kann with 4...Nd7; a one-move mate after five setup moves. |
-| Magnus Smith Trap (`magnus-smith-trap`) | 5 | Needs the Open Sicilian with 6.Bc4 as White; eight setup moves. |
-| Marshall Trap (`marshall-trap`) | 5 | A second reply to 2.Nf3; nine setup moves and a six-move combination. |
-| Owen's Defence: Greco's mate (`owen-greco-mate`) | 5 | Only against Owen's Defence; rook and queen are given up before the mate. |
-| Stafford Gambit (`stafford-gambit`) | 5 | A second reply to 2.Nf3; a queen sacrifice and a two-bishop mate. |
-| Cambridge Springs Defense: the Bd3 trap (`cambridge-springs-trap`) | 6 | Needs 1...d5 as Black; eight setup moves. |
-| Elephant Trap (`elephant-trap`) | 6 | Needs 1...d5 as Black. By shape it would be stage 2: capture first, queen sacrifice. |
-| Halosar Trap (`halosar-trap`) | 6 | Needs 1.d4 and the Blackmar-Diemer Gambit as White. |
-| Lasker Trap (`lasker-trap`) | 6 | Needs the Albin Countergambit as Black; an underpromotion. |
-| Queen's Gambit Accepted: the greedy b5 (`qga-b5-trap`) | 6 | Needs 1.d4 as White. |
-| Sea-Cadet Mate (`sea-cadet-mate`) | 6 | Needs the Goring Gambit as White; the Legal pattern again. |
-| Siberian Trap (`siberian-trap`) | 6 | Needs the Sicilian as Black. |
-| Smith-Morra Gambit: the queen trap (`smith-morra-queen-trap`) | 6 | Needs the Smith-Morra Gambit as White. |
-| Tarrasch Trap (Open Defence) (`tarrasch-trap`) | 6 | Needs the Ruy Lopez as White; eleven setup moves. |
+| Trap | Stage | Order | Why |
+| --- | --- | --- | --- |
+| Fool's Mate (`fools-mate`) | 0 | 1 | One move: the queen mates on h4. |
+| Fool's Mate, White's version (`fools-mate-white`) | 0 | 2 | One move: the queen mates on h5. |
+| Scholar's Mate (`scholars-mate`) | 0 | 3 | One blow on f7 after three setup moves. |
+| Scholar's Mate: the defence (`scholars-mate-defence`) | 0 | 4 | Each move answers a one-move threat; learned right after the attack it stops. |
+| King's Gambit Declined: the check on h4 (`kings-gambit-declined-qh4`) | 1 | 1 | Two forcing moves: a check, then mate or the rook. |
+| Knight Attack: the fork on f7 (`knight-attack-f7`) | 1 | 2 | One capture that forks queen and rook; needs the fork theme first. |
+| Petrov's Defence: the discovered check (`petrov-damiano`) | 1 | 3 | Two forcing moves: a discovered check wins the queen. |
+| Damiano Defence (`damiano-defence`) | 1 | 4 | Four moves, all checks and captures, with a knight sacrifice. |
+| Blackburne Shilling Gambit: the refutation (`blackburne-shilling-defence`) | 1 | 5 | A single safe choice: trade knights instead of taking on e5. |
+| Legal Trap (`legal-mate`) | 2 | 1 | A queen sacrifice, then two forcing moves to mate. |
+| Mortimer Trap (`mortimer-trap`) | 2 | 2 | The key move is quiet (c6); the win itself is a simple fork. |
+| Englund Gambit: the trap (`englund-trap`) | 2 | 3 | The key move is a quiet pin (Bb4) before the mate. |
+| Blackburne Shilling Gambit (`blackburne-shilling`) | 3 | 1 | Quiet first move (Qg5), a rook left hanging, four moves. |
+| Fishing Pole Trap, Exchange Variation (`fishing-pole-exchange`) | 3 | 2 | Five moves with two quiet ones (Qh4, g3) and a piece left hanging. |
+| Fishing Pole Trap, Berlin Defence (`fishing-pole-berlin`) | 4 | 1 | Same idea as the Exchange version, but the setup itself is dubious. |
+| Fried Liver Attack (`fried-liver`) | 4 | 2 | Seven setup moves and an attack that is not a forced win. |
+| Noah's Ark Trap (`noahs-ark`) | 4 | 3 | Seven setup moves; the win comes from quiet pawn moves. |
+| Caro-Kann: the smothered mate on d6 (`caro-kann-smothered`) | 5 | 1 | Only against the Caro-Kann with 4...Nd7; a one-move mate after five setup moves. |
+| Budapest Gambit: Kieninger Trap (`budapest-kieninger`) | 5 | 2 | A second answer to 1.d4; seven setup moves before a one-move mate. |
+| Magnus Smith Trap (`magnus-smith-trap`) | 5 | 3 | Needs the Open Sicilian with 6.Bc4 as White; eight setup moves. |
+| Stafford Gambit (`stafford-gambit`) | 5 | 4 | A second reply to 2.Nf3; a queen sacrifice and a two-bishop mate. |
+| Owen's Defence: Greco's mate (`owen-greco-mate`) | 5 | 5 | Only against Owen's Defence; rook and queen are given up before the mate. |
+| Marshall Trap (`marshall-trap`) | 5 | 6 | A second reply to 2.Nf3; nine setup moves and a six-move combination. |
+| Halosar Trap (`halosar-trap`) | 6 | 1 | Needs 1.d4 and the Blackmar-Diemer Gambit as White. |
+| Siberian Trap (`siberian-trap`) | 6 | 2 | Needs the Sicilian as Black. |
+| Tarrasch Trap (Open Defence) (`tarrasch-trap`) | 6 | 3 | Needs the Ruy Lopez as White; eleven setup moves. |
+| Sea-Cadet Mate (`sea-cadet-mate`) | 6 | 4 | Needs the Goring Gambit as White; the Legal pattern again. |
+| Smith-Morra Gambit: the queen trap (`smith-morra-queen-trap`) | 6 | 5 | Needs the Smith-Morra Gambit as White. |
+| Cambridge Springs Defense: the Bd3 trap (`cambridge-springs-trap`) | 6 | 6 | Needs 1...d5 as Black; eight setup moves. |
+| Queen's Gambit Accepted: the greedy b5 (`qga-b5-trap`) | 6 | 7 | Needs 1.d4 as White. |
+| Elephant Trap (`elephant-trap`) | 6 | 8 | Needs 1...d5 as Black. By shape it would be stage 2: capture first, queen sacrifice. |
+| Lasker Trap (`lasker-trap`) | 6 | 9 | Needs the Albin Countergambit as Black; an underpromotion. |
 
 ### Stage 0
 
@@ -229,26 +229,7 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 
 ### Stage 1
 
-#### 5. Blackburne Shilling Gambit: the refutation · Шиллинговый гамбит: как не попасться (`blackburne-shilling-defence`)
-
-- **Side:** White · **Kind:** defence · **Repertoire:** core · **Reliability:** solid · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxd4 exd4 5.O-O
-- **Idea:** Do not take on e5: trade the knight on d4 and keep the better game.
-- **Correct line:** 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxd4 exd4 5.O-O (+1.3)
-- **If the opponent deviates:** 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3# (mistake, the player is checkmated); 4.c3 Nxf3+ 5.Qxf3 (hold, +0.6)
-- **Note:** The mirror of blackburne-shilling: the same opening from White's side.
-- **Source:** [Wikipedia: Blackburne Shilling Gambit (revision 1382027590)](https://en.wikipedia.org/w/index.php?title=Blackburne_Shilling_Gambit&oldid=1382027590); [Lichess opening name: Italian Game: Blackburne-Kostić Gambit (C50)](https://github.com/lichess-org/chess-openings)
-
-#### 6. Damiano Defence · Защита Дамиано (`damiano-defence`)
-
-- **Side:** White · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3
-- **Idea:** The move f6 exposed the king: a knight sacrifice, a check from h5, and the queen collects the rook.
-- **Correct line:** 2...f6? 3.Nxe5 fxe5? 4.Qh5+ g6 5.Qxe5+ Qe7 6.Qxh8 (+5.6)
-- **If the opponent deviates:** 3...Qe7 4.Nf3 Qxe4+ 5.Be2 (decline, +2.5); 4...Ke7 5.Qxe5+ Kf7 6.Bc4+ d5 7.Bxd5+ Kg6 8.h4 (trap, +4.3)
-- **Source:** [Wikipedia: Damiano Defence (revision 1371784700)](https://en.wikipedia.org/w/index.php?title=Damiano_Defence&oldid=1371784700); [Lichess opening name: King's Pawn Game: Damiano Defense, Damiano Gambit (C40)](https://github.com/lichess-org/chess-openings)
-
-#### 7. King's Gambit Declined: the check on h4 · Отказанный королевский гамбит: шах с h4 (`kings-gambit-declined-qh4`)
+#### 5. King's Gambit Declined: the check on h4 · Отказанный королевский гамбит: шах с h4 (`kings-gambit-declined-qh4`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
 - **Start:** 1.e4 e5 2.f4 Bc5
@@ -258,7 +239,7 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** The opening name and the 2...Bc5 3.Nf3 d6 main line are from the sources. The 3.fxe5 punishment is engine-checked only.
 - **Source:** [Wikipedia: King's Gambit (revision 1382023287)](https://en.wikipedia.org/w/index.php?title=King's_Gambit&oldid=1382023287); [Lichess opening name: King's Gambit Declined: Classical Variation (C30)](https://github.com/lichess-org/chess-openings)
 
-#### 8. Knight Attack: the fork on f7 · Конь на g5: вилка на f7 (`knight-attack-f7`)
+#### 6. Knight Attack: the fork on f7 · Конь на g5: вилка на f7 (`knight-attack-f7`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
 - **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5
@@ -268,7 +249,7 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** The 4...h6, 4...Be7 and 4...d6 punishments are engine-checked only.
 - **Source:** [Lichess opening name: Italian Game: Two Knights Defense, Knight Attack (C57)](https://github.com/lichess-org/chess-openings); [Wikipedia: Two Knights Defense (revision 1381945263)](https://en.wikipedia.org/w/index.php?title=Two_Knights_Defense&oldid=1381945263)
 
-#### 9. Petrov's Defence: the discovered check · Русская партия: вскрытый шах (`petrov-damiano`)
+#### 7. Petrov's Defence: the discovered check · Русская партия: вскрытый шах (`petrov-damiano`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
 - **Start:** 1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2
@@ -277,19 +258,28 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **If the opponent deviates:** 3...d6 4.Nf3 Nxe4 (sound, +0.4); 4...Qe7 5.Qxe4 d6 6.d4 dxe5 7.dxe5 (decline, +0.6)
 - **Source:** [Wikipedia: Petrov's Defence (revision 1382022050)](https://en.wikipedia.org/w/index.php?title=Petrov's_Defence&oldid=1382022050); [Lichess opening name: Petrov's Defense: Damiano Variation (C42)](https://github.com/lichess-org/chess-openings)
 
+#### 8. Damiano Defence · Защита Дамиано (`damiano-defence`)
+
+- **Side:** White · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
+- **Start:** 1.e4 e5 2.Nf3
+- **Idea:** The move f6 exposed the king: a knight sacrifice, a check from h5, and the queen collects the rook.
+- **Correct line:** 2...f6? 3.Nxe5 fxe5? 4.Qh5+ g6 5.Qxe5+ Qe7 6.Qxh8 (+5.6)
+- **If the opponent deviates:** 3...Qe7 4.Nf3 Qxe4+ 5.Be2 (decline, +2.5); 4...Ke7 5.Qxe5+ Kf7 6.Bc4+ d5 7.Bxd5+ Kg6 8.h4 (trap, +4.3)
+- **Source:** [Wikipedia: Damiano Defence (revision 1371784700)](https://en.wikipedia.org/w/index.php?title=Damiano_Defence&oldid=1371784700); [Lichess opening name: King's Pawn Game: Damiano Defense, Damiano Gambit (C40)](https://github.com/lichess-org/chess-openings)
+
+#### 9. Blackburne Shilling Gambit: the refutation · Шиллинговый гамбит: как не попасться (`blackburne-shilling-defence`)
+
+- **Side:** White · **Kind:** defence · **Repertoire:** core · **Reliability:** solid · **Status:** verified
+- **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxd4 exd4 5.O-O
+- **Idea:** Do not take on e5: trade the knight on d4 and keep the better game.
+- **Correct line:** 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4 4.Nxd4 exd4 5.O-O (+1.3)
+- **If the opponent deviates:** 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3# (mistake, the player is checkmated); 4.c3 Nxf3+ 5.Qxf3 (hold, +0.6)
+- **Note:** The mirror of blackburne-shilling: the same opening from White's side.
+- **Source:** [Wikipedia: Blackburne Shilling Gambit (revision 1382027590)](https://en.wikipedia.org/w/index.php?title=Blackburne_Shilling_Gambit&oldid=1382027590); [Lichess opening name: Italian Game: Blackburne-Kostić Gambit (C50)](https://github.com/lichess-org/chess-openings)
+
 ### Stage 2
 
-#### 10. Englund Gambit: the trap · Гамбит Энглунда: ловушка (`englund-trap`)
-
-- **Side:** Black · **Kind:** trap · **Repertoire:** core · **Reliability:** dubious · **Status:** verified
-- **Start:** 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2
-- **Idea:** A check on b4 forks b2; if the bishop goes to c3 it is pinned and traded, and the queen mates on c1.
-- **Correct line:** 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1# (checkmate)
-- **If the opponent deviates:** 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5 (sound, -2.8); 5.Nc3 Qxf4 6.Nd5 Qe4 (decline, -0.2)
-- **Note:** Objectively weak by the engine: see the "sound" lines. Kept as the first answer to 1.d4 by the owner's decision. Review rule: after 25 of the owner's games that start 1.d4 e5, compare how often a trap line or a one-move win appeared with how often the critical 6.Nc3 line appeared, and decide whether the Budapest replaces it. The 2...Nc6, 3...Qe7 line was introduced by Kārlis Bētiņš; the opening is named after Fritz Englund.
-- **Source:** [Wikipedia: Englund Gambit (revision 1382025129)](https://en.wikipedia.org/w/index.php?title=Englund_Gambit&oldid=1382025129); [Lichess opening name: Englund Gambit: Main Line (A40)](https://github.com/lichess-org/chess-openings)
-
-#### 11. Legal Trap · Мат Легаля (`legal-mate`)
+#### 10. Legal Trap · Мат Легаля (`legal-mate`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** core · **Reliability:** solid · **Status:** verified
 - **Start:** 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3
@@ -299,7 +289,7 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** Named after Sire de Legall. The game against Saint Brie is usually dated Paris 1750; Wikipedia reports research pointing to 1787 and a different, flawed move order.
 - **Source:** [Wikipedia: Legal Trap (revision 1380541817)](https://en.wikipedia.org/w/index.php?title=Legal_Trap&oldid=1380541817); [Lichess opening name: Philidor Defense (C41)](https://github.com/lichess-org/chess-openings); [Lichess opening name: Italian Game: Paris Defense (C50)](https://github.com/lichess-org/chess-openings)
 
-#### 12. Mortimer Trap · Ловушка Мортимера (`mortimer-trap`)
+#### 11. Mortimer Trap · Ловушка Мортимера (`mortimer-trap`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** core · **Reliability:** risky · **Status:** verified
 - **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?!
@@ -308,6 +298,16 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **If the opponent deviates:** 5.Bc4 c6 6.Nc3 Ng6 (sound, -0.7); 6.Nc4 Ng6 7.Ba4 b5 (decline, +3.4)
 - **Note:** Named after James Mortimer. Wikipedia: Black deliberately plays an inferior move to set it.
 - **Source:** [Wikipedia: Ruy Lopez, Mortimer Trap (revision 1356337121)](https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Mortimer_Trap&oldid=1356337121); [Lichess opening name: Ruy Lopez: Berlin Defense, Anti-Berlin Variation, Mortimer Trap (C65)](https://github.com/lichess-org/chess-openings)
+
+#### 12. Englund Gambit: the trap · Гамбит Энглунда: ловушка (`englund-trap`)
+
+- **Side:** Black · **Kind:** trap · **Repertoire:** core · **Reliability:** dubious · **Status:** verified
+- **Start:** 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2
+- **Idea:** A check on b4 forks b2; if the bishop goes to c3 it is pinned and traded, and the queen mates on c1.
+- **Correct line:** 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1# (checkmate)
+- **If the opponent deviates:** 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5 (sound, -2.8); 5.Nc3 Qxf4 6.Nd5 Qe4 (decline, -0.2)
+- **Note:** Objectively weak by the engine: see the "sound" lines. Kept as the first answer to 1.d4 by the owner's decision. Review rule: after 25 of the owner's games that start 1.d4 e5, compare how often a trap line or a one-move win appeared with how often the critical 6.Nc3 line appeared, and decide whether the Budapest replaces it. The 2...Nc6, 3...Qe7 line was introduced by Kārlis Bētiņš; the opening is named after Fritz Englund.
+- **Source:** [Wikipedia: Englund Gambit (revision 1382025129)](https://en.wikipedia.org/w/index.php?title=Englund_Gambit&oldid=1382025129); [Lichess opening name: Englund Gambit: Main Line (A40)](https://github.com/lichess-org/chess-openings)
 
 ### Stage 3
 
@@ -363,7 +363,16 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 
 ### Stage 5
 
-#### 18. Budapest Gambit: Kieninger Trap · Будапештский гамбит: ловушка Кинингера (`budapest-kieninger`)
+#### 18. Caro-Kann: the smothered mate on d6 · Каро-Канн: спёртый мат на d6 (`caro-kann-smothered`)
+
+- **Side:** White · **Kind:** trap · **Repertoire:** branch · **Reliability:** solid · **Status:** verified
+- **Start:** 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2
+- **Idea:** The queen on e2 pins the e7-pawn, so the knight mates from d6.
+- **Correct line:** 5...Ngf6?? 6.Nd6# (checkmate)
+- **If the opponent deviates:** 5...Ndf6 (sound, +0.2)
+- **Source:** [Wikipedia: Caro–Kann Defence (revision 1381151588)](https://en.wikipedia.org/w/index.php?title=Caro%E2%80%93Kann_Defence&oldid=1381151588); [Wikipedia: Smothered mate (revision 1356335772)](https://en.wikipedia.org/w/index.php?title=Smothered_mate&oldid=1356335772)
+
+#### 19. Budapest Gambit: Kieninger Trap · Будапештский гамбит: ловушка Кинингера (`budapest-kieninger`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** branch · **Reliability:** risky · **Status:** verified
 - **Start:** 1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5
@@ -372,15 +381,6 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **If the opponent deviates:** 8.Nxe5 Nxe5 9.e3 Bxd2+ 10.Qxd2 (sound, -0.3); 8.Nxe5 Nxe5 9.axb4?? Nd3# (trap, checkmate)
 - **Note:** Named after Georg Kieninger (offhand game against Godai, Vienna 1925). Needs 2.c4; Wikipedia notes that 2.Nf3 avoids the Budapest. A second answer to 1.d4, so practice opens after the Englund.
 - **Source:** [Wikipedia: Budapest Gambit (revision 1382027140)](https://en.wikipedia.org/w/index.php?title=Budapest_Gambit&oldid=1382027140); [Lichess opening name: Indian Defense: Budapest Gambit Accepted, Main Line, Rubinstein Variation (A52)](https://github.com/lichess-org/chess-openings)
-
-#### 19. Caro-Kann: the smothered mate on d6 · Каро-Канн: спёртый мат на d6 (`caro-kann-smothered`)
-
-- **Side:** White · **Kind:** trap · **Repertoire:** branch · **Reliability:** solid · **Status:** verified
-- **Start:** 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2
-- **Idea:** The queen on e2 pins the e7-pawn, so the knight mates from d6.
-- **Correct line:** 5...Ngf6?? 6.Nd6# (checkmate)
-- **If the opponent deviates:** 5...Ndf6 (sound, +0.2)
-- **Source:** [Wikipedia: Caro–Kann Defence (revision 1381151588)](https://en.wikipedia.org/w/index.php?title=Caro%E2%80%93Kann_Defence&oldid=1381151588); [Wikipedia: Smothered mate (revision 1356335772)](https://en.wikipedia.org/w/index.php?title=Smothered_mate&oldid=1356335772)
 
 #### 20. Magnus Smith Trap · Ловушка Магнуса Смита (`magnus-smith-trap`)
 
@@ -392,15 +392,15 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** Needs the Open Sicilian with 6.Bc4 as White. Wikipedia quotes Edward Winter: the name is probably a misnomer.
 - **Source:** [Wikipedia: Sicilian Defence, Magnus Smith Trap (revision 1380207873)](https://en.wikipedia.org/w/index.php?title=Sicilian_Defence%2C_Magnus_Smith_Trap&oldid=1380207873); [Lichess opening name: Sicilian Defense: Magnus Smith Trap (B57)](https://github.com/lichess-org/chess-openings)
 
-#### 21. Marshall Trap · Ловушка Маршалла (`marshall-trap`)
+#### 21. Stafford Gambit · Стаффордский гамбит (`stafford-gambit`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** branch · **Reliability:** dubious · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4 5.d4 d5 6.Bd3 Bd6 7.O-O O-O 8.c4 Bg4 9.cxd5 f5
-- **Idea:** The bishop is sacrificed on h2, the knight forks from f2, and a queen check wins the rook.
-- **Correct line:** 10.Re1? Bxh2+ 11.Kxh2 Nxf2 12.Qe2 Nxd3 13.Qxd3 Bxf3 14.Qxf3 Qh4+ 15.Kg1 Qxe1+ (+6.5)
-- **If the opponent deviates:** 10.Nc3 (sound, -1.4); 11.Nxh2 Bxd1 (trap, +4.0)
-- **Note:** Named after Frank Marshall. Needs the Petrov as Black, a second reply to 2.Nf3.
-- **Source:** [Wikipedia: Petrov's Defence, Marshall Trap (revision 1356337237)](https://en.wikipedia.org/w/index.php?title=Petrov's_Defence%2C_Marshall_Trap&oldid=1356337237); [Lichess opening name: Petrov's Defense: Classical Attack, Marshall Trap (C42)](https://github.com/lichess-org/chess-openings)
+- **Start:** 1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5
+- **Idea:** The bishop pins the knight, but the knight takes on e4: capturing the queen allows mate by the two bishops.
+- **Correct line:** 6.Bg5? Nxe4 7.Bxd8?? Bxf2+ 8.Ke2 Bg4# (checkmate)
+- **If the opponent deviates:** 6.Be2 h5 7.h3 (sound, -2.5); 7.Be3 Bxe3 8.fxe3 Qh4+ (trap, +6.0)
+- **Note:** A second reply to 2.Nf3, next to 2...Nc6. Wikipedia: considered dubious; popular online since the early 2020s.
+- **Source:** [Wikipedia: Stafford Gambit (revision 1368550067)](https://en.wikipedia.org/w/index.php?title=Stafford_Gambit&oldid=1368550067); [Wikipedia: Petrov's Defence (revision 1382022050)](https://en.wikipedia.org/w/index.php?title=Petrov's_Defence&oldid=1382022050); [Lichess opening name: Petrov's Defense: Stafford Gambit (C42)](https://github.com/lichess-org/chess-openings)
 
 #### 22. Owen's Defence: Greco's mate · Защита Оуэна: мат Греко (`owen-greco-mate`)
 
@@ -412,39 +412,19 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** Wikipedia: the line was given by Greco in the 17th century.
 - **Source:** [Wikipedia: Owen's Defence (revision 1384648868)](https://en.wikipedia.org/w/index.php?title=Owen's_Defence&oldid=1384648868); [Lichess opening name: Owen Defense: Matovinsky Gambit (B00)](https://github.com/lichess-org/chess-openings)
 
-#### 23. Stafford Gambit · Стаффордский гамбит (`stafford-gambit`)
+#### 23. Marshall Trap · Ловушка Маршалла (`marshall-trap`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** branch · **Reliability:** dubious · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5
-- **Idea:** The bishop pins the knight, but the knight takes on e4: capturing the queen allows mate by the two bishops.
-- **Correct line:** 6.Bg5? Nxe4 7.Bxd8?? Bxf2+ 8.Ke2 Bg4# (checkmate)
-- **If the opponent deviates:** 6.Be2 h5 7.h3 (sound, -2.5); 7.Be3 Bxe3 8.fxe3 Qh4+ (trap, +6.0)
-- **Note:** A second reply to 2.Nf3, next to 2...Nc6. Wikipedia: considered dubious; popular online since the early 2020s.
-- **Source:** [Wikipedia: Stafford Gambit (revision 1368550067)](https://en.wikipedia.org/w/index.php?title=Stafford_Gambit&oldid=1368550067); [Wikipedia: Petrov's Defence (revision 1382022050)](https://en.wikipedia.org/w/index.php?title=Petrov's_Defence&oldid=1382022050); [Lichess opening name: Petrov's Defense: Stafford Gambit (C42)](https://github.com/lichess-org/chess-openings)
+- **Start:** 1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4 5.d4 d5 6.Bd3 Bd6 7.O-O O-O 8.c4 Bg4 9.cxd5 f5
+- **Idea:** The bishop is sacrificed on h2, the knight forks from f2, and a queen check wins the rook.
+- **Correct line:** 10.Re1? Bxh2+ 11.Kxh2 Nxf2 12.Qe2 Nxd3 13.Qxd3 Bxf3 14.Qxf3 Qh4+ 15.Kg1 Qxe1+ (+6.5)
+- **If the opponent deviates:** 10.Nc3 (sound, -1.4); 11.Nxh2 Bxd1 (trap, +4.0)
+- **Note:** Named after Frank Marshall. Needs the Petrov as Black, a second reply to 2.Nf3.
+- **Source:** [Wikipedia: Petrov's Defence, Marshall Trap (revision 1356337237)](https://en.wikipedia.org/w/index.php?title=Petrov's_Defence%2C_Marshall_Trap&oldid=1356337237); [Lichess opening name: Petrov's Defense: Classical Attack, Marshall Trap (C42)](https://github.com/lichess-org/chess-openings)
 
 ### Stage 6
 
-#### 24. Cambridge Springs Defense: the Bd3 trap · Кембридж-спрингская защита: ловушка (`cambridge-springs-trap`)
-
-- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
-- **Start:** 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nf3 Qa5 7.Nd2 Bb4 8.Qc2 O-O
-- **Idea:** The pawn takes on c4, attacking the d3-bishop and uncovering the queen against the g5-bishop.
-- **Correct line:** 9.Bd3?? dxc4 10.Bxf6 cxd3 11.Qxd3 Nxf6 (+7.2)
-- **If the opponent deviates:** 9.Be2 (sound, -0.2)
-- **Note:** The opening and its name are from the sources. The 9.Bd3 punishment is engine-checked only. Needs 1...d5 as Black.
-- **Source:** [Wikipedia: Queen's Gambit Declined (revision 1382050090)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined&oldid=1382050090); [Lichess opening name: Queen's Gambit Declined: Cambridge Springs Defense, Bogoljubow Variation (D52)](https://github.com/lichess-org/chess-openings)
-
-#### 25. Elephant Trap · Слоновья ловушка (`elephant-trap`)
-
-- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
-- **Start:** 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5
-- **Idea:** The pinned knight takes on d5 anyway: a bishop check from b4 wins the queen back with an extra piece.
-- **Correct line:** 6.Nxd5?? Nxd5 7.Bxd8 Bb4+ 8.Qd2 Bxd2+ 9.Kxd2 Kxd8 (+5.2)
-- **If the opponent deviates:** 6.e3 (sound, -0.2); 5.e3 c6 6.Nf3 Qa5 (sound, -0.2)
-- **Note:** Needs 1...d5 as Black. The owner already passed it once with one error. Earliest recorded game: Mayet-Harrwitz, Berlin 1848.
-- **Source:** [Wikipedia: Queen's Gambit Declined, Elephant Trap (revision 1384407150)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined%2C_Elephant_Trap&oldid=1384407150)
-
-#### 26. Halosar Trap · Ловушка Халосара (`halosar-trap`)
+#### 24. Halosar Trap · Ловушка Халосара (`halosar-trap`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** dubious · **Status:** verified
 - **Start:** 1.d4 d5 2.e4 dxe4 3.Nc3 Nf6 4.f3 exf3 5.Qxf3 Qxd4 6.Be3 Qb4 7.O-O-O
@@ -454,37 +434,7 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** Named after Hermann Halosar (Diemer-Halosar, Baden-Baden 1934). Needs 1.d4 and the Ryder Gambit as White.
 - **Source:** [Wikipedia: Blackmar–Diemer Gambit (revision 1381541710)](https://en.wikipedia.org/w/index.php?title=Blackmar%E2%80%93Diemer_Gambit&oldid=1381541710)
 
-#### 27. Lasker Trap · Ловушка Ласкера (`lasker-trap`)
-
-- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** risky · **Status:** verified
-- **Start:** 1.d4 d5 2.c4 e5 3.dxe5 d4
-- **Idea:** The pawn reaches g1 and promotes to a knight with check: promoting to a queen would achieve nothing.
-- **Correct line:** 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+ 8.Ke1 Qh4+ 9.Kd2 Nc6 (+7.7)
-- **If the opponent deviates:** 4.Nf3 (sound, -0.7); 6.fxe3 (decline, +0.1)
-- **Note:** Named after Emanuel Lasker; first noted by Serafino Dubois. Needs 1...d5 and 2...e5 as Black.
-- **Source:** [Wikipedia: Albin Countergambit, Lasker Trap (revision 1356337160)](https://en.wikipedia.org/w/index.php?title=Albin_Countergambit%2C_Lasker_Trap&oldid=1356337160); [Lichess opening name: Queen's Gambit Declined: Albin Countergambit, Lasker Trap (D08)](https://github.com/lichess-org/chess-openings)
-
-#### 28. Queen's Gambit Accepted: the greedy b5 · Принятый ферзевый гамбит: жадная пешка b5 (`qga-b5-trap`)
-
-- **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
-- **Start:** 1.d4 d5 2.c4 dxc4 3.e3
-- **Idea:** Black clings to the c4-pawn, the a8-h1 diagonal weakens, and the queen on f3 wins a piece.
-- **Correct line:** 3...b5? 4.a4 c6 5.axb5 cxb5?? 6.Qf3 Nc6 7.Qxc6+ (+5.5)
-- **If the opponent deviates:** 3...Nf6 (sound, +0.3); 3...Be6 (sound, +0.6)
-- **Note:** Wikipedia: pointed out by Alessandro Salvio in 1604. Needs 1.d4 as White.
-- **Source:** [Wikipedia: Queen's Gambit Accepted (revision 1378795157)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Accepted&oldid=1378795157)
-
-#### 29. Sea-Cadet Mate · Мат морского кадета (`sea-cadet-mate`)
-
-- **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.O-O
-- **Idea:** The same Légal mate in the Scotch: the knight takes on e5, the queen is given, three pieces mate.
-- **Correct line:** 7...Ne5?? 8.Nxe5 Bxd1 9.Bxf7+ Ke7 10.Nd5# (checkmate)
-- **If the opponent deviates:** 7...Nf6 (sound, +0.1); 8...dxe5 9.Qxg4 (decline, +7.0)
-- **Note:** The name and the mating line come from the Lichess opening data set. Needs the Göring Gambit as White.
-- **Source:** [Lichess opening name: Scotch Game: Sea-Cadet Mate (C44)](https://github.com/lichess-org/chess-openings)
-
-#### 30. Siberian Trap · Сибирская ловушка (`siberian-trap`)
+#### 25. Siberian Trap · Сибирская ловушка (`siberian-trap`)
 
 - **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
 - **Start:** 1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 Qc7 7.O-O Nf6 8.Qe2 Ng4
@@ -494,7 +444,27 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** Needs the Sicilian as Black. The name comes from Boris Schipkov of Novosibirsk.
 - **Source:** [Wikipedia: Sicilian Defence, Smith–Morra Gambit, Siberian Trap (revision 1317188806)](https://en.wikipedia.org/w/index.php?title=Sicilian_Defence%2C_Smith%E2%80%93Morra_Gambit%2C_Siberian_Trap&oldid=1317188806); [Lichess opening name: Sicilian Defense: Smith-Morra Gambit Accepted, Siberian Variation, Siberian Trap (B21)](https://github.com/lichess-org/chess-openings)
 
-#### 31. Smith-Morra Gambit: the queen trap · Гамбит Смита-Морра: потеря ферзя (`smith-morra-queen-trap`)
+#### 26. Tarrasch Trap (Open Defence) · Ловушка Тарраша (`tarrasch-trap`)
+
+- **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
+- **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7 10.Re1 O-O 11.Nd4
+- **Idea:** After the trade on e6 the d5-pawn is pinned, so the rook takes the knight on e4.
+- **Correct line:** 11...Qd7? 12.Nxe6 fxe6 13.Rxe4 (+6.0)
+- **If the opponent deviates:** 11...Nxd4 12.cxd4 (sound, +0.6); 12...Qxe6 13.Rxe4 (trap, +6.2)
+- **Note:** Named after Siegbert Tarrasch, who caught Zukertort (1887) and Gunsberg (1890) with it. Needs the Ruy Lopez as White.
+- **Source:** [Wikipedia: Ruy Lopez, Tarrasch Trap (revision 1356337163)](https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Tarrasch_Trap&oldid=1356337163); [Lichess opening name: Ruy Lopez: Open, Tarrasch Trap (C83)](https://github.com/lichess-org/chess-openings)
+
+#### 27. Sea-Cadet Mate · Мат морского кадета (`sea-cadet-mate`)
+
+- **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
+- **Start:** 1.e4 e5 2.Nf3 Nc6 3.d4 exd4 4.c3 dxc3 5.Nxc3 d6 6.Bc4 Bg4 7.O-O
+- **Idea:** The same Légal mate in the Scotch: the knight takes on e5, the queen is given, three pieces mate.
+- **Correct line:** 7...Ne5?? 8.Nxe5 Bxd1 9.Bxf7+ Ke7 10.Nd5# (checkmate)
+- **If the opponent deviates:** 7...Nf6 (sound, +0.1); 8...dxe5 9.Qxg4 (decline, +7.0)
+- **Note:** The name and the mating line come from the Lichess opening data set. Needs the Göring Gambit as White.
+- **Source:** [Lichess opening name: Scotch Game: Sea-Cadet Mate (C44)](https://github.com/lichess-org/chess-openings)
+
+#### 28. Smith-Morra Gambit: the queen trap · Гамбит Смита-Морра: потеря ферзя (`smith-morra-queen-trap`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** risky · **Status:** verified
 - **Start:** 1.e4 c5 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 d6 6.Bc4 Nf6 7.e5
@@ -504,15 +474,45 @@ The stage of a trap is the `stage` field of its file. Moving a trap is a data ch
 - **Note:** The opening is from the sources; this line is engine-checked only. Wikipedia: the gambit has a minefield of traps for Black.
 - **Source:** [Wikipedia: Smith–Morra Gambit (revision 1341932942)](https://en.wikipedia.org/w/index.php?title=Smith%E2%80%93Morra_Gambit&oldid=1341932942); [Lichess opening name: Sicilian Defense: Smith-Morra Gambit Accepted (B21)](https://github.com/lichess-org/chess-openings)
 
-#### 32. Tarrasch Trap (Open Defence) · Ловушка Тарраша (`tarrasch-trap`)
+#### 29. Cambridge Springs Defense: the Bd3 trap · Кембридж-спрингская защита: ловушка (`cambridge-springs-trap`)
+
+- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
+- **Start:** 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.e3 c6 6.Nf3 Qa5 7.Nd2 Bb4 8.Qc2 O-O
+- **Idea:** The pawn takes on c4, attacking the d3-bishop and uncovering the queen against the g5-bishop.
+- **Correct line:** 9.Bd3?? dxc4 10.Bxf6 cxd3 11.Qxd3 Nxf6 (+7.2)
+- **If the opponent deviates:** 9.Be2 (sound, -0.2)
+- **Note:** The opening and its name are from the sources. The 9.Bd3 punishment is engine-checked only. Needs 1...d5 as Black.
+- **Source:** [Wikipedia: Queen's Gambit Declined (revision 1382050090)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined&oldid=1382050090); [Lichess opening name: Queen's Gambit Declined: Cambridge Springs Defense, Bogoljubow Variation (D52)](https://github.com/lichess-org/chess-openings)
+
+#### 30. Queen's Gambit Accepted: the greedy b5 · Принятый ферзевый гамбит: жадная пешка b5 (`qga-b5-trap`)
 
 - **Side:** White · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
-- **Start:** 1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 Nf6 5.O-O Nxe4 6.d4 b5 7.Bb3 d5 8.dxe5 Be6 9.c3 Be7 10.Re1 O-O 11.Nd4
-- **Idea:** After the trade on e6 the d5-pawn is pinned, so the rook takes the knight on e4.
-- **Correct line:** 11...Qd7? 12.Nxe6 fxe6 13.Rxe4 (+6.0)
-- **If the opponent deviates:** 11...Nxd4 12.cxd4 (sound, +0.6); 12...Qxe6 13.Rxe4 (trap, +6.2)
-- **Note:** Named after Siegbert Tarrasch, who caught Zukertort (1887) and Gunsberg (1890) with it. Needs the Ruy Lopez as White.
-- **Source:** [Wikipedia: Ruy Lopez, Tarrasch Trap (revision 1356337163)](https://en.wikipedia.org/w/index.php?title=Ruy_Lopez%2C_Tarrasch_Trap&oldid=1356337163); [Lichess opening name: Ruy Lopez: Open, Tarrasch Trap (C83)](https://github.com/lichess-org/chess-openings)
+- **Start:** 1.d4 d5 2.c4 dxc4 3.e3
+- **Idea:** Black clings to the c4-pawn, the a8-h1 diagonal weakens, and the queen on f3 wins a piece.
+- **Correct line:** 3...b5? 4.a4 c6 5.axb5 cxb5?? 6.Qf3 Nc6 7.Qxc6+ (+5.5)
+- **If the opponent deviates:** 3...Nf6 (sound, +0.3); 3...Be6 (sound, +0.6)
+- **Note:** Wikipedia: pointed out by Alessandro Salvio in 1604. Needs 1.d4 as White.
+- **Source:** [Wikipedia: Queen's Gambit Accepted (revision 1378795157)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Accepted&oldid=1378795157)
+
+#### 31. Elephant Trap · Слоновья ловушка (`elephant-trap`)
+
+- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** solid · **Status:** verified
+- **Start:** 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5
+- **Idea:** The pinned knight takes on d5 anyway: a bishop check from b4 wins the queen back with an extra piece.
+- **Correct line:** 6.Nxd5?? Nxd5 7.Bxd8 Bb4+ 8.Qd2 Bxd2+ 9.Kxd2 Kxd8 (+5.2)
+- **If the opponent deviates:** 6.e3 (sound, -0.2); 5.e3 c6 6.Nf3 Qa5 (sound, -0.2)
+- **Note:** Needs 1...d5 as Black. The owner already passed it once with one error. Earliest recorded game: Mayet-Harrwitz, Berlin 1848.
+- **Source:** [Wikipedia: Queen's Gambit Declined, Elephant Trap (revision 1384407150)](https://en.wikipedia.org/w/index.php?title=Queen's_Gambit_Declined%2C_Elephant_Trap&oldid=1384407150)
+
+#### 32. Lasker Trap · Ловушка Ласкера (`lasker-trap`)
+
+- **Side:** Black · **Kind:** trap · **Repertoire:** outside · **Reliability:** risky · **Status:** verified
+- **Start:** 1.d4 d5 2.c4 e5 3.dxe5 d4
+- **Idea:** The pawn reaches g1 and promotes to a knight with check: promoting to a queen would achieve nothing.
+- **Correct line:** 4.e3? Bb4+ 5.Bd2 dxe3 6.Bxb4?? exf2+ 7.Ke2 fxg1=N+ 8.Ke1 Qh4+ 9.Kd2 Nc6 (+7.7)
+- **If the opponent deviates:** 4.Nf3 (sound, -0.7); 6.fxe3 (decline, +0.1)
+- **Note:** Named after Emanuel Lasker; first noted by Serafino Dubois. Needs 1...d5 and 2...e5 as Black.
+- **Source:** [Wikipedia: Albin Countergambit, Lasker Trap (revision 1356337160)](https://en.wikipedia.org/w/index.php?title=Albin_Countergambit%2C_Lasker_Trap&oldid=1356337160); [Lichess opening name: Queen's Gambit Declined: Albin Countergambit, Lasker Trap (D08)](https://github.com/lichess-org/chess-openings)
 
 ### Backlog: names without lines (all unverified)
 

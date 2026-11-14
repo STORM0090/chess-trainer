@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 2,
+  "order": 1,
   "stageReason": "A queen sacrifice, then two forcing moves to mate.",
   "idea": {
     "ru": "Связанный конь уходит и подставляет ферзя, а три лёгкие фигуры матуют короля.",

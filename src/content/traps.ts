@@ -1,6 +1,7 @@
 // Trap content bundled into the app. The files are small, so all of them ship in the main
 // bundle and work offline without extra requests.
 
+import { compareLadder } from '../../shared/ladder.ts';
 import type { TrapFile } from '../../shared/trap-types.ts';
 import { compileTrap, type CompiledTrap } from '../core/trap-model';
 
@@ -9,10 +10,10 @@ const files = import.meta.glob<TrapFile>('../../content/traps/*.json', {
   import: 'default',
 });
 
-/** Verified traps only, ordered by ladder stage and then by file name. */
+/** Verified traps only, in ladder order: by stage, then by the `order` field of the file. */
 const traps: TrapFile[] = Object.values(files)
   .filter((file) => file.verified === true && file.draft !== true)
-  .sort((a, b) => a.stage - b.stage || a.id.localeCompare(b.id));
+  .sort(compareLadder);
 
 export function allTraps(): TrapFile[] {
   return traps;

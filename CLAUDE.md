@@ -56,6 +56,13 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
   The APK keystore lives outside the repository.
 - Never ask the owner to paste tokens into the chat. Only the owner runs `gh auth login`.
 - Anything that affects the license, the user's data or the public repository is asked first.
+- Chat exports and any other file with personal data (paths with the user name, e-mail
+  addresses, tokens) are never created inside the project folder. `.claude/` is git-ignored,
+  but an ignored file is one mistake away from a commit: keep such files outside the project.
+- `npm run check:privacy` runs in CI and fails the build when a tracked file holds a Windows
+  path with a user name, an e-mail address other than a noreply one, or a token.
+  `package-lock.json` and the Stockfish build in `engine/` are not scanned. Device models
+  are not checked: they are in the documents on purpose.
 
 ## Content
 
@@ -78,6 +85,6 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 - `npm run dev`: dev server
 - `npm run build`: production build (CI passes `--base` for GitHub Pages)
-- `npm run typecheck`, `npm test`, `npm run verify:check`: checks that CI runs
-- `npm run test:e2e`: Playwright smoke test on a phone-sized screen; needs `npm run build` first
+- `npm run typecheck`, `npm test`, `npm run verify:check`, `npm run check:privacy`: checks that CI runs
+- `npm run test:e2e`: Playwright tests on a phone-sized screen; need `npm run build` first
 - `npm run verify`: verify every trap, update trap files, the cache and the ROADMAP catalogue

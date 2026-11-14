@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 0,
+  "order": 4,
   "stageReason": "Each move answers a one-move threat; learned right after the attack it stops.",
   "idea": {
     "ru": "Сначала защитить e5 конём, потом закрыть f7 ходами g6 и Nf6.",

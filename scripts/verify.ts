@@ -19,6 +19,7 @@ import { Chess } from 'chess.js';
 import { injectCatalog, renderCatalog, trapStatus } from './lib/catalog.ts';
 import { enginePackageVersion, type EngineFlavour, type EngineResult } from './lib/engine.ts';
 import { evaluateAll } from './lib/eval-pool.ts';
+import { compareLadder } from '../shared/ladder.ts';
 import { measureLine, parseMovetext } from '../shared/movetext.ts';
 import type {
   BacklogEntry,
@@ -170,6 +171,7 @@ function structuralProblems(trap: TrapFile, fileId: string): string[] {
   if (!trap.title?.ru || !trap.title?.en) problems.push('title needs ru and en');
   if (!trap.idea?.ru || !trap.idea?.en) problems.push('idea needs ru and en');
   if (!Number.isInteger(trap.stage) || !trap.stageReason) problems.push('stage and stageReason are required');
+  if (!Number.isInteger(trap.order) || trap.order < 1) problems.push('order (place inside the stage, from 1) is required');
   if (!trap.sources?.length || trap.sources.some((source) => !/^https:\/\//.test(source.url))) {
     problems.push('at least one source with an https URL is required');
   }
@@ -198,6 +200,7 @@ function serialise(trap: TrapFile): string {
     side: trap.side,
     repertoire: trap.repertoire,
     stage: trap.stage,
+    order: trap.order,
     stageReason: trap.stageReason,
     idea: trap.idea,
     sacrifice: trap.sacrifice,
@@ -343,7 +346,7 @@ async function main(): Promise<void> {
     if (existsSync(ROADMAP_FILE)) {
       const roadmap = readFileSync(ROADMAP_FILE, 'utf8');
       const backlog = readJson<BacklogEntry[]>(BACKLOG_FILE, []);
-      const ordered = traps.map((item) => item.trap).sort((a, b) => a.stage - b.stage || a.id.localeCompare(b.id));
+      const ordered = traps.map((item) => item.trap).sort(compareLadder);
       update(ROADMAP_FILE, injectCatalog(roadmap, renderCatalog(ordered, backlog)), roadmap);
     }
   }

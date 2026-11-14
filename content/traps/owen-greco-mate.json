@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "branch",
   "stage": 5,
+  "order": 5,
   "stageReason": "Only against Owen's Defence; rook and queen are given up before the mate.",
   "idea": {
     "ru": "Чёрные берут ладью и гонят ферзя, а пешка с шахом открывает слона, который матует на g6.",

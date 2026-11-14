@@ -21,6 +21,9 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
+      # No personal data in tracked files: Windows paths with a user name, e-mail addresses
+      # other than noreply ones, tokens. A finding fails the build before anything is published.
+      - run: npm run check:privacy
       - run: npm run typecheck
       - run: npm test
       # Trap content: legality is replayed every time; engine evaluations come from the

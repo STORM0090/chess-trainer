@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "branch",
   "stage": 5,
+  "order": 2,
   "stageReason": "A second answer to 1.d4; seven setup moves before a one-move mate.",
   "idea": {
     "ru": "Конь берёт на e5 и оставляет слона под боем: взятие слона открывает мат конём на d3.",

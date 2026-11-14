@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 4,
+  "order": 3,
   "stageReason": "Seven setup moves; the win comes from quiet pawn moves.",
   "idea": {
     "ru": "Ферзь белых взял на d4, и пешки a6, b5, c5, c4 запирают слона на b3.",

@@ -15,6 +15,22 @@ describe('trap content in the app', () => {
     expect(traps.length).toBeGreaterThanOrEqual(32);
     const stages = traps.map((file) => file.stage);
     expect(stages).toEqual([...stages].sort((a, b) => a - b));
+    // Inside a stage the `order` field decides: 1, 2, 3 with no gaps and no repeats.
+    for (const stage of new Set(stages)) {
+      const orders = traps.filter((file) => file.stage === stage).map((file) => file.order);
+      expect(orders, `stage ${stage}`).toEqual(orders.map((_, index) => index + 1));
+    }
+    expect(traps.slice(0, 4).map((file) => file.id)).toEqual([
+      'fools-mate',
+      'fools-mate-white',
+      'scholars-mate',
+      'scholars-mate-defence',
+    ]);
+    expect(traps.filter((file) => file.stage === 2).map((file) => file.id)).toEqual([
+      'legal-mate',
+      'mortimer-trap',
+      'englund-trap',
+    ]);
     expect(getTrap('no-such-trap')).toBeUndefined();
   });
 
@@ -107,9 +123,12 @@ describe('judgeMove', () => {
     // Scholar's Mate: the main line plays 2.Qh5, another line reaches the mate with 2.Bc4.
     const scholars = trap('scholars-mate');
     expect(scholars.main.steps[2]?.san).toBe('Qh5');
-    expect(judgeMove(scholars, scholars.main, 2, { from: 'f1', to: 'c4', promotion: undefined })).toEqual({
-      kind: 'otherLine',
-    });
+    const verdict = judgeMove(scholars, scholars.main, 2, { from: 'f1', to: 'c4', promotion: undefined });
+    expect(verdict.kind).toBe('otherLine');
+    // The line with the same moves so far, so a chain or review run can go on along it.
+    const follow = verdict.kind === 'otherLine' ? verdict.follow : undefined;
+    expect(follow?.steps[2]?.san).toBe('Bc4');
+    expect(follow?.main).toBe(false);
   });
 
   it('wants the right promotion piece', () => {

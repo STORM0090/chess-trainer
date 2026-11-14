@@ -76,6 +76,12 @@ export interface TrapFile {
   repertoire: 'core' | 'branch' | 'outside';
   /** Ladder stage, see content/ROADMAP.md. Data, not code: change it here to move a trap. */
   stage: number;
+  /**
+   * Place inside the stage, from 1. Practice opens in this order. Data, not code: the default
+   * rule is "shorter blow, then shorter setup, then a forcing first move", and the owner may
+   * change any number by hand.
+   */
+  order: number;
   /** One sentence: why the trap sits on this stage. */
   stageReason: string;
   idea: { ru: string; en: string };

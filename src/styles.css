@@ -760,3 +760,83 @@ button.move {
 .line-mistake .line-button-title {
   color: var(--bad);
 }
+
+/* Progress: statuses, the "today" block, the data screen */
+
+.badge-status-seen,
+.badge-status-locked,
+.badge-status-new {
+  border-color: var(--border);
+  color: var(--muted);
+}
+
+.badge-status-started,
+.badge-status-learned {
+  border-color: var(--warn);
+  color: var(--warn);
+}
+
+.badge-status-mastered,
+.badge-status-worked {
+  border-color: var(--ok);
+  color: var(--ok);
+}
+
+.trap-card-marks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-top: 0.125rem;
+}
+
+.trap-card-locked .trap-card-title {
+  color: var(--muted);
+}
+
+.today-count {
+  font-weight: 700;
+}
+
+.button-two-lines {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.125rem;
+  line-height: 1.2;
+}
+
+.button-note {
+  font-size: 0.8125rem;
+  font-weight: 400;
+  opacity: 0.85;
+}
+
+.confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  border: 1px solid var(--warn);
+  border-radius: 0.5rem;
+}
+
+.panel-actions-column {
+  flex-direction: column;
+}
+
+.data-screen .panel {
+  width: 100%;
+}
+
+.notice-warning {
+  border-color: var(--warn);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}

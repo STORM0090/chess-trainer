@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 1,
+  "order": 2,
   "stageReason": "One capture that forks queen and rook; needs the fork theme first.",
   "idea": {
     "ru": "Конь и слон вдвоём бьют на f7; если чёрные не защитились, конь берёт с вилкой на ферзя и ладью.",

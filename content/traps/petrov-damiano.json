@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 1,
+  "order": 3,
   "stageReason": "Two forcing moves: a discovered check wins the queen.",
   "idea": {
     "ru": "Конь уходит с линии e с шахом от ферзя и забирает чёрного ферзя.",

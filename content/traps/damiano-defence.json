@@ -9,6 +9,7 @@
   "side": "white",
   "repertoire": "core",
   "stage": 1,
+  "order": 4,
   "stageReason": "Four moves, all checks and captures, with a knight sacrifice.",
   "idea": {
     "ru": "Ход f6 открыл короля: жертва коня, шах с h5 и ферзь забирает ладью.",

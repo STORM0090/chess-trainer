@@ -9,6 +9,7 @@
   "side": "black",
   "repertoire": "core",
   "stage": 2,
+  "order": 2,
   "stageReason": "The key move is quiet (c6); the win itself is a simple fork.",
   "idea": {
     "ru": "Белые взяли пешку e5; пешка c6 гонит слона, а шах ферзём с a5 забирает коня.",
