@@ -355,7 +355,8 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   hanging pieces, which matches the level table.
 - **Node unpacks the archive itself** (`zlib.createZstdDecompress`), so no dependency was
   added.
-- **The generated file is committed** (developer's decision, please confirm): CI cannot
+- **The generated file is committed** (proposed by the developer, confirmed by the owner on
+  2026-11-14: it stays in the public repository): CI cannot
   download 295 MB on every build, the data is CC0, and only the id, the position, the moves,
   the rating and the themes are kept. The links to the source games are dropped, so no player
   name is reachable from the file. `THIRD_PARTY_NOTICES.md` names the source.
