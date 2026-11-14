@@ -9,6 +9,7 @@ import {
   positionKey,
   type CompiledLine,
   type CompiledTrap,
+  type Exercise,
   type Step,
 } from './trap-model';
 
@@ -54,7 +55,7 @@ export interface KnownMistake {
 }
 
 /** The player's errors that the trap file describes (lines tagged `mistake`). */
-export function knownMistakes(trap: CompiledTrap): KnownMistake[] {
+export function knownMistakes(trap: Exercise): KnownMistake[] {
   const mistakes: KnownMistake[] = [];
   for (const line of trap.lines) {
     if (line.tag !== 'mistake') continue;
@@ -93,7 +94,7 @@ export type Verdict =
 
 /** Judges the player's move in the position before `line.steps[ply]`. */
 export function judgeMove(
-  trap: CompiledTrap,
+  trap: Exercise,
   line: CompiledLine,
   ply: number,
   move: PlayerMove,

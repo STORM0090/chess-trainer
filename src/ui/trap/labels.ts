@@ -73,7 +73,7 @@ export function lineHelp(trap: CompiledTrap, line: CompiledLine): string {
 
 /** "4.Nc3" for a white move, "4...g6" for a black one. */
 export function numberedSan(step: Step, withMark = false): string {
-  const number = Math.floor(step.ply / 2) + 1;
+  const number = step.moveNumber;
   const mark = withMark && step.mark ? step.mark : '';
   return `${number}${step.mover === 'white' ? '.' : '...'}${step.san}${mark}`;
 }

@@ -16,7 +16,7 @@ import {
   type PlayerMove,
   type Verdict,
 } from '../../core/learn';
-import { fenAtPly, type CompiledLine, type CompiledTrap } from '../../core/trap-model';
+import { fenAtPly, type CompiledLine, type Exercise } from '../../core/trap-model';
 import { fmt, t } from '../../i18n';
 import { Board, type BoardHint } from '../board/Board';
 import { PromotionPicker } from '../board/PromotionPicker';
@@ -75,7 +75,8 @@ function verdictText(verdict: Verdict | undefined): string {
 }
 
 interface LineDrillProps {
-  trap: CompiledTrap;
+  /** A trap or a puzzle. */
+  trap: Exercise;
   line: CompiledLine;
   /** The run starts in the position before this ply. */
   startPly: number;
@@ -218,7 +219,10 @@ export function LineDrill(props: LineDrillProps) {
       hintText = t.learn.hintPiece;
     } else if (state.hintLevel === 3) {
       hint = { kind: 'move', from: step.from, to: step.to };
-      hintText = t.learn.hintArrow;
+      // The arrow cannot show which piece the pawn becomes.
+      hintText = step.promotion
+        ? fmt(t.learn.hintArrowPromotion, { piece: t.board.pieces[step.promotion] })
+        : t.learn.hintArrow;
     }
   }
 

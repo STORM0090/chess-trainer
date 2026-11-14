@@ -14,14 +14,19 @@ export function MoveList({ steps, ply, onSelect }: MoveListProps) {
   if (steps.length === 0) return <p class="movelist movelist-empty">{t.traps.startPosition}</p>;
   return (
     <ol class="movelist">
-      {steps.map((step) => {
+      {steps.map((step, index) => {
         const text = `${step.san}${step.mark ?? ''}`;
         const isCurrent = step.ply === ply - 1;
         const isBad = step.mark === '?' || step.mark === '??';
         const className = `move${isCurrent ? ' move-current' : ''}${isBad ? ' move-bad' : ''}`;
         return (
           <li key={step.ply} class="movelist-item">
-            {step.mover === 'white' && <span class="move-number">{step.ply / 2 + 1}.</span>}
+            {step.mover === 'white' ? (
+              <span class="move-number">{step.moveNumber}.</span>
+            ) : (
+              // A puzzle can start with a move of Black.
+              index === 0 && <span class="move-number">{step.moveNumber}…</span>
+            )}
             {onSelect ? (
               <button
                 type="button"

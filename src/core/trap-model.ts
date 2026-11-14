@@ -11,8 +11,10 @@ export const START_FEN = DEFAULT_POSITION;
 export type MoveKind = 'mate' | 'check' | 'capture' | 'quiet';
 
 export interface Step {
-  /** 0 for White's first move. */
+  /** Index of the move in its line. In a trap line this is also the ply of the game. */
   ply: number;
+  /** Move number of the game, for display: 3 in "3.Nxe5" and in "3...fxe5". */
+  moveNumber: number;
   san: string;
   mark: MoveMark | undefined;
   mover: Side;
@@ -27,6 +29,8 @@ export interface Step {
 export interface CompiledLine {
   /** Position of the line in the trap file. */
   index: number;
+  /** The position before the first move: the initial one for traps, any for puzzles. */
+  startFen: string;
   tag: LineTag;
   main: boolean;
   expect: Expect;
@@ -34,10 +38,17 @@ export interface CompiledLine {
   result: LineResult | undefined;
 }
 
-export interface CompiledTrap {
-  file: TrapFile;
+/**
+ * What a drill needs to know: which side the player has, and the lines that belong together.
+ * Traps and puzzles both compile to this, so one drill and one judge serve both.
+ */
+export interface Exercise {
   side: Side;
   lines: CompiledLine[];
+}
+
+export interface CompiledTrap extends Exercise {
+  file: TrapFile;
   main: CompiledLine;
 }
 
@@ -57,6 +68,7 @@ function compileLine(moves: string): Step[] {
           : 'quiet';
     return {
       ply: parsed.ply,
+      moveNumber: Math.floor(parsed.ply / 2) + 1,
       san: parsed.san,
       mark: parsed.mark,
       mover: sideOfPly(parsed.ply),
@@ -73,6 +85,7 @@ function compileLine(moves: string): Step[] {
 export function compileTrap(file: TrapFile): CompiledTrap {
   const lines: CompiledLine[] = file.lines.map((line, index) => ({
     index,
+    startFen: START_FEN,
     tag: line.tag,
     main: line.main === true,
     expect: line.expect,
@@ -84,9 +97,11 @@ export function compileTrap(file: TrapFile): CompiledTrap {
   return { file, side: file.side, lines, main };
 }
 
-/** The position after `ply` moves of the line (0 gives the starting position). */
+/** The position after `ply` moves of the line (0 gives its starting position). */
 export function fenAtPly(line: CompiledLine, ply: number): string {
-  return ply <= 0 ? START_FEN : (line.steps[Math.min(ply, line.steps.length) - 1]?.fenAfter ?? START_FEN);
+  return ply <= 0
+    ? line.startFen
+    : (line.steps[Math.min(ply, line.steps.length) - 1]?.fenAfter ?? line.startFen);
 }
 
 /** Number of moves two lines share from the start. */
