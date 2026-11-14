@@ -305,6 +305,14 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   field and the three "by feel" answers left as unfilled template text. The merge went ahead
   on the explicit instruction; the three questions are repeated in `docs/QA/M3.md`.
 
+## M3 accepted (2026-11-14)
+
+- The owner reported section A of `docs/QA/M3.md` as passed on the S24 Ultra and confirmed
+  the merge. As worded, the report says the ШВУ hints are clear, 8 to 10 variants per trap
+  are not too many, and a chain step of one player move is convenient. Nothing was said about
+  the 0.65 s pause before the opponent's move; it stays.
+- Merged into `main` as `v0.4.0-m3`.
+
 ## Privacy check (2026-11-14)
 
 - **`npm run check:privacy`** (owner's request) scans every file tracked by git and fails the
