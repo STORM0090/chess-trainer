@@ -305,6 +305,28 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   field and the three "by feel" answers left as unfilled template text. The merge went ahead
   on the explicit instruction; the three questions are repeated in `docs/QA/M3.md`.
 
+## Privacy check (2026-11-14)
+
+- **`npm run check:privacy`** (owner's request) scans every file tracked by git and fails the
+  build on a Windows path with a user name (also the Git Bash and WSL spellings), an e-mail
+  address that is not a noreply or `example.*` address, or a token-like string (GitHub, "sk-"
+  keys, AWS, Google, Slack, Lichess, private key headers). CI runs it right after `npm ci`,
+  so nothing is built or published when it fails.
+- **Not scanned:** `package-lock.json` and the Stockfish build (`public/engine/`, published
+  as `engine/`): they hold other people's addresses and paths. The project's own code in
+  `src/engine/` is scanned. Device models are not checked; they are in the documents on
+  purpose.
+- **The report never prints the match**, only file, line and kind: CI logs of a public
+  repository are public.
+- **Added on the developer's initiative:** the author and committer address of the checked
+  commit must be a noreply address, the same rule `CLAUDE.md` has for history.
+- **Limits.** It checks the pushed commit, not every commit between two pushes, and not the
+  built site on the `gh-pages` branch. A full scan of all 50 commits on all branches and tags
+  was done by hand on 2026-11-14 and found nothing personal.
+- **Chat exports** and other files with personal data are not created inside the project
+  folder (rule in `CLAUDE.md`). `.claude/` has been git-ignored from the first commit and no
+  commit ever touched it.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
