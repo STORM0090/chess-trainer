@@ -338,6 +338,72 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   folder (rule in `CLAUDE.md`). `.claude/` has been git-ignored from the first commit and no
   commit ever touched it.
 
+## Puzzles and the entry test (M4, 2026-11-14)
+
+- **Source.** The Lichess puzzle database, CC0: `lichess_db_puzzle.csv.zst`, 309,751,173
+  bytes, 6,193,530 puzzles, HTTP `Last-Modified` of 1 November 2026, downloaded on
+  2026-11-14 with the owner's "ok" into the git-ignored `.cache/lichess/`. Its SHA-256 is
+  written into `content/puzzles/lichess.json` and `content/puzzles/README.md`.
+- **Selection** (`npm run build:puzzles`, `scripts/build-puzzles.ts`). For every theme and
+  every 100-point rating bucket from 400 to 1400: the 30 most played puzzles with popularity
+  of 80 or more, 200 plays or more, a rating deviation of 90 or less and at most three moves
+  of the player. A theme starts at the lower rating of the level that introduces it. The same
+  archive always gives the same file. Every kept puzzle is replayed with chess.js (0 were
+  rejected); a unit test replays the committed file again. Result: 1,896 puzzles, 290 KB.
+  The table "kept / available" per theme and bucket is in `content/puzzles/README.md`: the
+  count the roadmap was waiting for. Below 600 the database has almost nothing but mates and
+  hanging pieces, which matches the level table.
+- **Node unpacks the archive itself** (`zlib.createZstdDecompress`), so no dependency was
+  added.
+- **The generated file is committed** (developer's decision, please confirm): CI cannot
+  download 295 MB on every build, the data is CC0, and only the id, the position, the moves,
+  the rating and the themes are kept. The links to the source games are dropped, so no player
+  name is reachable from the file. `THIRD_PARTY_NOTICES.md` names the source.
+- **How it ships.** The file is a separate chunk (262 KB, 85 KB gzipped) loaded when the
+  puzzle screen opens. The service worker caches it on install with the rest of the app, so
+  puzzles work offline. The precache grew from 313 KiB to 587 KiB.
+- **One move-tree format.** A puzzle compiles into the same `CompiledLine` as a trap line
+  (`src/core/puzzle-model.ts`). The line got a `startFen`, a step got a `moveNumber` for
+  display, and the drill and the judge take an `Exercise` (side and lines) instead of a
+  trap. So the hint ladder, the promotion window, the pause before the opponent's move and
+  "another mate is also accepted" are the same code for traps and puzzles.
+- **Levels** are the table of `content/ROADMAP.md`, section 4, as data in
+  `shared/puzzle-types.ts`: T0 400-700, T1 600-900, T2 800-1100, T3 1000-1250, T4
+  1150-1400, shown to the player as levels 1 to 5. The new themes of T3 and T4 are not
+  approved yet, so these two levels serve the nine approved themes at a higher rating.
+- **Entry test.** Ten puzzles, two per level, easiest first. A test puzzle comes from the
+  middle half of its band (the bands overlap at the edges), the two puzzles of a level have
+  different themes, and levels 1 to 3 test the themes they introduce. The puzzles are picked
+  at random each time. The level is the first one with a missed puzzle; nothing missed gives
+  level 5.
+- **A puzzle counts only when it is clean** (no wrong move, no hint), the same bar as a chain
+  step. Hints stay available in the test: a beginner always reaches the solution, and a used
+  hint simply means "not counted". Developer's decision; the checklist asks the owner.
+- **The test sets the puzzle level only.** It does not open or move traps: the trap ladder
+  stays with the unlock rule the owner approved. "Stages are reviewed after the entry test"
+  is a review by the owner, with the result in hand.
+- **Without a test** the player is on level 1. The test can be taken again at any time; the
+  new result replaces the level.
+- **Level up:** when the last 30 puzzles from the band of the level are solved cleanly at 70%
+  or better (the roadmap rule). Only puzzles whose rating is inside the band count. There is
+  no level down; taking the test again is the way down.
+- **Which puzzle comes next in a theme:** a puzzle failed on an earlier day, then a new one
+  from the band, then a new one with the nearest rating, then the one solved longest ago.
+  A failed puzzle never comes back on the same day.
+- **Themes above the level are open.** They serve puzzles from the band of the level that
+  introduces them and carry the mark "сложнее вашего уровня".
+- **Storage.** IndexedDB version 2 adds the store `puzzles`; the level lives in `settings`
+  under its own key. The progress file is format 2; files of format 1 are still read.
+- **Third hint and promotion.** The arrow cannot show the piece a pawn becomes, so the text
+  names it. This also applies to traps.
+- **Not checked:** the Russian theme names and one-line tasks are the developer's wording.
+  They were not compared with the Russian translation on Lichess.
+- **Not done in M4:** FSRS for puzzles (a failed puzzle returns by the simple rule above),
+  puzzles on the first screen and in a daily session (M5), a link from a puzzle to Lichess.
+- **Explanations, batch 1.** The 23 texts are a draft in `docs/explanations/batch-1.md`
+  with the facts in `batch-1-facts.txt` (`npm run explain:facts`). They are not in the
+  trap files or in the app until the owner's review.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency

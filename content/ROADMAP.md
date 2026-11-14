@@ -14,7 +14,7 @@ four things that do not run out:
 
 1. **The tactics stream.** Puzzles from the Lichess database (CC0), served by theme and rating
    band. The band rises with the player (section 4). The number of puzzles available per theme
-   and band has not been counted yet; `build-puzzles` reports it in M3.
+   and rating is counted by `build-puzzles`: see `content/puzzles/README.md`.
 2. **Reviews.** Every trap and every failed puzzle comes back on an FSRS schedule.
 3. **Catalogue growth.** New traps are added in batches of 3 to 5 through the same verify
    script. The backlog at the end of the catalogue is the queue.
@@ -90,8 +90,8 @@ it. The app needs a simple game log for this ("the trap worked" button, stage pl
 
 Theme names are Lichess puzzle theme keys, checked against Lichess's `puzzleTheme.xml`.
 Rating bands are on the Lichess puzzle scale, which is not the chess.com rapid scale; they are
-starting guesses that the entry test (M3) and the 70-80% target correct. The first three levels
-use exactly the nine themes approved for M3. Themes marked `*` are additions that need approval.
+starting guesses that the entry test (M4) and the 70-80% target correct. The first three levels
+use exactly the nine approved themes. Themes marked `*` are additions that need approval.
 
 | Level | Rating band | New themes | Feeds trap stage |
 | --- | --- | --- | --- |
@@ -108,8 +108,9 @@ A level is passed when the last 30 puzzles of its band are solved at 70% or bett
 keeps serving the themes of the levels below it. `quietMove` and `sacrifice` aim directly at
 the weak spot from section 2.
 
-**Entry test (M3, outline):** ten puzzles, two per band from T0 to T4. The starting level is the
-first band where at least one of the two is missed.
+**Entry test (built in M4):** ten puzzles, two per band from T0 to T4. The starting level is the
+first band where at least one of the two is missed. Until the starred themes are approved, T3 and
+T4 serve the nine approved themes at their rating.
 
 ## 5. Other content tracks
 
@@ -130,7 +131,7 @@ every source. A new source is one adapter.
 | Source | How | Status |
 | --- | --- | --- |
 | Trap files | `content/traps/*.json`, checked by verify, added in batches from the backlog | working |
-| Lichess puzzles | A Node script filters `lichess_db_puzzle.csv` (CC0) by theme and rating; wider bands and new themes are a re-run | M3 |
+| Lichess puzzles | A Node script filters `lichess_db_puzzle.csv` (CC0) by theme and rating; wider bands and new themes are a re-run | working (M4) |
 | The owner's games from chess.com | Download the games as PGN, run the engine over them, keep positions where the evaluation dropped sharply and one move was clearly best | later; the chess.com API and its terms have not been checked yet |
 | PGN import | Paste or open a PGN, replay it with chess.js, turn a chosen position into an exercise | later |
 

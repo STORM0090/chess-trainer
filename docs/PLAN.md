@@ -12,7 +12,7 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M1b (done) | Verified trap content, verify script, two-year roadmap | `docs/QA/M1b-content.md` | |
 | M2 (done) | Learning modes: View and Learn on all 32 traps, ШВУ hints, reliability label | `docs/QA/M2.md` | |
 | M3 (done) | Progression: backward chain, FSRS reviews, stages and unlocking, collection, game log, export and import | `docs/QA/M3.md` | |
-| M4 | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder | Take the test; solve 5 puzzles in three themes with the network off | medium |
+| M4 (built, waits for the phone checklist and the review of the explanations) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
 | M5 | Daily session, trap of the day, soft streak, settings, `.ics` reminder | A week of sessions; add the calendar reminder | medium |
 | M6 | Bot below 800 (Stockfish lite plus a human-error layer), ШВУ checklist | Three games; watch heat and battery | large |
 | M7 | Signed APK from GitHub Actions, local notifications | Install, move the progress over, get a notification the next morning | medium |
