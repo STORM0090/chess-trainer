@@ -276,7 +276,7 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   request; file names no longer decide. `shared/ladder.ts` sorts by stage, then order, for
   the app and for the ROADMAP catalogue alike. verify requires the field and a unit test
   requires 1, 2, 3 without gaps in every stage. The numbers were proposed by one rule and
-  wait for the owner's confirmation: shorter blow first, then shorter setup, then a forcing
+  confirmed by the owner on 2026-11-14: shorter blow first, then shorter setup, then a forcing
   first move before a quiet one; a defence after the attacks of its stage.
   - Stage 0: Fool's Mate, Fool's Mate (White), Scholar's Mate, the defence against it.
   - Stage 1: King's Gambit Declined Qh4, Knight Attack on f7, Petrov discovered check,

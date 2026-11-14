@@ -31,8 +31,8 @@ for `keytool` (M7).
 - **"Skip variant" button** in Learn: done in M3. Deviation steps of the chain can be skipped
   too; the main steps of the chain cannot.
 - **"Я это знаю" button** on the trap page and **the `order` field** inside a stage: done in
-  M3 at the owner's request; see "Progression (M3)" in `docs/DECISIONS.md`. The order itself
-  is a proposal until the owner confirms it.
+  M3 at the owner's request; see "Progression (M3)" in `docs/DECISIONS.md`. The owner
+  confirmed the proposed order on 2026-11-14.
 - **Russian explanations for every line.** Approved by the owner on 2026-11-14 with the
   rules below. The split into batches was redone at the owner's request and waits for a last
   look.
