@@ -15,8 +15,11 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 
 - These rules cover every commit and every pull request in the whole repository:
   - Never add `Co-Authored-By` or any similar trailer.
-  - No signature or mention of Claude or any AI tool in commit messages or PR descriptions
-    (no "Generated with ..." line either).
+  - No authorship signature: nothing in a commit message or a PR description may present
+    Claude or any other AI tool as an author or co-author (no "Generated with ..." line
+    either).
+  - The rule is about trailers and signatures. Naming a file of this repository, such as
+    `CLAUDE.md`, in a commit message is fine.
   - The commit author is the owner, through the GitHub noreply address. Never write a personal
     email into history.
 - Small commits. Every milestone must build, pass CI and deploy.

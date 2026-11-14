@@ -310,7 +310,10 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
 - The owner reported section A of `docs/QA/M3.md` as passed on the S24 Ultra and confirmed
   the merge. As worded, the report says the ШВУ hints are clear, 8 to 10 variants per trap
   are not too many, and a chain step of one player move is convenient. Nothing was said about
-  the 0.65 s pause before the opponent's move; it stays.
+  the 0.65 s pause before the opponent's move; the owner then said to leave it as it is until
+  he writes otherwise.
+- **Commit rule clarified by the owner:** trailers and authorship signatures are forbidden;
+  the file name `CLAUDE.md` in a commit message is not a violation. `CLAUDE.md` says so now.
 - Merged into `main` as `v0.4.0-m3`.
 
 ## Privacy check (2026-11-14)
