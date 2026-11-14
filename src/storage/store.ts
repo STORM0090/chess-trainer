@@ -11,6 +11,7 @@ import {
   type GameOutcome,
   type TrapProgress,
 } from '../core/progress';
+import { applyPuzzleStat, applyPuzzleToLevel, applyTest, type TacticsState } from '../core/tactics';
 import * as db from './db';
 
 export interface StoreState {
@@ -112,6 +113,29 @@ export function setClockShift(days: number): void {
   const settings = { ...state.data.settings, clockShiftDays: Math.max(0, Math.round(days)) };
   setData({ ...state.data, settings });
   persist(() => db.saveSettings(settings));
+}
+
+/**
+ * Records one attempt at a puzzle. `counts` is false for the entry test, which sets the
+ * level by its own rule. Returns true when this puzzle moved the player one level up.
+ */
+export function recordPuzzle(id: string, rating: number, clean: boolean, counts: boolean): boolean {
+  const now = appNow();
+  const stat = applyPuzzleStat(state.data.puzzles[id], id, clean, now);
+  const applied = counts
+    ? applyPuzzleToLevel(state.data.tactics, rating, clean, now)
+    : { tactics: state.data.tactics, levelUp: false };
+  setData({ ...state.data, puzzles: { ...state.data.puzzles, [id]: stat }, tactics: applied.tactics });
+  persist(() => db.savePuzzle(stat, applied.tactics));
+  return applied.levelUp;
+}
+
+/** Saves the entry test: the level starts from its result. */
+export function recordTest(results: boolean[]): TacticsState {
+  const tactics = applyTest(results, appNow());
+  setData({ ...state.data, tactics });
+  persist(() => db.saveTactics(tactics));
+  return tactics;
 }
 
 /** Replaces everything with imported data. Resolves to `false` when it could not be saved. */

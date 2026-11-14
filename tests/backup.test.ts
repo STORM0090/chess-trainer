@@ -2,6 +2,7 @@ import { beforeAll, describe, expect, it } from 'vitest';
 import { BACKUP_FORMAT, backupFileName, makeBackup, parseBackup } from '../src/core/backup';
 import { applyChainRun, applyReview, emptyData, emptyProgress, type AppData } from '../src/core/progress';
 import { initSchedule } from '../src/core/schedule';
+import { emptyTactics } from '../src/core/tactics';
 
 const NOW = new Date(2026, 10, 14, 21, 30).getTime();
 const TOMORROW = new Date(2026, 10, 15, 9, 0).getTime();
@@ -19,6 +20,16 @@ function sample(): AppData {
     traps: { 'fools-mate': fools, 'legal-mate': emptyProgress('legal-mate') },
     games: [{ id: 'g1', trapId: 'fools-mate', at: NOW, outcome: 'declined' }],
     settings: { clockShiftDays: 0 },
+    puzzles: {
+      '0000D': { id: '0000D', attempts: 2, clean: 1, lastAt: NOW, lastClean: true },
+      cfxZa: { id: 'cfxZa', attempts: 1, clean: 0, lastAt: NOW, lastClean: false },
+    },
+    tactics: {
+      level: 1,
+      test: { at: NOW, results: [true, true, false, true, true, true, false, true, true, false], level: 1 },
+      recent: [true, false, true],
+      updatedAt: NOW,
+    },
   };
 }
 
@@ -61,6 +72,26 @@ describe('progress file', () => {
     expect(parsed.ok && parsed.data.traps['fools-mate']?.knownAt).toBeNull();
   });
 
+  it('reads a file of format 1, written before puzzles existed', () => {
+    const text = fileWith((file) => {
+      file.format = 1;
+      delete file.data.puzzles;
+      delete file.data.tactics;
+    });
+    const parsed = parseBackup(text);
+    expect(parsed.ok && parsed.data.puzzles).toEqual({});
+    expect(parsed.ok && parsed.data.tactics).toEqual(emptyTactics());
+    expect(parsed.ok && Object.keys(parsed.data.traps)).toEqual(['fools-mate', 'legal-mate']);
+  });
+
+  it('keeps a level that was never set', () => {
+    const text = fileWith((file) => {
+      file.data.tactics = emptyTactics();
+    });
+    const parsed = parseBackup(text);
+    expect(parsed.ok && parsed.data.tactics).toEqual(emptyTactics());
+  });
+
   it('refuses text that is not a progress file', () => {
     expect(parseBackup('not json')).toEqual({ ok: false, problem: 'notJson' });
     expect(parseBackup('[1, 2]')).toEqual({ ok: false, problem: 'notBackup' });
@@ -90,6 +121,17 @@ describe('progress file', () => {
       (file) => (file.data.games[0].trapId = 'Not An Id'),
       (file) => (file.data.settings = { clockShiftDays: 1.5 }),
       (file) => delete file.exportedAt,
+      (file) => delete file.data.puzzles,
+      (file) => delete file.data.tactics,
+      (file) => (file.data.puzzles['cfxZa'].id = '0000D'),
+      (file) => (file.data.puzzles['cfxZa'].clean = 5),
+      (file) => (file.data.puzzles['cfxZa'].lastClean = 'no'),
+      (file) => (file.data.puzzles['<script>'] = { id: '<script>', attempts: 1, clean: 0, lastAt: 1, lastClean: false }),
+      (file) => (file.data.tactics.level = 9),
+      (file) => (file.data.tactics.level = '1'),
+      (file) => (file.data.tactics.recent = [1, 0]),
+      (file) => (file.data.tactics.test.results = 'all'),
+      (file) => (file.data.tactics.test.level = -1),
     ];
     for (const change of damaged) {
       expect(parseBackup(fileWith(change)), String(change)).toEqual({ ok: false, problem: 'damaged' });

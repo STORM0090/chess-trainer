@@ -3,9 +3,12 @@
 
 import type { AppData, GameEntry, GameOutcome, LineStat, Settings, TrapProgress } from './progress';
 import type { StoredCard } from './schedule';
+import { emptyTactics, TEST_SIZE, type PuzzleStat, type TacticsState, type TestRecord } from './tactics';
+import { TOP_LEVEL } from '../../shared/puzzle-types.ts';
 
 export const BACKUP_APP = 'chess-trainer';
-export const BACKUP_FORMAT = 1;
+/** Format 2 added puzzles and the tactics level. Files of format 1 are still read. */
+export const BACKUP_FORMAT = 2;
 
 export interface BackupFile {
   app: typeof BACKUP_APP;
@@ -146,7 +149,37 @@ function readSettings(value: unknown): Settings | undefined {
   return { clockShiftDays: shift };
 }
 
-function readData(value: unknown): AppData | undefined {
+function isLevel(value: unknown): value is number {
+  return isCount(value) && value <= TOP_LEVEL;
+}
+
+function isResults(value: unknown, max: number): value is boolean[] {
+  return Array.isArray(value) && value.length <= max && value.every((item) => typeof item === 'boolean');
+}
+
+function readPuzzle(id: string, value: unknown): PuzzleStat | undefined {
+  if (!isObject(value) || value.id !== id || !/^[A-Za-z0-9]{1,12}$/.test(id)) return undefined;
+  if (!isCount(value.attempts) || !isCount(value.clean) || value.clean > value.attempts) return undefined;
+  if (!isTime(value.lastAt) || typeof value.lastClean !== 'boolean') return undefined;
+  return { id, attempts: value.attempts, clean: value.clean, lastAt: value.lastAt, lastClean: value.lastClean };
+}
+
+function readTest(value: unknown): TestRecord | null | undefined {
+  if (value === null) return null;
+  if (!isObject(value) || !isTime(value.at) || !isLevel(value.level)) return undefined;
+  if (!isResults(value.results, TEST_SIZE)) return undefined;
+  return { at: value.at, results: value.results, level: value.level };
+}
+
+function readTactics(value: unknown): TacticsState | undefined {
+  if (!isObject(value) || !isTime(value.updatedAt)) return undefined;
+  const test = readTest(value.test);
+  if (test === undefined || !(value.level === null || isLevel(value.level))) return undefined;
+  if (!isResults(value.recent, 1000)) return undefined;
+  return { level: value.level, test, recent: value.recent, updatedAt: value.updatedAt };
+}
+
+function readData(value: unknown, format: number): AppData | undefined {
   if (!isObject(value) || !isObject(value.traps) || !Array.isArray(value.games)) return undefined;
   const traps: Record<string, TrapProgress> = {};
   for (const [id, raw] of Object.entries(value.traps)) {
@@ -161,10 +194,24 @@ function readData(value: unknown): AppData | undefined {
     games.push(game);
   }
   const settings = readSettings(value.settings);
-  return settings ? { traps, games, settings } : undefined;
+  if (!settings) return undefined;
+  // Format 1 was written before puzzles existed.
+  if (format < 2) return { traps, games, settings, puzzles: {}, tactics: emptyTactics() };
+  if (!isObject(value.puzzles)) return undefined;
+  const puzzles: Record<string, PuzzleStat> = {};
+  for (const [id, raw] of Object.entries(value.puzzles)) {
+    const puzzle = readPuzzle(id, raw);
+    if (!puzzle) return undefined;
+    puzzles[id] = puzzle;
+  }
+  const tactics = readTactics(value.tactics);
+  return tactics ? { traps, games, settings, puzzles, tactics } : undefined;
 }
 
-/** Reads a progress file. Progress for traps this version does not know is kept as it is. */
+/**
+ * Reads a progress file. Progress for traps and puzzles this version does not know is kept
+ * as it is.
+ */
 export function parseBackup(text: string): ParsedBackup {
   let raw: unknown;
   try {
@@ -176,7 +223,7 @@ export function parseBackup(text: string): ParsedBackup {
     return { ok: false, problem: 'notBackup' };
   }
   if (raw.format > BACKUP_FORMAT) return { ok: false, problem: 'newerFormat' };
-  const data = raw.format === BACKUP_FORMAT ? readData(raw.data) : undefined;
+  const data = raw.format === 1 || raw.format === 2 ? readData(raw.data, raw.format) : undefined;
   if (!data || typeof raw.exportedAt !== 'string' || typeof raw.appVersion !== 'string') {
     return { ok: false, problem: 'damaged' };
   }

@@ -4,6 +4,7 @@
 import type { ChainStep } from './chain';
 import { firstCard, nextReviewDay, reviewCard, type Grade, type StoredCard } from './schedule';
 import { startOfNextLocalDay } from './days';
+import { emptyTactics, type PuzzleStat, type TacticsState } from './tactics';
 
 export interface LineStat {
   /** Runs without errors and hints. */
@@ -63,10 +64,13 @@ export interface AppData {
   traps: Record<string, TrapProgress>;
   games: GameEntry[];
   settings: Settings;
+  /** Puzzles the player has tried, by puzzle id. */
+  puzzles: Record<string, PuzzleStat>;
+  tactics: TacticsState;
 }
 
 export function emptyData(): AppData {
-  return { traps: {}, games: [], settings: { clockShiftDays: 0 } };
+  return { traps: {}, games: [], settings: { clockShiftDays: 0 }, puzzles: {}, tactics: emptyTactics() };
 }
 
 export function emptyProgress(id: string): TrapProgress {
