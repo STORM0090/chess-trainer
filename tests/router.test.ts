@@ -13,6 +13,13 @@ describe('parseRoute', () => {
     expect(parseRoute('#/diag/')).toEqual({ name: 'diag' });
     expect(parseRoute('#/board')).toEqual({ name: 'board' });
     expect(parseRoute('#/data')).toEqual({ name: 'data' });
+    expect(parseRoute('#/puzzles')).toEqual({ name: 'puzzles' });
+    expect(parseRoute('#/puzzles/test')).toEqual({ name: 'puzzleTest' });
+  });
+
+  it('reads the puzzle theme and refuses an unknown one', () => {
+    expect(parseRoute('#/puzzles/theme/mateIn1')).toEqual({ name: 'puzzleTheme', theme: 'mateIn1' });
+    expect(parseRoute('#/puzzles/theme/zugzwang')).toEqual({ name: 'notFound', path: 'puzzles/theme/zugzwang' });
   });
 
   it('reads the trap id for View and Learn', () => {
@@ -42,6 +49,9 @@ describe('parseRoute', () => {
       { name: 'chain', id: 'englund-trap' },
       { name: 'review', id: 'englund-trap' },
       { name: 'data' },
+      { name: 'puzzles' },
+      { name: 'puzzleTest' },
+      { name: 'puzzleTheme', theme: 'backRankMate' },
     ];
     for (const route of routes) expect(parseRoute(routeHref(route))).toEqual(route);
   });

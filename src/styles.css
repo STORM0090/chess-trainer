@@ -457,6 +457,13 @@ body {
   }
 }
 
+/* Four links must fit a 360 px screen. */
+@media (max-width: 24rem) {
+  .nav a {
+    padding: 0 0.5rem;
+  }
+}
+
 /* Trap list */
 
 .list-screen {
@@ -839,4 +846,18 @@ button.move {
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;
+}
+
+/* Puzzles */
+
+.test-rows {
+  margin: 0.5rem 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+.test-rows li {
+  padding: 0.125rem 0;
 }

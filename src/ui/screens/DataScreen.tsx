@@ -1,6 +1,7 @@
 import { useRef, useState } from 'preact/hooks';
 import { backupFileName, makeBackup, parseBackup, type BackupProblem } from '../../core/backup';
 import { trapStatus, type AppData } from '../../core/progress';
+import { TOP_LEVEL } from '../../../shared/puzzle-types.ts';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
 import { replaceData, setClockShift, useStore } from '../../storage/store';
@@ -9,6 +10,14 @@ const DATE_AND_TIME = new Intl.DateTimeFormat('ru', { dateStyle: 'long', timeSty
 
 function withProgress(data: AppData): number {
   return Object.values(data.traps).filter((trap) => trapStatus(trap) !== 'new').length;
+}
+
+function puzzleSummary(data: AppData): string {
+  const { level } = data.tactics;
+  return fmt(t.data.puzzleSummary, {
+    solved: Object.values(data.puzzles).filter((puzzle) => puzzle.clean > 0).length,
+    level: level === null ? t.data.noLevel : `${level + 1} / ${TOP_LEVEL + 1}`,
+  });
 }
 
 /** Hands the browser a file to save. Works without a server and without any permission. */
@@ -82,6 +91,7 @@ export function DataScreen() {
             games: data.games.length,
           })}
         </p>
+        <p>{puzzleSummary(data)}</p>
       </section>
 
       <section class="panel">
@@ -122,7 +132,8 @@ export function DataScreen() {
                   date: exportedDate(incoming.exportedAt),
                   traps: withProgress(incoming.data),
                   games: incoming.data.games.length,
-                })}
+                })}{' '}
+                {puzzleSummary(incoming.data)}
               </p>
               <div class="panel-actions">
                 <button type="button" class="button button-primary" onClick={() => void confirmImport(incoming.data)}>

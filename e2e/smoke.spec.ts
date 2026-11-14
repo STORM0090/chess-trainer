@@ -148,7 +148,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   expect(download.suggestedFilename()).toMatch(/^chess-trainer-\d{4}-\d{2}-\d{2}\.json$/);
   const path = await download.path();
   const file = JSON.parse(await readFile(path, 'utf8'));
-  expect(file).toMatchObject({ app: 'chess-trainer', format: 1 });
+  expect(file).toMatchObject({ app: 'chess-trainer', format: 2 });
   expect(file.data.traps['fools-mate']).toMatchObject({ chainDepth: 2, reviews: 1 });
   expect(file.data.traps['fools-mate'].masteredAt).not.toBeNull();
 
@@ -159,8 +159,9 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
         const open = indexedDB.open('chess-trainer');
         open.onerror = () => reject(open.error);
         open.onsuccess = () => {
-          const tx = open.result.transaction(['traps', 'games', 'settings'], 'readwrite');
-          for (const name of ['traps', 'games', 'settings']) tx.objectStore(name).clear();
+          const stores = ['traps', 'games', 'settings', 'puzzles'];
+          const tx = open.result.transaction(stores, 'readwrite');
+          for (const name of stores) tx.objectStore(name).clear();
           tx.oncomplete = () => resolve();
           tx.onerror = () => reject(tx.error);
         };
@@ -200,6 +201,91 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   await expect(page.getByText('Освоено 1 из 32')).toBeVisible();
   await expect(page.locator('.trap-card-locked')).toHaveCount(29);
   await expect(page.getByRole('link', { name: /Детский мат\s*Начать цепочку/ })).toBeVisible();
+
+  expect(problems, 'errors in the browser console').toEqual([]);
+});
+
+interface PuzzleRow {
+  id: string;
+  fen: string;
+  moves: string;
+}
+
+const PROMOTION_NAME: Record<string, string> = { q: 'Ферзь', r: 'Ладья', b: 'Слон', n: 'Конь' };
+
+/** Plays the solution of the puzzle on the screen. With `hint` it asks for one hint first. */
+async function solvePuzzle(page: Page, puzzles: Map<string, PuzzleRow>, hint = false): Promise<string> {
+  const id = (await page.locator('[data-puzzle]').getAttribute('data-puzzle')) ?? '';
+  const puzzle = puzzles.get(id);
+  if (!puzzle) throw new Error(`The puzzle "${id}" is not in the puzzle file`);
+  // The side to move in the position is the opponent.
+  const side: Side = puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white';
+  const moves = puzzle.moves.split(' ');
+  const status = page.locator('.learn-screen .status');
+  for (let index = 1; index < moves.length; index += 2) {
+    const move = moves[index] ?? '';
+    // The opponent's move is on the board when the list has it.
+    await expect(page.locator('.movelist-item')).toHaveCount(index);
+    await expect(status).toHaveText('Ваш ход');
+    if (hint && index === 1) await page.getByRole('button', { name: 'Подсказка' }).tap();
+    await playMove(page, move, side);
+    const piece = PROMOTION_NAME[move.slice(4)];
+    if (piece) await page.getByRole('button', { name: piece }).tap();
+  }
+  await expect(status).toHaveText('Задача завершена');
+  return id;
+}
+
+test('the entry test sets the level and puzzles are served by theme', async ({ page }) => {
+  const problems = watchForErrors(page);
+  const file = JSON.parse(await readFile('content/puzzles/lichess.json', 'utf8')) as { puzzles: PuzzleRow[] };
+  const puzzles = new Map(file.puzzles.map((puzzle) => [puzzle.id, puzzle]));
+
+  await page.goto('./');
+  await page.getByRole('link', { name: 'Задачи' }).tap();
+  await expect(page.getByRole('heading', { level: 1, name: 'Задачи' })).toBeVisible();
+  await expect(page.locator('.trap-card')).toHaveCount(9);
+  await expect(page.getByText(/Уровень пока не определён/)).toBeVisible();
+  await expectNoSidewaysScroll(page);
+
+  // Ten puzzles. The fifth is solved with a hint, so it does not count: level 3 of 5.
+  await page.getByRole('link', { name: 'Пройти тест' }).tap();
+  await page.getByRole('button', { name: 'Начать тест' }).tap();
+  for (let number = 1; number <= 10; number++) {
+    await expect(page.getByRole('heading', { level: 1, name: `Тест: задача ${number} из 10` })).toBeVisible();
+    await solvePuzzle(page, puzzles, number === 5);
+    await expect(
+      page.getByText(number === 5 ? 'Не засчитано. Ошибок: 0, подсказок: 1.' : 'Засчитано.', { exact: true }),
+    ).toBeVisible();
+    await expectNoSidewaysScroll(page);
+    await page.getByRole('button', { name: number === 10 ? 'Показать результат' : 'Следующая задача' }).tap();
+  }
+  await expect(page.getByText('Ваш уровень: 3 из 5. Рейтинг задач: 800–1100.')).toBeVisible();
+  await expect(page.getByText('Засчитано задач: 9 из 10.')).toBeVisible();
+  await expect(page.getByText('Уровень 3 (800–1100): 1 из 2')).toBeVisible();
+
+  // The level is saved.
+  await page.getByRole('link', { name: 'К задачам' }).tap();
+  await page.reload();
+  await expect(page.getByText('Уровень 3 из 5. Рейтинг задач: 800–1100.')).toBeVisible();
+
+  // Puzzles of one theme, one after another.
+  await page.locator('.trap-card', { hasText: 'Мат в 1 ход' }).tap();
+  await expect(page.getByRole('heading', { level: 1, name: 'Мат в 1 ход' })).toBeVisible();
+  const first = await solvePuzzle(page, puzzles);
+  await expect(page.getByText('Решено без ошибок и подсказок.')).toBeVisible();
+  const rating = puzzles.get(first) as PuzzleRow & { rating: number };
+  expect(rating.rating).toBeGreaterThanOrEqual(800);
+  expect(rating.rating).toBeLessThan(1100);
+  await page.getByRole('button', { name: 'Следующая задача' }).tap();
+  await expect(page.locator('[data-puzzle]')).not.toHaveAttribute('data-puzzle', first);
+  const second = await solvePuzzle(page, puzzles, true);
+  expect(second).not.toBe(first);
+  await expect(page.getByText('Ошибок: 0, подсказок: 1. Задача вернётся в другой день.')).toBeVisible();
+  await expectNoSidewaysScroll(page);
+
+  await page.goto('./#/data');
+  await expect(page.getByText(/Задач решено чисто: \d+\. Уровень в задачах: 3 \/ 5\./)).toBeVisible();
 
   expect(problems, 'errors in the browser console').toEqual([]);
 });

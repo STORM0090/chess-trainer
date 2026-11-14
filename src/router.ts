@@ -1,3 +1,5 @@
+import { isPuzzleTheme, type PuzzleTheme } from '../shared/puzzle-types.ts';
+
 /** Hash-based routes. GitHub Pages has no SPA fallback, so the path never changes. */
 export type Route =
   | { name: 'traps' }
@@ -5,6 +7,9 @@ export type Route =
   | { name: 'learn'; id: string }
   | { name: 'chain'; id: string }
   | { name: 'review'; id: string }
+  | { name: 'puzzles' }
+  | { name: 'puzzleTest' }
+  | { name: 'puzzleTheme'; theme: PuzzleTheme }
   | { name: 'board' }
   | { name: 'data' }
   | { name: 'diag' }
@@ -12,11 +17,16 @@ export type Route =
 
 const TRAP = /^trap\/([a-z0-9-]+)$/;
 const MODE = /^trap\/([a-z0-9-]+)\/(learn|chain|review)$/;
+const THEME = /^puzzles\/theme\/([A-Za-z0-9]+)$/;
 
 /** Turns `location.hash` (for example "#/trap/legal-mate") into a route. */
 export function parseRoute(hash: string): Route {
   const path = hash.replace(/^#/, '').replace(/^\/+|\/+$/g, '');
   if (path === '') return { name: 'traps' };
+  if (path === 'puzzles') return { name: 'puzzles' };
+  if (path === 'puzzles/test') return { name: 'puzzleTest' };
+  const theme = THEME.exec(path)?.[1];
+  if (isPuzzleTheme(theme)) return { name: 'puzzleTheme', theme };
   if (path === 'board') return { name: 'board' };
   if (path === 'data') return { name: 'data' };
   if (path === 'diag') return { name: 'diag' };
@@ -37,6 +47,11 @@ export function routeHref(route: Exclude<Route, { name: 'notFound' }>): string {
     case 'chain':
     case 'review':
       return `#/trap/${route.id}/${route.name}`;
+    case 'puzzleTest':
+      return '#/puzzles/test';
+    case 'puzzleTheme':
+      return `#/puzzles/theme/${route.theme}`;
+    case 'puzzles':
     case 'board':
     case 'data':
     case 'diag':

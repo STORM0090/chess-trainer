@@ -8,6 +8,9 @@ import { ChainScreen } from './ui/screens/ChainScreen';
 import { DataScreen } from './ui/screens/DataScreen';
 import { DiagScreen } from './ui/screens/DiagScreen';
 import { LearnScreen } from './ui/screens/LearnScreen';
+import { PuzzlesScreen } from './ui/screens/PuzzlesScreen';
+import { PuzzleTestScreen } from './ui/screens/PuzzleTestScreen';
+import { PuzzleThemeScreen } from './ui/screens/PuzzleThemeScreen';
 import { ReviewScreen } from './ui/screens/ReviewScreen';
 import { TrapListScreen } from './ui/screens/TrapListScreen';
 import { TrapScreen } from './ui/screens/TrapScreen';
@@ -66,6 +69,12 @@ function Screen({ route }: { route: Route }) {
       return <ChainScreen id={route.id} />;
     case 'review':
       return <ReviewScreen id={route.id} />;
+    case 'puzzles':
+      return <PuzzlesScreen />;
+    case 'puzzleTest':
+      return <PuzzleTestScreen />;
+    case 'puzzleTheme':
+      return <PuzzleThemeScreen theme={route.theme} />;
     case 'board':
       return <BoardScreen />;
     case 'data':
@@ -87,11 +96,12 @@ function Screen({ route }: { route: Route }) {
 export function App() {
   const route = useRoute();
   const inTraps = ['traps', 'trap', 'learn', 'chain', 'review'].includes(route.name);
+  const inPuzzles = ['puzzles', 'puzzleTest', 'puzzleTheme'].includes(route.name);
   const inData = route.name === 'data' || route.name === 'diag';
   // A new screen starts at the top; without this the page keeps the scroll of the previous one.
   useEffect(() => {
     window.scrollTo(0, 0);
-  }, [route.name, 'id' in route ? route.id : '']);
+  }, [route.name, 'id' in route ? route.id : '', 'theme' in route ? route.theme : '']);
   return (
     <>
       <header class="header">
@@ -99,6 +109,9 @@ export function App() {
         <nav class="nav">
           <a href={routeHref({ name: 'traps' })} aria-current={inTraps ? 'page' : undefined}>
             {t.nav.traps}
+          </a>
+          <a href={routeHref({ name: 'puzzles' })} aria-current={inPuzzles ? 'page' : undefined}>
+            {t.nav.puzzles}
           </a>
           <a href={routeHref({ name: 'board' })} aria-current={route.name === 'board' ? 'page' : undefined}>
             {t.nav.board}
