@@ -8,7 +8,7 @@ import { routeHref } from '../../router';
 import { appNow, updateTrap } from '../../storage/store';
 import { LineDrill, type DrillResult } from '../drill/LineDrill';
 import { LockedScreen, TrapHead, useTrapAccess } from '../trap/access';
-import { lineHelp, resultText } from '../trap/labels';
+import { LineNotes } from '../trap/LineNotes';
 import { MissingTrap } from './TrapScreen';
 
 /**
@@ -145,10 +145,7 @@ function ChainSession({ trap, progress }: { trap: CompiledTrap; progress: TrapPr
           {clean && !upcoming && <p>{t.chain.finished}</p>}
           {result?.otherMateSan && <p>{fmt(t.learn.otherMate, { san: result.otherMateSan })}</p>}
           {result && !result.otherMateSan && (
-            <>
-              <p>{lineHelp(trap, result.line)}</p>
-              <p class="line-result">{resultText(result.line.result)}</p>
-            </>
+            <LineNotes trap={trap} line={result.line} />
           )}
         </section>
       </LineDrill>

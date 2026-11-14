@@ -191,11 +191,11 @@ export const ru = {
       matedIn: 'Итог: вам ставят мат в {n}.',
       eval: 'Оценка движка: {eval}, {verdict}.',
       verdict: {
-        winning: 'у вас выиграно',
+        winning: 'у вас большой перевес',
         better: 'у вас лучше',
         equal: 'примерно равно',
         worse: 'у вас хуже',
-        losing: 'у вас проиграно',
+        losing: 'у соперника большой перевес',
       },
       short: { checkmate: 'мат', checkmated: 'вам мат', mateIn: 'мат в {n}', matedIn: 'вам мат в {n}' },
     },
@@ -208,6 +208,12 @@ export const ru = {
       pause: 'Пауза',
     },
     startPosition: 'Начальная позиция',
+    source: {
+      board: 'Проверено по доске.',
+      engine: 'По оценке движка.',
+      both: 'Проверено по доске и по оценке движка.',
+      link: 'Источник',
+    },
   },
   puzzles: {
     title: 'Задачи',

@@ -96,6 +96,46 @@ function mateFacts(chess: Chess): string[] {
   return facts;
 }
 
+/**
+ * A piece of the side to move that is attacked and is the only defender of another attacked
+ * piece: where can it go and still defend that piece, and who attacks each of those squares?
+ */
+function guardFacts(chess: Chess): string[] {
+  const side = chess.turn();
+  const enemy = other(side);
+  const facts: string[] = [];
+  for (const row of chess.board()) {
+    for (const cell of row) {
+      if (!cell || cell.color !== side || cell.type === 'k') continue;
+      if (chess.attackers(cell.square, enemy).length === 0) continue;
+      const defenders = chess.attackers(cell.square, side);
+      const guard = defenders[0];
+      if (defenders.length !== 1 || !guard) continue;
+      if (chess.attackers(guard, enemy).length === 0) continue;
+      facts.push(
+        `${pieceAt(chess, cell.square)} is attacked and defended only by ${pieceAt(chess, guard)}, which is attacked by ` +
+          `${attackersText(chess, guard, enemy)}`,
+      );
+      const keeps: string[] = [];
+      const moves = chess.moves({ square: guard, verbose: true });
+      for (const move of moves) {
+        const after = new Chess(chess.fen());
+        after.move({ from: move.from, to: move.to, promotion: move.promotion });
+        if (move.to === cell.square || !after.attackers(cell.square, side).includes(move.to)) continue;
+        keeps.push(
+          `${move.san} (still defends ${cell.square}; ${move.to} is attacked by ${attackersText(after, move.to, enemy)}` +
+            `${after.isCheck() ? '; gives check' : ''})`,
+        );
+      }
+      facts.push(
+        `  moves of the ${PIECE_NAME[chess.get(guard)?.type ?? 'q']} from ${guard}: ${moves.length}; ones that keep defending ${cell.square}: ` +
+          (keeps.length > 0 ? keeps.join('; ') : 'none'),
+      );
+    }
+  }
+  return facts;
+}
+
 function lineFacts(trap: TrapFile, index: number): string[] {
   const line = trap.lines[index];
   if (!line) return [];
@@ -167,6 +207,7 @@ function lineFacts(trap: TrapFile, index: number): string[] {
       }
       out.push(`  ${colorName(color)} pieces under attack: ${hanging.join('; ') || 'none'}`);
     }
+    out.push(...guardFacts(chess).map((fact) => `  guard: ${fact}`));
   }
   const result = line.result;
   if (result?.cp !== undefined) {

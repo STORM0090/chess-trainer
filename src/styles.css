@@ -861,3 +861,9 @@ button.move {
 .test-rows li {
   padding: 0.125rem 0;
 }
+
+/* The source mark after an explanation: quieter than the text itself. */
+.line-source {
+  color: var(--muted);
+  font-size: 0.8125rem;
+}

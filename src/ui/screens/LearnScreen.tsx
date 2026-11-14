@@ -6,7 +6,8 @@ import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
 import { LineDrill, type DrillResult } from '../drill/LineDrill';
 import { LockedScreen, TrapHead, useTrapAccess } from '../trap/access';
-import { lineHelp, lineTitle, resultText } from '../trap/labels';
+import { LineNotes } from '../trap/LineNotes';
+import { lineTitle } from '../trap/labels';
 import { MissingTrap } from './TrapScreen';
 
 /**
@@ -92,8 +93,7 @@ function LearnSession({ trap }: { trap: CompiledTrap }) {
             )}
           </div>
           {result?.otherMateSan && <p>{fmt(t.learn.otherMate, { san: result.otherMateSan })}</p>}
-          <p>{lineHelp(trap, line)}</p>
-          {!result?.otherMateSan && <p class="line-result">{resultText(line.result)}</p>}
+          <LineNotes trap={trap} line={line} showResult={!result?.otherMateSan} />
           {remaining > 0 && <p class="hint-text">{fmt(t.learn.more, { n: remaining })}</p>}
         </section>
       </LineDrill>

@@ -36,6 +36,24 @@ export interface LineResult {
   problem?: string;
 }
 
+/** Where the statement of an explanation comes from. */
+export type ExplanationSource =
+  /** Seen in the position; checked with chess.js by `npm run explain:facts`. */
+  | 'board'
+  /** Rests on the engine evaluation stored by verify. */
+  | 'engine';
+
+/**
+ * A short Russian text for the player about one line. Written by hand, reviewed by the owner
+ * in docs/explanations/batch-<n>.md and copied here by `npm run explain:apply`.
+ */
+export interface LineExplanation {
+  ru: string;
+  sources: ExplanationSource[];
+  /** A listed source, when the statement comes from one. */
+  link?: string;
+}
+
 export interface TrapLine {
   tag: LineTag;
   /** Exactly one line per file: the line the app teaches and chains backwards. */
@@ -44,6 +62,7 @@ export interface TrapLine {
   /** Full move text from move 1. "?" or "??" on an opponent move marks the decisive mistake. */
   moves: string;
   note?: string;
+  explanation?: LineExplanation;
   /** Written by verify. */
   result?: LineResult;
 }

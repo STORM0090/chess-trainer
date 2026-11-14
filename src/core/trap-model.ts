@@ -2,7 +2,7 @@
 
 import { Chess, DEFAULT_POSITION, type Square } from 'chess.js';
 import { parseMovetext, sideOfPly, type MoveMark, type Side } from '../../shared/movetext.ts';
-import type { Expect, LineResult, LineTag, TrapFile } from '../../shared/trap-types.ts';
+import type { Expect, LineExplanation, LineResult, LineTag, TrapFile } from '../../shared/trap-types.ts';
 import type { PromotionPiece } from './chess-helpers';
 
 export const START_FEN = DEFAULT_POSITION;
@@ -36,6 +36,8 @@ export interface CompiledLine {
   expect: Expect;
   steps: Step[];
   result: LineResult | undefined;
+  /** The reviewed Russian text about the line, when it is written. */
+  explanation: LineExplanation | undefined;
 }
 
 /**
@@ -91,6 +93,7 @@ export function compileTrap(file: TrapFile): CompiledTrap {
     expect: line.expect,
     steps: compileLine(line.moves),
     result: line.result,
+    explanation: line.explanation,
   }));
   const main = lines.find((line) => line.main);
   if (!main) throw new Error(`Trap "${file.id}" has no main line`);

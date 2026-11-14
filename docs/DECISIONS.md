@@ -401,9 +401,21 @@ Newest entries at the bottom of each section. Dates are YYYY-MM-DD.
   They were not compared with the Russian translation on Lichess.
 - **Not done in M4:** FSRS for puzzles (a failed puzzle returns by the simple rule above),
   puzzles on the first screen and in a daily session (M5), a link from a puzzle to Lichess.
-- **Explanations, batch 1.** The 23 texts are a draft in `docs/explanations/batch-1.md`
-  with the facts in `batch-1-facts.txt` (`npm run explain:facts`). They are not in the
-  trap files or in the app until the owner's review.
+- **Explanations, batch 1.** Approved by the owner on 2026-11-14 with edits (texts 1, 6, 8,
+  14, 21); the list is at the end of `docs/explanations/batch-1.md`.
+- **Where the texts live.** The batch file is the reviewed text. `npm run explain:apply`
+  copies it into the trap files as a field of the line, `explanation: { ru, sources }`, and
+  a unit test fails when the two differ. A batch whose commit is reverted leaves the test
+  green: the app then shows the general sentence for the kind of line, as before.
+- **Where the app shows them:** under the line in View, and after a run in Learn, in the
+  chain and in a review, in place of the general sentence, followed by a quiet source mark
+  ("Проверено по доске.", "По оценке движка." or both).
+- **Evaluation words** (owner's rule of 2026-11-14): from +2.0 the app says "большой
+  перевес", not "выиграно"; from -2.0 "у соперника большой перевес". "Выиграно" is left for
+  mate and won material, which the app words separately ("Итог: мат.").
+- **Guard check in the facts script.** For a piece that is attacked and is the only defender
+  of another attacked piece, `explain:facts` lists the moves that keep the defence and who
+  attacks each of those squares. Text 21 rests on it.
 
 ## Known open points
 

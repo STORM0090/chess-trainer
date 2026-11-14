@@ -56,6 +56,7 @@ export function compilePuzzle(entry: PuzzleEntry): CompiledPuzzle {
     expect: 'win',
     steps,
     result: undefined,
+    explanation: undefined,
   };
   return { entry, side, lines: [line], line };
 }

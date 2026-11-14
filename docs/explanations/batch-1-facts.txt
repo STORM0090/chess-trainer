@@ -232,6 +232,12 @@ engine: stockfish 19.0.1 (single, full network), 2000000 nodes
   material, player minus opponent: -1 (pawn 1, minor 3, rook 5, queen 9)
   Black pieces under attack: pawn c7 (attacked by c4; defended by d8); pawn g6 (attacked by f7; defended by h7); pawn b5 (attacked by c4; defended by d4); knight d4 (attacked by c4; defended by e5)
   White pieces under attack: bishop f7 (attacked by e7; defended by c4); queen c4 (attacked by b5; defended by f7); pawn e4 (attacked by f6; defended by nobody); pawn c2 (attacked by d4; defended by c4)
+  guard: White bishop f7 is attacked and defended only by White queen c4, which is attacked by Black pawn b5
+  guard:   moves of the queen from c4: 14; ones that keep defending f7: Qd5 (still defends f7; d5 is attacked by Black knight f6); Qe6+ (still defends f7; e6 is attacked by Black pawn d7, Black king e7, Black knight d4; gives check); Qb3 (still defends f7; b3 is attacked by Black knight d4)
+  guard: White queen c4 is attacked and defended only by White bishop f7, which is attacked by Black king e7
+  guard:   moves of the bishop from f7: 5; ones that keep defending c4: Bg8 (still defends c4; g8 is attacked by Black rook h8, Black knight f6); Be6 (still defends c4; e6 is attacked by Black pawn d7, Black king e7, Black knight d4); Bd5 (still defends c4; d5 is attacked by Black knight f6)
+  guard: White pawn c2 is attacked and defended only by White queen c4, which is attacked by Black pawn b5
+  guard:   moves of the queen from c4: 14; ones that keep defending c2: Qc5+ (still defends c2; c5 is attacked by nobody; gives check); Qc6 (still defends c2; c6 is attacked by Black pawn d7, Black knight d4); Qxc7 (still defends c2; c7 is attacked by Black queen d8); Qd3 (still defends c2; d3 is attacked by nobody); Qc3 (still defends c2; c3 is attacked by nobody); Qb3 (still defends c2; b3 is attacked by Black knight d4); Qa4 (still defends c2; a4 is attacked by Black pawn b5)
   engine (stored by verify): 5.93 for the player, best move c4d3
 [4] mistake: 1.e4 e5 2.Qh5 g6?? 3.Qxe5+
     2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5

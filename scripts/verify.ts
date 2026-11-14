@@ -19,6 +19,7 @@ import { Chess } from 'chess.js';
 import { injectCatalog, renderCatalog, trapStatus } from './lib/catalog.ts';
 import { enginePackageVersion, type EngineFlavour, type EngineResult } from './lib/engine.ts';
 import { evaluateAll } from './lib/eval-pool.ts';
+import { serialiseTrap } from './lib/trap-file.ts';
 import { compareLadder } from '../shared/ladder.ts';
 import { measureLine, parseMovetext } from '../shared/movetext.ts';
 import type {
@@ -190,38 +191,6 @@ function structuralProblems(trap: TrapFile, fileId: string): string[] {
   return problems;
 }
 
-/** Fixed key order, so files only change when their content changes. */
-function serialise(trap: TrapFile): string {
-  const ordered: TrapFile = {
-    schema: trap.schema,
-    id: trap.id,
-    kind: trap.kind,
-    title: trap.title,
-    side: trap.side,
-    repertoire: trap.repertoire,
-    stage: trap.stage,
-    order: trap.order,
-    stageReason: trap.stageReason,
-    idea: trap.idea,
-    sacrifice: trap.sacrifice,
-    prerequisites: trap.prerequisites,
-    lines: trap.lines.map((line) => ({
-      tag: line.tag,
-      ...(line.main ? { main: true } : {}),
-      expect: line.expect,
-      moves: line.moves,
-      ...(line.note ? { note: line.note } : {}),
-      ...(line.result ? { result: line.result } : {}),
-    })),
-    sources: trap.sources,
-    ...(trap.notes ? { notes: trap.notes } : {}),
-    ...(trap.draft ? { draft: true } : {}),
-    verified: trap.verified ?? false,
-    ...(trap.verification ? { verification: trap.verification } : {}),
-  };
-  return `${JSON.stringify(ordered, null, 2)}\n`;
-}
-
 async function main(): Promise<void> {
   const args = parseArgs(process.argv.slice(2));
   const files = readdirSync(TRAPS_DIR)
@@ -332,7 +301,7 @@ async function main(): Promise<void> {
     if (args.check) console.log(`verify: out of date: ${path.slice(ROOT.length + 1)}`);
     else writeFileSync(path, next);
   };
-  for (const item of traps) update(item.path, serialise(item.trap), item.original);
+  for (const item of traps) update(item.path, serialiseTrap(item.trap), item.original);
 
   if (!args.only) {
     // Keep only the positions that are still in use, in a stable order.

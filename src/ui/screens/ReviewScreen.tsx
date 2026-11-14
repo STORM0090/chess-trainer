@@ -16,7 +16,8 @@ import { routeHref } from '../../router';
 import { appNow, updateTrap, type StoreState } from '../../storage/store';
 import { LineDrill, type DrillResult } from '../drill/LineDrill';
 import { TrapHead, trapOrder, useTrapAccess } from '../trap/access';
-import { lineHelp, resultText, whenText } from '../trap/labels';
+import { LineNotes } from '../trap/LineNotes';
+import { whenText } from '../trap/labels';
 import { MissingTrap } from './TrapScreen';
 
 /**
@@ -138,10 +139,7 @@ function ReviewSession({
             {outcome.drill.otherMateSan ? (
               <p>{fmt(t.learn.otherMate, { san: outcome.drill.otherMateSan })}</p>
             ) : (
-              <>
-                <p>{lineHelp(trap, outcome.drill.line)}</p>
-                <p class="line-result">{resultText(outcome.drill.line.result)}</p>
-              </>
+              <LineNotes trap={trap} line={outcome.drill.line} />
             )}
           </section>
         )}

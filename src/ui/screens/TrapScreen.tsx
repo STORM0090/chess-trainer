@@ -12,13 +12,12 @@ import { MoveList } from '../trap/MoveList';
 import { GamesPanel, ProgressPanel } from '../trap/ProgressPanel';
 import { ReliabilityBadge } from '../trap/ReliabilityBadge';
 import { useTrapAccess } from '../trap/access';
+import { LineNotes } from '../trap/LineNotes';
 import {
   divergenceLabel,
   formatEval,
-  lineHelp,
   lineTitle,
   resultShort,
-  resultText,
 } from '../trap/labels';
 
 const NO_DESTS: Dests = new Map();
@@ -150,8 +149,7 @@ function TrapView({ trap }: { trap: CompiledTrap }) {
             {lineTitle(line)}
             {!line.main && <span class="panel-title-move"> {divergenceLabel(trap, line)}</span>}
           </h2>
-          <p>{lineHelp(trap, line)}</p>
-          <p class="line-result">{resultText(line.result)}</p>
+          <LineNotes trap={trap} line={line} />
         </section>
 
         <ProgressPanel trap={trap} access={access} />
