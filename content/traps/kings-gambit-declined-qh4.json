@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.Ke2 Qxe4#",
+      "explanation": {
+        "ru": "Белые взяли пешку e5, а их король остался открыт для шаха с h4. У белых два ответа; на Ke2 ферзь берёт незащищённую пешку e4, и это мат: поля вокруг короля заняты своими фигурами или биты ферзём и слоном c5.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.g3 Qxe4+ 5.Qe2 Qxh1",
+      "explanation": {
+        "ru": "Белые закрылись пешкой g3: ферзь берёт e4 с шахом, нападая заодно на ладью h1, и следующим ходом забирает её.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 496,
         "best": "d2d4",
@@ -45,6 +57,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6",
+      "explanation": {
+        "ru": "Белые сначала выводят коня: ловушки нет. Пешку e5 вы защищаете ходом d6, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -28,
         "best": "c2c3",
@@ -55,6 +74,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.f4 Bc5 3.Nf3 d6 4.c3",
+      "explanation": {
+        "ru": "Спокойное продолжение 4.c3: позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -7,
         "best": "b8c6",

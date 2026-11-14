@@ -25,6 +25,12 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nf6?? 5.Nc6+ Qe7 6.Nxe7 Bxe7",
+      "explanation": {
+        "ru": "Чёрный конь ушёл с e4, и на линии e между вашим ферзём и чёрным королём остался только ваш конь. Он идёт на c6: это шах от ферзя и нападение на ферзя d8, чёрные отдают ферзя за коня.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 798,
         "best": "e2d1",
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nf6?? 5.Nc6+ Be7 6.Nxd8",
+      "explanation": {
+        "ru": "Чёрные закрылись от шаха слоном: конь просто берёт ферзя d8.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 828,
         "best": "e8d8",
@@ -45,6 +57,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Nd6?? 5.Nc6+ Qe7 6.Nxe7",
+      "explanation": {
+        "ru": "Конь отступил на d6, но линия e всё равно открылась: тот же шах с c6 выигрывает ферзя.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 834,
         "best": "f8e7",
@@ -56,6 +74,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 Qe7 5.Qxe4 d6 6.d4 dxe5 7.dxe5",
       "note": "Wikipedia: best for Black; White keeps a moderate advantage.",
+      "explanation": {
+        "ru": "Чёрные ставят ферзя на e7: вы берёте коня e4, чёрные отыгрывают фигуру, но у вас остаётся лишняя пешка и позиция лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 63,
         "best": "b8c6",
@@ -66,6 +91,13 @@
       "tag": "decline",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4?! 4.Qe2 d5 5.d3 Qe7 6.dxe4 Qxe5 7.exd5",
+      "explanation": {
+        "ru": "Чёрные защищают коня пешкой d5: вы нападаете на него пешкой d3 и после разменов остаётесь с лишней пешкой, у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 167,
         "best": "f8d6",
@@ -76,6 +108,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 d6 4.Nf3 Nxe4",
+      "explanation": {
+        "ru": "Правильный порядок: сначала d6 прогоняет вашего коня, и только потом чёрные берут на e4. По оценке позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 44,
         "best": "d2d4",
@@ -87,6 +126,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Be2",
       "note": "Stafford Gambit.",
+      "explanation": {
+        "ru": "Чёрные отдают пешку e5 и выводят слона на c5 с ударом по f2: после спокойного Be2 у вас лишняя пешка и большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 216,
         "best": "f6g4",
@@ -97,6 +143,12 @@
       "tag": "mistake",
       "expect": "loss",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5?? Nxe4 7.Bxd8 Bxf2+ 8.Ke2 Bg4#",
+      "explanation": {
+        "ru": "Так нельзя: на Bg5 конь берёт e4, подставляя ферзя. Если взять ферзя, то Bxf2+ оставляет королю один ход, и Bg4 ставит мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmated",
         "ok": true

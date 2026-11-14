@@ -25,6 +25,12 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 fxe5? 4.Qh5+ g6 5.Qxe5+ Qe7 6.Qxh8",
+      "explanation": {
+        "ru": "Ход f6 защитил пешку e5, но открыл короля: вы жертвуете коня на e5, и после fxe5 ферзь даёт шах с h5. На g6 ферзь берёт e5 с шахом, нападая на ладью h8, и забирает её.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 559,
         "best": "g8f6",
@@ -35,6 +41,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 fxe5? 4.Qh5+ Ke7 5.Qxe5+ Kf7 6.Bc4+ d5 7.Bxd5+ Kg6 8.h4",
+      "explanation": {
+        "ru": "Король уходит на e7: вы берёте e5 с шахом и шахами выгоняете короля на g6. Материал равный, но по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 426,
         "best": "h7h6",
@@ -46,6 +59,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Nf3 Qxe4+ 5.Be2",
       "note": "Wikipedia: 3...Qe7 is the only way to regain the pawn.",
+      "explanation": {
+        "ru": "Чёрные не берут коня, а нападают на него ферзём: конь отступает, чёрные отыгрывают пешку, но по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 246,
         "best": "d7d5",
@@ -56,6 +76,13 @@
       "tag": "decline",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Nf3 d5 5.d3 dxe4 6.dxe4",
+      "explanation": {
+        "ru": "Чёрные играют d5 вместо взятия на e4: у вас остаётся лишняя пешка, по оценке у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 196,
         "best": "e7e4",
@@ -66,6 +93,13 @@
       "tag": "mistake",
       "expect": "loss",
       "moves": "1.e4 e5 2.Nf3 f6? 3.Nxe5 Qe7 4.Qh5+? g6 5.Nxg6 Qxe4+ 6.Be2 Qxg6",
+      "explanation": {
+        "ru": "Так нельзя: при ферзе на e7 шах с h5 не проходит. После g6 и Nxg6 ферзь берёт e4 с шахом, нападая на коня, и забирает его: у соперника большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -451,
         "best": "b1c3",

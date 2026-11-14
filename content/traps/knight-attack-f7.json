@@ -25,6 +25,12 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 h6?? 5.Nxf7 Qe7 6.Nxh8",
+      "explanation": {
+        "ru": "Конь и слон вдвоём нападают на f7, а защищает пешку только король. Чёрные сыграли h6 и не прикрыли f7: конь берёт пешку под защитой слона, нападает сразу на ферзя и ладью и забирает ладью.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 737,
         "best": "d7d5",
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Be7?? 5.Nxf7",
+      "explanation": {
+        "ru": "Слон на e7 не защищает f7: та же вилка на ферзя и ладью.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 806,
         "best": "c6a5",
@@ -45,6 +57,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d6?? 5.Nxf7",
+      "explanation": {
+        "ru": "Ход d6 тоже не защищает f7: конь берёт с вилкой на ферзя и ладью.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 640,
         "best": "c8g4",
@@ -55,6 +73,13 @@
       "tag": "decline",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Qe7 5.Bxf7+ Kd8 6.Bb3",
+      "explanation": {
+        "ru": "Чёрные защитили f7 ферзём, но слон всё равно берёт пешку с шахом под защитой коня: у вас лишняя пешка и большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 247,
         "best": "d8e8",
@@ -65,6 +90,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3",
+      "explanation": {
+        "ru": "Лучшая защита: пешка d5 нападает на слона c4. У вас остаётся лишняя пешка, но по оценке позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 16,
         "best": "f6d5",
@@ -76,6 +108,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Bc5 5.Bxf7+ Ke7 6.Bd5",
       "note": "Traxler Counterattack. Wikipedia: 5.Bxf7+ is preferred by most modern masters.",
+      "explanation": {
+        "ru": "Чёрные не защищают f7, а сами нападают на f2: вы берёте пешку f7 слоном с шахом, и по оценке у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 86,
         "best": "h8f8",
