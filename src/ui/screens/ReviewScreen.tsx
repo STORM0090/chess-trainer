@@ -13,7 +13,7 @@ import type { Grade } from '../../core/schedule';
 import type { CompiledTrap } from '../../core/trap-model';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
-import { appNow, updateTrap, type StoreState } from '../../storage/store';
+import { appNow, recordReview, type StoreState } from '../../storage/store';
 import { LineDrill, type DrillResult } from '../drill/LineDrill';
 import { TrapHead, trapOrder, useTrapAccess } from '../trap/access';
 import { LineNotes } from '../trap/LineNotes';
@@ -90,7 +90,7 @@ function ReviewSession({
       mastered: progress.masteredAt === null && after.masteredAt !== null,
       opened: allTraps().find((file) => file.id === newlyOpen)?.title.ru,
     });
-    updateTrap(id, (current) => applyReview(current, grade, now));
+    recordReview(id, grade);
   };
 
   const now = appNow();

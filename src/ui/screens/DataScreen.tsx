@@ -4,7 +4,8 @@ import { trapStatus, type AppData } from '../../core/progress';
 import { TOP_LEVEL } from '../../../shared/puzzle-types.ts';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
-import { replaceData, setClockShift, useStore } from '../../storage/store';
+import { replaceData, setClockShift, updateSettings, useStore } from '../../storage/store';
+import { downloadFile } from '../download';
 
 const DATE_AND_TIME = new Intl.DateTimeFormat('ru', { dateStyle: 'long', timeStyle: 'short' });
 
@@ -18,19 +19,6 @@ function puzzleSummary(data: AppData): string {
     solved: Object.values(data.puzzles).filter((puzzle) => puzzle.clean > 0).length,
     level: level === null ? t.data.noLevel : `${level + 1} / ${TOP_LEVEL + 1}`,
   });
-}
-
-/** Hands the browser a file to save. Works without a server and without any permission. */
-function download(name: string, text: string): void {
-  const url = URL.createObjectURL(new Blob([text], { type: 'application/json' }));
-  const link = document.createElement('a');
-  link.href = url;
-  link.download = name;
-  document.body.append(link);
-  link.click();
-  link.remove();
-  // The download starts asynchronously; the address must outlive this call.
-  setTimeout(() => URL.revokeObjectURL(url), 60_000);
 }
 
 type ImportState =
@@ -52,7 +40,10 @@ export function DataScreen() {
     // The real time, not the test clock: the file says when it was actually made.
     const now = Date.now();
     const name = backupFileName(now);
-    download(name, JSON.stringify(makeBackup(data, now, __APP_VERSION__), null, 2));
+    // The file itself already says that it was saved now.
+    const saved = { ...data, settings: { ...data.settings, lastBackupAt: now, backupSnoozedUntil: null } };
+    downloadFile(name, JSON.stringify(makeBackup(saved, now, __APP_VERSION__), null, 2), 'application/json');
+    updateSettings({ lastBackupAt: now, backupSnoozedUntil: null });
     setExported(name);
   };
 
@@ -164,8 +155,8 @@ export function DataScreen() {
         </div>
       </section>
 
-      <a class="button button-quiet" href={routeHref({ name: 'diag' })}>
-        {t.data.diag}
+      <a class="button button-quiet" href={routeHref({ name: 'more' })}>
+        {t.more.back}
       </a>
     </div>
   );

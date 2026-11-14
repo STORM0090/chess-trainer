@@ -1,48 +1,11 @@
 import { readFile } from 'node:fs/promises';
-import { expect, test, type Page } from '@playwright/test';
-
-type Side = 'white' | 'black';
-
-/** Taps the middle of a square on a board shown from `side`. */
-async function tapSquare(page: Page, square: string, side: Side): Promise<void> {
-  const board = page.locator('.board cg-board');
-  await board.scrollIntoViewIfNeeded();
-  const box = await board.boundingBox();
-  if (!box) throw new Error('The board is not on the page');
-  const file = square.charCodeAt(0) - 'a'.charCodeAt(0);
-  const rank = Number(square[1]) - 1;
-  const column = side === 'white' ? file : 7 - file;
-  const row = side === 'white' ? 7 - rank : rank;
-  const size = box.width / 8;
-  await page.touchscreen.tap(box.x + (column + 0.5) * size, box.y + (row + 0.5) * size);
-}
-
-async function playMove(page: Page, move: string, side: Side): Promise<void> {
-  await tapSquare(page, move.slice(0, 2), side);
-  await tapSquare(page, move.slice(2, 4), side);
-}
-
-async function expectNoSidewaysScroll(page: Page): Promise<void> {
-  const overflow = await page.evaluate(
-    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
-  );
-  expect(overflow, 'the page must not scroll sideways').toBeLessThanOrEqual(0);
-}
-
-/** Collects everything the browser reports as an error. */
-function watchForErrors(page: Page): string[] {
-  const problems: string[] = [];
-  page.on('pageerror', (error) => problems.push(String(error)));
-  page.on('console', (message) => {
-    if (message.type() === 'error') problems.push(message.text());
-  });
-  return problems;
-}
+import { expect, test } from '@playwright/test';
+import { expectNoSidewaysScroll, loadPuzzles, playMove, solvePuzzle, watchForErrors } from './helpers.ts';
 
 test('the list and the View screen work on a phone screen', async ({ page }) => {
   const problems = watchForErrors(page);
 
-  await page.goto('./');
+  await page.goto('./#/traps');
   await expect(page.getByRole('heading', { level: 1, name: 'Ловушки' })).toBeVisible();
   await expect(page.locator('.trap-card')).toHaveCount(32);
   await expect(page.getByText('Освоено 0 из 32')).toBeVisible();
@@ -77,7 +40,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   });
 
   // Fool's Mate, played as Black: 1.f3 e5 2.g4 Qh4#.
-  await page.goto('./');
+  await page.goto('./#/traps');
   await page.getByRole('link', { name: /Начать цепочку/ }).tap();
   await expect(page.getByText('Цепочка: шаг 1 из 2')).toBeVisible();
   const status = page.locator('.learn-screen .status');
@@ -111,7 +74,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   await expectNoSidewaysScroll(page);
 
   // The progress survives a reload.
-  await page.goto('./');
+  await page.goto('./#/traps');
   await page.reload();
   const card = page.locator('.trap-card', { hasText: 'Дурацкий мат' }).first();
   await expect(card).toContainText('Изучена');
@@ -119,7 +82,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   await expect(page.locator('.trap-card-locked')).toHaveCount(31);
 
   // The review opens the next day: move the app's clock instead of waiting.
-  await page.getByRole('link', { name: 'Данные' }).tap();
+  await page.goto('./#/data');
   await page.getByRole('button', { name: 'На день вперёд' }).tap();
   await expect(page.getByText('Часы приложения: +1 дн.')).toBeVisible();
   await page.getByRole('link', { name: 'Ловушки' }).tap();
@@ -151,7 +114,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   expect(download.suggestedFilename()).toMatch(/^chess-trainer-\d{4}-\d{2}-\d{2}\.json$/);
   const path = await download.path();
   const file = JSON.parse(await readFile(path, 'utf8'));
-  expect(file).toMatchObject({ app: 'chess-trainer', format: 2 });
+  expect(file).toMatchObject({ app: 'chess-trainer', format: 3 });
   expect(file.data.traps['fools-mate']).toMatchObject({ chainDepth: 2, reviews: 1 });
   expect(file.data.traps['fools-mate'].masteredAt).not.toBeNull();
 
@@ -162,7 +125,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
         const open = indexedDB.open('chess-trainer');
         open.onerror = () => reject(open.error);
         open.onsuccess = () => {
-          const stores = ['traps', 'games', 'settings', 'puzzles'];
+          const stores = ['traps', 'games', 'settings', 'puzzles', 'days'];
           const tx = open.result.transaction(stores, 'readwrite');
           for (const name of stores) tx.objectStore(name).clear();
           tx.oncomplete = () => resolve();
@@ -208,44 +171,12 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   expect(problems, 'errors in the browser console').toEqual([]);
 });
 
-interface PuzzleRow {
-  id: string;
-  fen: string;
-  moves: string;
-}
-
-const PROMOTION_NAME: Record<string, string> = { q: 'Ферзь', r: 'Ладья', b: 'Слон', n: 'Конь' };
-
-/** Plays the solution of the puzzle on the screen. With `hint` it asks for one hint first. */
-async function solvePuzzle(page: Page, puzzles: Map<string, PuzzleRow>, hint = false): Promise<string> {
-  const id = (await page.locator('[data-puzzle]').getAttribute('data-puzzle')) ?? '';
-  const puzzle = puzzles.get(id);
-  if (!puzzle) throw new Error(`The puzzle "${id}" is not in the puzzle file`);
-  // The side to move in the position is the opponent.
-  const side: Side = puzzle.fen.split(' ')[1] === 'w' ? 'black' : 'white';
-  const moves = puzzle.moves.split(' ');
-  const status = page.locator('.learn-screen .status');
-  for (let index = 1; index < moves.length; index += 2) {
-    const move = moves[index] ?? '';
-    // The opponent's move is on the board when the list has it.
-    await expect(page.locator('.movelist-item')).toHaveCount(index);
-    await expect(status).toHaveText('Ваш ход');
-    if (hint && index === 1) await page.getByRole('button', { name: 'Подсказка' }).tap();
-    await playMove(page, move, side);
-    const piece = PROMOTION_NAME[move.slice(4)];
-    if (piece) await page.getByRole('button', { name: piece }).tap();
-  }
-  await expect(status).toHaveText('Задача завершена');
-  return id;
-}
-
 test('the entry test sets the level and puzzles are served by theme', async ({ page }) => {
   const problems = watchForErrors(page);
-  const file = JSON.parse(await readFile('content/puzzles/lichess.json', 'utf8')) as { puzzles: PuzzleRow[] };
-  const puzzles = new Map(file.puzzles.map((puzzle) => [puzzle.id, puzzle]));
+  const puzzles = await loadPuzzles();
 
   await page.goto('./');
-  await page.getByRole('link', { name: 'Задачи' }).tap();
+  await page.getByRole('link', { name: 'Задачи', exact: true }).tap();
   await expect(page.getByRole('heading', { level: 1, name: 'Задачи' })).toBeVisible();
   await expect(page.locator('.trap-card')).toHaveCount(9);
   await expect(page.getByText(/Уровень пока не определён/)).toBeVisible();
@@ -277,14 +208,14 @@ test('the entry test sets the level and puzzles are served by theme', async ({ p
   await expect(page.getByRole('heading', { level: 1, name: 'Мат в 1 ход' })).toBeVisible();
   const first = await solvePuzzle(page, puzzles);
   await expect(page.getByText('Решено без ошибок и подсказок.')).toBeVisible();
-  const rating = puzzles.get(first) as PuzzleRow & { rating: number };
-  expect(rating.rating).toBeGreaterThanOrEqual(800);
-  expect(rating.rating).toBeLessThan(1100);
+  const rating = puzzles.get(first)?.rating ?? 0;
+  expect(rating).toBeGreaterThanOrEqual(800);
+  expect(rating).toBeLessThan(1100);
   await page.getByRole('button', { name: 'Следующая задача' }).tap();
   await expect(page.locator('[data-puzzle]')).not.toHaveAttribute('data-puzzle', first);
   const second = await solvePuzzle(page, puzzles, true);
   expect(second).not.toBe(first);
-  await expect(page.getByText('Ошибок: 0, подсказок: 1. Задача вернётся в другой день.')).toBeVisible();
+  await expect(page.getByText('Ошибок: 0, подсказок: 1. Задача вернётся на повторение.')).toBeVisible();
   await expectNoSidewaysScroll(page);
 
   await page.goto('./#/data');

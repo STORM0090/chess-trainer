@@ -1,11 +1,12 @@
 import { useState } from 'preact/hooks';
 import { getTrap } from '../../content/traps';
 import { blowDepths, chainLength, nextChainStep, type ChainStep } from '../../core/chain';
-import { applyChainRun, isClean, skipDeviation, type TrapProgress } from '../../core/progress';
+import { newTrapHeldBack } from '../../core/daily';
+import { isClean, skipDeviation, type TrapProgress } from '../../core/progress';
 import type { CompiledTrap } from '../../core/trap-model';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
-import { appNow, updateTrap } from '../../storage/store';
+import { appNow, recordChainRun, today, updateTrap } from '../../storage/store';
 import { LineDrill, type DrillResult } from '../drill/LineDrill';
 import { LockedScreen, TrapHead, useTrapAccess } from '../trap/access';
 import { LineNotes } from '../trap/LineNotes';
@@ -22,11 +23,36 @@ export function ChainScreen({ id }: { id: string }) {
 
 function ChainGate({ trap }: { trap: CompiledTrap }) {
   const access = useTrapAccess(trap.file.id);
-  return access.unlocked ? (
-    <ChainSession trap={trap} progress={access.progress} />
-  ) : (
-    <LockedScreen trap={trap} blocker={access.blocker} />
-  );
+  // Decided once: the first run of this trap makes it today's new trap, and the screen stays.
+  const [heldBackBy] = useState(() => {
+    const day = today();
+    const { runs } = access.progress;
+    return newTrapHeldBack(day, trap.file.id, runs.clean + runs.failed > 0) ? day.newTrap : null;
+  });
+  if (!access.unlocked) return <LockedScreen trap={trap} blocker={access.blocker} />;
+  if (heldBackBy !== null) {
+    const other = getTrap(heldBackBy);
+    return (
+      <div class="screen board-screen">
+        <TrapHead trap={trap} />
+        <div class="trap-body">
+          <section class="panel">
+            <p class="verdict">{t.newTrap.heldBack}</p>
+            <p class="hint-text">{fmt(t.newTrap.help, { title: other?.file.title.ru ?? heldBackBy })}</p>
+            <div class="panel-actions">
+              <a class="button button-primary" href={routeHref({ name: 'trap', id: trap.file.id })}>
+                {t.traps.view}
+              </a>
+              <a class="button" href={routeHref({ name: 'today' })}>
+                {t.session.toToday}
+              </a>
+            </div>
+          </section>
+        </div>
+      </div>
+    );
+  }
+  return <ChainSession trap={trap} progress={access.progress} />;
 }
 
 function stepHelp(trap: CompiledTrap, step: ChainStep): string {
@@ -76,7 +102,7 @@ function ChainSession({ trap, progress }: { trap: CompiledTrap; progress: TrapPr
     setJustLearned(
       step.kind === 'main' && step.depth === length && isClean(drill) && progress.learnedAt === null,
     );
-    updateTrap(id, (current) => applyChainRun(current, step, length, drill, appNow()));
+    recordChainRun(id, step, length, drill);
   };
 
   const skip = () => {

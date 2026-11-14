@@ -2,16 +2,37 @@
 // the functions below; every change is written to IndexedDB right away.
 
 import { useEffect, useState } from 'preact/hooks';
-import { DAY_MS } from '../core/days';
+import type { ChainStep } from '../core/chain';
 import {
+  applyActivity,
+  completeItem,
+  emptyDay,
+  type ActivityKind,
+  type DayRecord,
+  type SessionItem,
+} from '../core/daily';
+import { DAY_MS, dayKey, type DayKey } from '../core/days';
+import {
+  applyChainRun,
+  applyReview,
   emptyData,
   emptyProgress,
+  isClean,
   type AppData,
   type GameEntry,
   type GameOutcome,
+  type RunResult,
+  type Settings,
   type TrapProgress,
 } from '../core/progress';
-import { applyPuzzleStat, applyPuzzleToLevel, applyTest, type TacticsState } from '../core/tactics';
+import type { Grade } from '../core/schedule';
+import {
+  applyPuzzleStat,
+  applyPuzzleToLevel,
+  applyTest,
+  type AttemptResult,
+  type TacticsState,
+} from '../core/tactics';
 import * as db from './db';
 
 export interface StoreState {
@@ -109,24 +130,53 @@ export function removeGame(id: string): void {
   persist(() => db.deleteGame(id));
 }
 
-export function setClockShift(days: number): void {
-  const settings = { ...state.data.settings, clockShiftDays: Math.max(0, Math.round(days)) };
+function saveSettings(settings: Settings): void {
   setData({ ...state.data, settings });
   persist(() => db.saveSettings(settings));
 }
 
+export function setClockShift(days: number): void {
+  saveSettings({ ...state.data.settings, clockShiftDays: Math.max(0, Math.round(days)) });
+}
+
+export function updateSettings(change: Partial<Omit<Settings, 'clockShiftDays'>>): void {
+  saveSettings({ ...state.data.settings, ...change });
+}
+
+/** Today's record of the daily log, as it is now. */
+export function today(now = appNow()): DayRecord {
+  const date = dayKey(now);
+  return state.data.days[date] ?? emptyDay(date);
+}
+
+/** Today's record with one more finished exercise. */
+function dayWith(kind: ActivityKind, clean: boolean, now: number): DayRecord {
+  return applyActivity(today(now), kind, clean, state.data.settings.dailyNorm, now);
+}
+
 /**
  * Records one attempt at a puzzle. `counts` is false for the entry test, which sets the
- * level by its own rule. Returns true when this puzzle moved the player one level up.
+ * level by its own rule. Only the first attempt at a puzzle counts for the level: a review
+ * of a failed puzzle is a repetition, not a measurement. Returns true when this puzzle
+ * moved the player one level up.
  */
-export function recordPuzzle(id: string, rating: number, clean: boolean, counts: boolean): boolean {
+export function recordPuzzle(id: string, rating: number, result: AttemptResult, counts: boolean): boolean {
   const now = appNow();
-  const stat = applyPuzzleStat(state.data.puzzles[id], id, clean, now);
-  const applied = counts
-    ? applyPuzzleToLevel(state.data.tactics, rating, clean, now)
-    : { tactics: state.data.tactics, levelUp: false };
-  setData({ ...state.data, puzzles: { ...state.data.puzzles, [id]: stat }, tactics: applied.tactics });
-  persist(() => db.savePuzzle(stat, applied.tactics));
+  const before = state.data.puzzles[id];
+  const clean = result.errors === 0 && result.hints === 0;
+  const stat = applyPuzzleStat(before, id, result, now);
+  const applied =
+    counts && before === undefined
+      ? applyPuzzleToLevel(state.data.tactics, rating, clean, now)
+      : { tactics: state.data.tactics, levelUp: false };
+  const day = dayWith('puzzle', clean, now);
+  setData({
+    ...state.data,
+    puzzles: { ...state.data.puzzles, [id]: stat },
+    tactics: applied.tactics,
+    days: { ...state.data.days, [day.date]: day },
+  });
+  persist(() => db.savePuzzle(stat, applied.tactics, day));
   return applied.levelUp;
 }
 
@@ -136,6 +186,62 @@ export function recordTest(results: boolean[]): TacticsState {
   setData({ ...state.data, tactics });
   persist(() => db.saveTactics(tactics));
   return tactics;
+}
+
+function saveTrapRun(id: string, after: TrapProgress, day: DayRecord): void {
+  setData({
+    ...state.data,
+    traps: { ...state.data.traps, [id]: after },
+    days: { ...state.data.days, [day.date]: day },
+  });
+  persist(() => db.saveTrapAndDay(after, day));
+}
+
+/** Records one run of a chain step. The first run of a trap makes it today's new trap. */
+export function recordChainRun(
+  id: string,
+  step: Pick<ChainStep, 'kind' | 'depth' | 'key'>,
+  length: number,
+  result: RunResult,
+): void {
+  const now = appNow();
+  const before = state.data.traps[id] ?? emptyProgress(id);
+  const firstRun = before.runs.clean + before.runs.failed === 0 && before.learnedAt === null;
+  const day = dayWith('trapStep', isClean(result), now);
+  saveTrapRun(id, applyChainRun(before, step, length, result, now), {
+    ...day,
+    newTrap: firstRun ? (day.newTrap ?? id) : day.newTrap,
+  });
+}
+
+/** Records a spaced review of a learned trap. Does nothing when the review is not due. */
+export function recordReview(id: string, grade: Grade): void {
+  const now = appNow();
+  const before = state.data.traps[id] ?? emptyProgress(id);
+  const after = applyReview(before, grade, now);
+  if (after === before) return;
+  saveTrapRun(id, after, dayWith('review', grade === 'good', now));
+}
+
+/** Stores today's session plan. A plan that exists is kept: the session stays the same all day. */
+export function startSession(plan: SessionItem[]): DayRecord {
+  const now = appNow();
+  const day = today(now);
+  if (day.session !== null) return day;
+  const next: DayRecord = { ...day, session: plan, updatedAt: now };
+  setData({ ...state.data, days: { ...state.data.days, [next.date]: next } });
+  persist(() => db.saveDay(next));
+  return next;
+}
+
+/** Marks one item of the session plan of `date` as finished. */
+export function finishSessionItem(date: DayKey, index: number, clean: boolean): void {
+  const day = state.data.days[date];
+  if (!day) return;
+  const next = completeItem(day, index, clean, appNow());
+  if (next === day) return;
+  setData({ ...state.data, days: { ...state.data.days, [date]: next } });
+  persist(() => db.saveDay(next));
 }
 
 /** Replaces everything with imported data. Resolves to `false` when it could not be saved. */

@@ -46,7 +46,7 @@ function ThemeSession({ theme, puzzles }: { theme: PuzzleTheme; puzzles: PuzzleE
 
   const finish = (drill: DrillResult) => {
     setResult(drill);
-    if (recordPuzzle(entry.id, entry.rating, isClean(drill), true)) {
+    if (recordPuzzle(entry.id, entry.rating, drill, true)) {
       setLevelUp(currentLevel(getStore().data.tactics) + 1);
     }
   };

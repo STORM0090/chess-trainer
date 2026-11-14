@@ -8,7 +8,10 @@ import './styles.css';
 const root = document.getElementById('app');
 if (!root) throw new Error('Missing #app element');
 
-// Saved progress and the review scheduler are needed by the very first screen.
-await Promise.all([loadStore(), initSchedule()]);
+// Saved progress and the review scheduler are needed by the very first screen. The
+// scheduler comes first: records of an older build are brought up to date while they are
+// read, and a failed puzzle gets its review card there.
+await initSchedule();
+await loadStore();
 render(<App />, root);
 initPwa();

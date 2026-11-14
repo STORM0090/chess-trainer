@@ -94,7 +94,7 @@ function TestSession({ puzzles }: { puzzles: PuzzleEntry[] }) {
     const all = [...results, clean];
     setLast(drill);
     setResults(all);
-    recordPuzzle(entry.id, entry.rating, clean, false);
+    recordPuzzle(entry.id, entry.rating, drill, false);
     // Saved with the last puzzle, not with the button: closing the app here loses nothing.
     if (all.length >= test.length) recordTest(all);
   };

@@ -2,10 +2,14 @@ import { describe, expect, it } from 'vitest';
 import { parseRoute, routeHref, type Route } from '../src/router';
 
 describe('parseRoute', () => {
-  it('maps an empty hash to the trap list', () => {
-    expect(parseRoute('')).toEqual({ name: 'traps' });
-    expect(parseRoute('#')).toEqual({ name: 'traps' });
-    expect(parseRoute('#/')).toEqual({ name: 'traps' });
+  it('maps an empty hash to the home screen', () => {
+    expect(parseRoute('')).toEqual({ name: 'today' });
+    expect(parseRoute('#')).toEqual({ name: 'today' });
+    expect(parseRoute('#/')).toEqual({ name: 'today' });
+    expect(parseRoute('#/traps')).toEqual({ name: 'traps' });
+    expect(parseRoute('#/session')).toEqual({ name: 'session' });
+    expect(parseRoute('#/more')).toEqual({ name: 'more' });
+    expect(parseRoute('#/settings')).toEqual({ name: 'settings' });
   });
 
   it('maps fixed screens, with or without a trailing slash', () => {
@@ -41,7 +45,11 @@ describe('parseRoute', () => {
 
   it('round-trips with routeHref', () => {
     const routes: Exclude<Route, { name: 'notFound' }>[] = [
+      { name: 'today' },
       { name: 'traps' },
+      { name: 'session' },
+      { name: 'more' },
+      { name: 'settings' },
       { name: 'board' },
       { name: 'diag' },
       { name: 'trap', id: 'englund-trap' },

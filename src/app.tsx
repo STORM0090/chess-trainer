@@ -8,6 +8,10 @@ import { ChainScreen } from './ui/screens/ChainScreen';
 import { DataScreen } from './ui/screens/DataScreen';
 import { DiagScreen } from './ui/screens/DiagScreen';
 import { LearnScreen } from './ui/screens/LearnScreen';
+import { MoreScreen } from './ui/screens/MoreScreen';
+import { SessionScreen } from './ui/screens/SessionScreen';
+import { SettingsScreen } from './ui/screens/SettingsScreen';
+import { TodayScreen } from './ui/screens/TodayScreen';
 import { PuzzlesScreen } from './ui/screens/PuzzlesScreen';
 import { PuzzleTestScreen } from './ui/screens/PuzzleTestScreen';
 import { PuzzleThemeScreen } from './ui/screens/PuzzleThemeScreen';
@@ -59,6 +63,14 @@ function StorageNotice() {
 
 function Screen({ route }: { route: Route }) {
   switch (route.name) {
+    case 'today':
+      return <TodayScreen />;
+    case 'session':
+      return <SessionScreen />;
+    case 'more':
+      return <MoreScreen />;
+    case 'settings':
+      return <SettingsScreen />;
     case 'traps':
       return <TrapListScreen />;
     case 'trap':
@@ -85,7 +97,7 @@ function Screen({ route }: { route: Route }) {
       return (
         <div class="screen">
           <h1 class="screen-title">{t.notFound.title}</h1>
-          <a class="button button-primary" href={routeHref({ name: 'traps' })}>
+          <a class="button button-primary" href={routeHref({ name: 'today' })}>
             {t.notFound.back}
           </a>
         </div>
@@ -97,7 +109,8 @@ export function App() {
   const route = useRoute();
   const inTraps = ['traps', 'trap', 'learn', 'chain', 'review'].includes(route.name);
   const inPuzzles = ['puzzles', 'puzzleTest', 'puzzleTheme'].includes(route.name);
-  const inData = route.name === 'data' || route.name === 'diag';
+  const inToday = route.name === 'today' || route.name === 'session';
+  const inMore = ['more', 'settings', 'data', 'diag', 'board'].includes(route.name);
   // A new screen starts at the top; without this the page keeps the scroll of the previous one.
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -107,17 +120,17 @@ export function App() {
       <header class="header">
         <span class="header-title">{t.appTitle}</span>
         <nav class="nav">
+          <a href={routeHref({ name: 'today' })} aria-current={inToday ? 'page' : undefined}>
+            {t.nav.today}
+          </a>
           <a href={routeHref({ name: 'traps' })} aria-current={inTraps ? 'page' : undefined}>
             {t.nav.traps}
           </a>
           <a href={routeHref({ name: 'puzzles' })} aria-current={inPuzzles ? 'page' : undefined}>
             {t.nav.puzzles}
           </a>
-          <a href={routeHref({ name: 'board' })} aria-current={route.name === 'board' ? 'page' : undefined}>
-            {t.nav.board}
-          </a>
-          <a href={routeHref({ name: 'data' })} aria-current={inData ? 'page' : undefined}>
-            {t.nav.data}
+          <a href={routeHref({ name: 'more' })} aria-current={inMore ? 'page' : undefined}>
+            {t.nav.more}
           </a>
         </nav>
       </header>
