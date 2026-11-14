@@ -46,8 +46,10 @@ jobs:
         run: |
           export VITE_COMMIT="${GITHUB_SHA::7}"
           npm run build -- --base="${{ steps.base.outputs.path }}"
-      # One smoke test in a phone-sized headless Chromium, against the build made above and
-      # under the same base path. A failure stops the deploy.
+      # The size budget of docs/PLAN.md: what the phone downloads and what it parses at start-up.
+      - run: npm run check:size
+      # Tests in a phone-sized headless Chromium, against the build made above and under the
+      # same base path, one of them with the network off. A failure stops the deploy.
       - name: Install the test browser
         run: npx playwright install --with-deps --only-shell chromium
       - name: Smoke test
