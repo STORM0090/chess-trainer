@@ -31,6 +31,12 @@ The full license texts are in each package's `LICENSE` file (in `node_modules` a
 generated file with the full texts is part of stage M7, before the first APK release
 (`docs/PLAN.md`, "APK signing key").
 
+## Content
+
+| Content | Source | License | Notes |
+| --- | --- | --- | --- |
+| Puzzles in `content/puzzles/lichess.json` | Lichess puzzle database, https://database.lichess.org/#puzzles | CC0 1.0 | 1,896 puzzles chosen by `scripts/build-puzzles.ts`; the archive and the choice are described in `content/puzzles/README.md`. CC0 asks for no attribution; the source is named here and in the app anyway. |
+
 ## Artwork
 
 | Asset | Author | License | Notes |

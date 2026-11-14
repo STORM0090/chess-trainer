@@ -22,7 +22,8 @@
     "verify": "node scripts/verify.ts",
     "verify:check": "node scripts/verify.ts --check",
     "check:privacy": "node scripts/check-privacy.ts",
-    "explain:facts": "node scripts/explain-facts.ts"
+    "explain:facts": "node scripts/explain-facts.ts",
+    "build:puzzles": "node scripts/build-puzzles.ts"
   },
   "dependencies": {
     "@lichess-org/chessground": "10.5.0",
