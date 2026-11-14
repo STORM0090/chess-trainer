@@ -21,7 +21,8 @@
     "test:e2e": "playwright test",
     "verify": "node scripts/verify.ts",
     "verify:check": "node scripts/verify.ts --check",
-    "check:privacy": "node scripts/check-privacy.ts"
+    "check:privacy": "node scripts/check-privacy.ts",
+    "explain:facts": "node scripts/explain-facts.ts"
   },
   "dependencies": {
     "@lichess-org/chessground": "10.5.0",

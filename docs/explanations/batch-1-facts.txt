@@ -1,0 +1,257 @@
+
+# fools-mate (Fool's Mate), the player is black
+engine: stockfish 19.0.1 (single, full network), 2000000 nodes
+[0] trap (main): 1.f3 e5 2.g4?? Qh4#
+    2.g4: marked ??
+    2...Qh4#: from h4 it attacks: pawn g4, pawn h2, king e1; checkmate
+  end: checkmate, Black wins
+  check on the White king e1 from: Black queen h4
+    the checking piece on h4 is attacked by White: nobody; defended by Black: nobody
+    d1: blocked by own queen
+    d2: blocked by own pawn
+    e2: blocked by own pawn
+    f1: blocked by own bishop
+    f2: covered by Black queen h4
+[1] trap: 1.g4 e5 2.f3?? Qh4#
+    2.f3: marked ??
+    2...Qh4#: from h4 it attacks: pawn g4, pawn h2, king e1; checkmate
+  end: checkmate, Black wins
+  check on the White king e1 from: Black queen h4
+    the checking piece on h4 is attacked by White: nobody; defended by Black: nobody
+    d1: blocked by own queen
+    d2: blocked by own pawn
+    e2: blocked by own pawn
+    f1: blocked by own bishop
+    f2: covered by Black queen h4
+[2] trap: 1.f3 e5 2.h3? Qh4+ 3.g3 Qxg3#
+    2.h3: marked ?
+    2...Qh4+: from h4 it attacks: pawn h3, king e1; check
+    3.g3: from g3 it attacks: queen h4; on g3 it can be taken by Black queen h4; defended by nobody; was in check with 1 legal move(s): g3
+    3...Qxg3#: captures the pawn on g3 (before the move it was attacked by Black queen h4 and defended by nobody); from g3 it attacks: pawn f3, pawn h3, king e1, knight g1; checkmate
+  end: checkmate, Black wins
+  check on the White king e1 from: Black queen g3
+    the checking piece on g3 is attacked by White: nobody; defended by Black: nobody
+    d1: blocked by own queen
+    d2: blocked by own pawn
+    e2: blocked by own pawn
+    f1: blocked by own bishop
+    f2: covered by Black queen g3
+[3] sound: 1.f3 e5 2.e4
+  end: no mate; Black to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: none
+  White pieces under attack: none
+  engine (stored by verify): 0.80 for the player, best move f8c5
+[4] sound: 1.f3 e5 2.Nc3
+  end: no mate; Black to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: none
+  White pieces under attack: none
+  engine (stored by verify): 0.72 for the player, best move g8f6
+
+# fools-mate-white (Fool's Mate, White's version), the player is white
+engine: stockfish 19.0.1 (single, full network), 2000000 nodes
+[0] trap (main): 1.e4 g5 2.d4 f6?? 3.Qh5#
+    2...f6: marked ??
+    3.Qh5#: from h5 it attacks: king e8, pawn h7, pawn g5; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen h5
+    the checking piece on h5 is attacked by Black: nobody; defended by White: nobody
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: blocked by own pawn
+    f7: covered by White queen h5
+    f8: blocked by own bishop
+[1] trap: 1.e4 f6 2.d4 g5?? 3.Qh5#
+    2...g5: on g5 it can be taken by White bishop c1; defended by Black pawn f6; marked ??
+    3.Qh5#: from h5 it attacks: king e8, pawn h7, pawn g5; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen h5
+    the checking piece on h5 is attacked by Black: nobody; defended by White: nobody
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: blocked by own pawn
+    f7: covered by White queen h5
+    f8: blocked by own bishop
+[2] sound: 1.e4 g5 2.d4 h6
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: none
+  Black pieces under attack: pawn g5 (attacked by c1; defended by h6)
+  engine (stored by verify): 2.15 for the player, best move h2h4
+[3] sound: 1.e4 f6 2.d4 e6
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: none
+  Black pieces under attack: none
+  engine (stored by verify): 1.51 for the player, best move a2a3
+
+# scholars-mate (Scholar's Mate), the player is white
+engine: stockfish 19.0.1 (single, full network), 2000000 nodes
+[0] trap (main): 1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...Nf6: from f6 it attacks: queen h5, pawn e4; marked ??
+    4.Qxf7#: captures the pawn on f7 (before the move it was attacked by White queen h5, White bishop c4 and defended by Black king e8); from f7 it attacks: king e8, bishop f8, pawn d7, pawn g7, knight f6; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen f7
+    the checking piece on f7 is attacked by Black: Black king e8; defended by White: White bishop c4
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: covered by White queen f7
+    f7: covered by White bishop c4
+    f8: blocked by own bishop
+[1] trap: 1.e4 e5 2.Bc4 Nc6 3.Qh5 Nf6?? 4.Qxf7#
+    2.Bc4: from c4 it attacks: pawn f7
+    3.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3...Nf6: from f6 it attacks: queen h5, pawn e4; marked ??
+    4.Qxf7#: captures the pawn on f7 (before the move it was attacked by White queen h5, White bishop c4 and defended by Black king e8); from f7 it attacks: king e8, bishop f8, pawn d7, pawn g7, knight f6; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen f7
+    the checking piece on f7 is attacked by Black: Black king e8; defended by White: White bishop c4
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: covered by White queen f7
+    f7: covered by White bishop c4
+    f8: blocked by own bishop
+[2] trap: 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nd4?? 5.Qxf7#
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7
+    4.Qf3: from f3 it attacks: pawn f7
+    4...Nd4: from d4 it attacks: queen f3, pawn c2; marked ??
+    5.Qxf7#: captures the pawn on f7 (before the move it was attacked by White bishop c4, White queen f3 and defended by Black king e8); from f7 it attacks: king e8, bishop f8, knight g8, pawn d7, pawn h7, pawn g6; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen f7
+    the checking piece on f7 is attacked by Black: Black king e8; defended by White: White bishop c4
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: covered by White queen f7
+    f7: covered by White bishop c4
+    f8: blocked by own bishop
+[3] trap: 1.e4 e5 2.Qh5 g6?? 3.Qxe5+ Qe7 4.Qxh8
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    2...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7; marked ??
+    3.Qxe5+: captures the pawn on e5 (before the move it was attacked by White queen h5 and defended by nobody); from e5 it attacks: king e8, rook h8, pawn c7; check
+    3...Qe7: from e7 it attacks: queen e5; on e7 it can be taken by White queen e5; defended by Black king e8, Black bishop f8, Black knight g8; was in check with 3 legal move(s): Qe7 Be7 Ne7
+    4.Qxh8: captures the rook on h8 (before the move it was attacked by White queen e5 and defended by nobody); from h8 it attacks: knight g8, pawn h7
+  end: no mate; Black to move
+  material, player minus opponent: 6 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: pawn e4 (attacked by e7; defended by nobody)
+  Black pieces under attack: knight g8 (attacked by h8; defended by nobody); pawn h7 (attacked by h8; defended by nobody)
+  engine (stored by verify): 7.04 for the player, best move d7d5
+[4] trap: 1.e4 e5 2.Qh5 Ke7?? 3.Qxe5#
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    2...Ke7: marked ??
+    3.Qxe5#: captures the pawn on e5 (before the move it was attacked by White queen h5 and defended by nobody); from e5 it attacks: pawn c7, king e7, pawn g7; checkmate
+  end: checkmate, White wins
+  check on the Black king e7 from: White queen e5
+    the checking piece on e5 is attacked by Black: nobody; defended by White: nobody
+    d6: covered by White queen e5
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e6: covered by White queen e5
+    e8: covered by White queen e5
+    f6: covered by White queen e5
+    f7: blocked by own pawn
+    f8: blocked by own bishop
+[5] decline: 1.e4 e5 2.Qh5 Nf6 3.Qxe5+ Be7
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    2...Nf6: from f6 it attacks: queen h5, pawn e4
+    3.Qxe5+: captures the pawn on e5 (before the move it was attacked by White queen h5 and defended by nobody); from e5 it attacks: king e8, pawn c7, knight f6; check
+    3...Be7: on e7 it can be taken by White queen e5; defended by Black queen d8, Black king e8; was in check with 2 legal move(s): Qe7 Be7
+  end: no mate; White to move
+  material, player minus opponent: 1 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: pawn e4 (attacked by f6; defended by e5)
+  Black pieces under attack: pawn c7 (attacked by e5; defended by d8); bishop e7 (attacked by e5; defended by d8,e8); knight f6 (attacked by e5; defended by e7,g7)
+  engine (stored by verify): -0.13 for the player, best move e5f4
+[6] sound: 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7
+    4.Qf3: from f3 it attacks: pawn f7
+    4...Nf6: from f6 it attacks: pawn e4; on f6 it can be taken by White queen f3; defended by Black queen d8
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: pawn e4 (attacked by f6; defended by f3)
+  Black pieces under attack: pawn f7 (attacked by c4; defended by e8); knight f6 (attacked by f3; defended by d8)
+  engine (stored by verify): -0.24 for the player, best move g1e2
+[7] sound: 1.e4 e5 2.Qh5 Nc6 3.Bc4 Qe7
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  White pieces under attack: none
+  Black pieces under attack: pawn f7 (attacked by h5,c4; defended by e8,e7); pawn h7 (attacked by h5; defended by h8); pawn e5 (attacked by h5; defended by e7,c6)
+  engine (stored by verify): -0.03 for the player, best move d2d3
+
+# scholars-mate-defence (Scholar's Mate: the defence), the player is black
+engine: stockfish 19.0.1 (single, full network), 2000000 nodes
+[0] hold (main): 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7
+    4.Qf3: from f3 it attacks: pawn f7
+    4...Nf6: from f6 it attacks: pawn e4; on f6 it can be taken by White queen f3; defended by Black queen d8
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: pawn f7 (attacked by c4; defended by e8); knight f6 (attacked by f3; defended by d8)
+  White pieces under attack: pawn e4 (attacked by f6; defended by f3)
+  engine (stored by verify): 0.24 for the player, best move g1e2
+[1] hold: 1.e4 e5 2.Bc4 Nc6 3.Qf3 Nf6
+    2.Bc4: from c4 it attacks: pawn f7
+    3.Qf3: from f3 it attacks: pawn f7
+    3...Nf6: from f6 it attacks: pawn e4; on f6 it can be taken by White queen f3; defended by Black queen d8, Black pawn g7
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: pawn f7 (attacked by c4; defended by e8); knight f6 (attacked by f3; defended by d8,g7)
+  White pieces under attack: pawn e4 (attacked by f6; defended by f3)
+  engine (stored by verify): 0.00 for the player, best move g1e2
+[2] hold: 1.e4 e5 2.Bc4 Bc5 3.Qh5 Qe7
+    2.Bc4: from c4 it attacks: pawn f7
+    2...Bc5: from c5 it attacks: pawn f2
+    3.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+  end: no mate; White to move
+  material, player minus opponent: 0 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: pawn f7 (attacked by h5,c4; defended by e8,e7); pawn h7 (attacked by h5; defended by h8); pawn e5 (attacked by h5; defended by e7)
+  White pieces under attack: pawn f2 (attacked by c5; defended by e1)
+  engine (stored by verify): 0.14 for the player, best move h5e2
+[3] punish: 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6 5.Qb3? Nd4 6.Bxf7+ Ke7 7.Qc4 b5
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7
+    4.Qf3: from f3 it attacks: pawn f7
+    4...Nf6: from f6 it attacks: pawn e4; on f6 it can be taken by White queen f3; defended by Black queen d8
+    5.Qb3: from b3 it attacks: pawn b7; marked ?
+    5...Nd4: from d4 it attacks: queen b3, pawn c2
+    6.Bxf7+: captures the pawn on f7 (before the move it was attacked by White bishop c4 and defended by Black king e8); from f7 it attacks: king e8, pawn g6; check; on f7 it can be taken by Black king e8; defended by White queen b3
+    6...Ke7: from e7 it attacks: bishop f7; was in check with 1 legal move(s): Ke7
+    7.Qc4: from c4 it attacks: pawn c7, knight d4
+    7...b5: from b5 it attacks: queen c4; on b5 it can be taken by White queen c4; defended by Black knight d4
+  end: no mate; White to move
+  material, player minus opponent: -1 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: pawn c7 (attacked by c4; defended by d8); pawn g6 (attacked by f7; defended by h7); pawn b5 (attacked by c4; defended by d4); knight d4 (attacked by c4; defended by e5)
+  White pieces under attack: bishop f7 (attacked by e7; defended by c4); queen c4 (attacked by b5; defended by f7); pawn e4 (attacked by f6; defended by nobody); pawn c2 (attacked by d4; defended by c4)
+  engine (stored by verify): 5.93 for the player, best move c4d3
+[4] mistake: 1.e4 e5 2.Qh5 g6?? 3.Qxe5+
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    2...g6: from g6 it attacks: queen h5; on g6 it can be taken by White queen h5; defended by Black pawn f7, Black pawn h7; marked ??
+    3.Qxe5+: captures the pawn on e5 (before the move it was attacked by White queen h5 and defended by nobody); from e5 it attacks: king e8, rook h8, pawn c7; check
+  end: no mate; Black to move (in check)
+  material, player minus opponent: -1 (pawn 1, minor 3, rook 5, queen 9)
+  Black pieces under attack: rook h8 (attacked by e5; defended by nobody); pawn c7 (attacked by e5; defended by d8)
+  White pieces under attack: none
+  engine (stored by verify): -7.26 for the player, best move d8e7
+[5] mistake: 1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7#
+    2.Qh5: from h5 it attacks: pawn f7, pawn h7, pawn e5
+    3.Bc4: from c4 it attacks: pawn f7
+    3...Nf6: from f6 it attacks: queen h5, pawn e4; marked ??
+    4.Qxf7#: captures the pawn on f7 (before the move it was attacked by White queen h5, White bishop c4 and defended by Black king e8); from f7 it attacks: king e8, bishop f8, pawn d7, pawn g7, knight f6; checkmate
+  end: checkmate, White wins
+  check on the Black king e8 from: White queen f7
+    the checking piece on f7 is attacked by Black: Black king e8; defended by White: White bishop c4
+    d7: blocked by own pawn
+    d8: blocked by own queen
+    e7: covered by White queen f7
+    f7: covered by White bishop c4
+    f8: blocked by own bishop
