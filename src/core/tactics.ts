@@ -9,7 +9,8 @@ import {
   type PuzzleEntry,
   type PuzzleTheme,
 } from '../../shared/puzzle-types.ts';
-import { startOfLocalDay } from './days';
+import { startOfNextLocalDay } from './days';
+import { nextReviewDay, reviewCard, startCard, type Grade, type StoredCard } from './schedule';
 
 /** What the app remembers about one puzzle. */
 export interface PuzzleStat {
@@ -19,6 +20,51 @@ export interface PuzzleStat {
   clean: number;
   lastAt: number;
   lastClean: boolean;
+  /**
+   * FSRS state. A puzzle gets a card when an attempt was not clean; a puzzle solved cleanly
+   * at once never comes back by itself.
+   */
+  card: StoredCard | null;
+  /** The review opens at this time (the start of a local day); `null` without a card. */
+  dueAt: number | null;
+}
+
+/** Errors and hints of one attempt. */
+export interface AttemptResult {
+  errors: number;
+  hints: number;
+}
+
+function gradeOfAttempt(result: AttemptResult): Grade {
+  if (result.errors > 0) return 'again';
+  return result.hints > 0 ? 'hard' : 'good';
+}
+
+export function isPuzzleDue(stat: PuzzleStat | undefined, now: number): boolean {
+  return stat != null && stat.card !== null && stat.dueAt !== null && stat.dueAt <= now;
+}
+
+/** Puzzles whose review is open, the longest waiting first. */
+export function duePuzzleIds(stats: Record<string, PuzzleStat>, now: number): string[] {
+  return Object.values(stats)
+    .filter((stat) => isPuzzleDue(stat, now))
+    .sort((a, b) => (a.dueAt ?? 0) - (b.dueAt ?? 0) || (a.id < b.id ? -1 : 1))
+    .map((stat) => stat.id);
+}
+
+/**
+ * A record written before puzzles had FSRS cards (the M4 build, progress file format 2).
+ * A puzzle that was failed last time gets a card as if it had been failed under the new
+ * rule: it is due on the day after that attempt, which is when the old rule brought it back.
+ */
+export function migratePuzzleStat(stat: Omit<PuzzleStat, 'card' | 'dueAt'> & Partial<PuzzleStat>): PuzzleStat {
+  if (stat.card !== undefined && stat.dueAt !== undefined) return stat as PuzzleStat;
+  if (stat.lastClean) return { ...stat, card: null, dueAt: null };
+  return {
+    ...stat,
+    card: startCard(stat.id, 'again', stat.lastAt),
+    dueAt: startOfNextLocalDay(stat.lastAt),
+  };
 }
 
 export interface TestRecord {
@@ -131,9 +177,9 @@ export function applyTest(results: boolean[], now: number): TacticsState {
 }
 
 /**
- * The next puzzle of a theme. In this order: a puzzle failed on an earlier day (it comes
- * back), a new puzzle from the band, a new puzzle with the nearest rating, and when the
- * theme has nothing new left, the puzzle solved longest ago.
+ * The next puzzle of a theme. In this order: a failed puzzle whose review is due, a new
+ * puzzle from the band, a new puzzle with the nearest rating, and when the theme has
+ * nothing new left, the puzzle tried longest ago.
  */
 export function nextPuzzle(
   pool: PuzzleEntry[],
@@ -146,13 +192,11 @@ export function nextPuzzle(
 ): PuzzleEntry | undefined {
   const band = bandFor(level, theme);
   const ofTheme = pool.filter((puzzle) => puzzle.themes.includes(theme) && puzzle.id !== exclude);
-  const today = startOfLocalDay(now);
 
-  const failedBefore = ofTheme.filter((puzzle) => {
-    const stat = stats[puzzle.id];
-    return stat !== undefined && !stat.lastClean && stat.lastAt < today;
-  });
-  if (failedBefore.length > 0) return pick(failedBefore, random);
+  const due = ofTheme
+    .filter((puzzle) => isPuzzleDue(stats[puzzle.id], now))
+    .sort((a, b) => (stats[a.id]?.dueAt ?? 0) - (stats[b.id]?.dueAt ?? 0));
+  if (due[0]) return due[0];
 
   const fresh = ofTheme.filter((puzzle) => stats[puzzle.id] === undefined);
   const inBand = fresh.filter((puzzle) => puzzle.rating >= band.min && puzzle.rating < band.max);
@@ -165,13 +209,38 @@ export function nextPuzzle(
   return [...ofTheme].sort((a, b) => (stats[a.id]?.lastAt ?? 0) - (stats[b.id]?.lastAt ?? 0))[0];
 }
 
-export function applyPuzzleStat(stat: PuzzleStat | undefined, id: string, clean: boolean, now: number): PuzzleStat {
+/**
+ * Records one attempt. A first attempt that is not clean starts an FSRS card, due the next
+ * day at the earliest. A puzzle with a card is graded when its review is due; an extra try
+ * before that day changes nothing in the schedule. A clean first attempt schedules nothing.
+ */
+export function applyPuzzleStat(
+  stat: PuzzleStat | undefined,
+  id: string,
+  result: AttemptResult,
+  now: number,
+): PuzzleStat {
+  const clean = result.errors === 0 && result.hints === 0;
+  const grade = gradeOfAttempt(result);
+  let card = stat?.card ?? null;
+  let dueAt = stat?.dueAt ?? null;
+  if (card === null) {
+    if (!clean) {
+      card = startCard(id, grade, now);
+      dueAt = nextReviewDay(card, now);
+    }
+  } else if (dueAt !== null && dueAt <= now) {
+    card = reviewCard(card, grade, now);
+    dueAt = nextReviewDay(card, now);
+  }
   return {
     id,
     attempts: (stat?.attempts ?? 0) + 1,
     clean: (stat?.clean ?? 0) + (clean ? 1 : 0),
     lastAt: now,
     lastClean: clean,
+    card,
+    dueAt,
   };
 }
 

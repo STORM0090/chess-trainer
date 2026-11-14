@@ -1,7 +1,9 @@
-import { describe, expect, it } from 'vitest';
+import { beforeAll, describe, expect, it } from 'vitest';
 import { TACTICS_LEVELS, TOP_LEVEL, type PuzzleEntry, type PuzzleTheme } from '../shared/puzzle-types.ts';
 import { compilePuzzle } from '../src/core/puzzle-model';
 import { judgeMove } from '../src/core/learn';
+import { DAY_MS, startOfNextLocalDay } from '../src/core/days';
+import { initSchedule } from '../src/core/schedule';
 import { fenAtPly } from '../src/core/trap-model';
 import {
   LEVEL_WINDOW,
@@ -9,7 +11,10 @@ import {
   applyPuzzleToLevel,
   applyTest,
   bandFor,
+  duePuzzleIds,
   emptyTactics,
+  isPuzzleDue,
+  migratePuzzleStat,
   levelFromTest,
   nextPuzzle,
   pickTestPuzzles,
@@ -18,6 +23,11 @@ import {
   type TacticsState,
 } from '../src/core/tactics';
 
+beforeAll(initSchedule);
+
+const CLEAN = { errors: 0, hints: 0 };
+const WRONG = { errors: 1, hints: 0 };
+const HINTED = { errors: 0, hints: 2 };
 const NOW = new Date(2026, 10, 14, 21, 30).getTime();
 const YESTERDAY = new Date(2026, 10, 13, 12, 0).getTime();
 
@@ -35,7 +45,7 @@ function fake(id: string, rating: number, ...themes: PuzzleTheme[]): PuzzleEntry
 }
 
 function stat(id: string, lastClean: boolean, lastAt: number): PuzzleStat {
-  return { id, attempts: 1, clean: lastClean ? 1 : 0, lastAt, lastClean };
+  return applyPuzzleStat(undefined, id, lastClean ? CLEAN : WRONG, lastAt);
 }
 
 describe('compilePuzzle', () => {
@@ -139,7 +149,7 @@ describe('nextPuzzle', () => {
     expect(nextPuzzle(pool, 'pin', 0, {}, NOW, () => 0)?.id).toBe('pin');
   });
 
-  it('brings back a puzzle failed on an earlier day, but not one failed today', () => {
+  it('brings back a failed puzzle when its review is due, not on the day it was failed', () => {
     expect(nextPuzzle(pool, 'mateIn1', 0, { mid: stat('mid', false, YESTERDAY) }, NOW, () => 0)?.id).toBe('mid');
     expect(nextPuzzle(pool, 'mateIn1', 0, { mid: stat('mid', false, NOW) }, NOW, () => 0)?.id).toBe('low');
   });
@@ -159,9 +169,9 @@ describe('nextPuzzle', () => {
 
 describe('progress in puzzles', () => {
   it('counts attempts and clean solutions', () => {
-    const first = applyPuzzleStat(undefined, 'a', false, YESTERDAY);
-    expect(first).toEqual({ id: 'a', attempts: 1, clean: 0, lastAt: YESTERDAY, lastClean: false });
-    expect(applyPuzzleStat(first, 'a', true, NOW)).toEqual({
+    const first = applyPuzzleStat(undefined, 'a', WRONG, YESTERDAY);
+    expect(first).toMatchObject({ id: 'a', attempts: 1, clean: 0, lastAt: YESTERDAY, lastClean: false });
+    expect(applyPuzzleStat(first, 'a', CLEAN, NOW)).toMatchObject({
       id: 'a',
       attempts: 2,
       clean: 1,
@@ -169,7 +179,78 @@ describe('progress in puzzles', () => {
       lastClean: true,
     });
     const pool = [fake('a', 500, 'mateIn1'), fake('b', 500, 'mateIn1')];
-    expect(solvedCount(pool, 'mateIn1', { a: applyPuzzleStat(first, 'a', true, NOW), b: first })).toBe(1);
+    expect(solvedCount(pool, 'mateIn1', { a: applyPuzzleStat(first, 'a', CLEAN, NOW), b: first })).toBe(1);
+  });
+
+  it('schedules nothing for a puzzle solved cleanly at once', () => {
+    expect(applyPuzzleStat(undefined, 'a', CLEAN, NOW)).toMatchObject({ card: null, dueAt: null });
+    expect(isPuzzleDue(applyPuzzleStat(undefined, 'a', CLEAN, NOW), NOW + 400 * DAY_MS)).toBe(false);
+  });
+
+  it('gives a failed puzzle a review card, due tomorrow at the earliest', () => {
+    for (const result of [WRONG, HINTED]) {
+      const failed = applyPuzzleStat(undefined, 'a', result, NOW);
+      expect(failed.card).not.toBeNull();
+      expect(failed.dueAt).toBe(startOfNextLocalDay(NOW));
+      expect(isPuzzleDue(failed, NOW)).toBe(false);
+      expect(isPuzzleDue(failed, startOfNextLocalDay(NOW))).toBe(true);
+    }
+  });
+
+  it('moves the review further away after every good answer and brings it back after a bad one', () => {
+    let puzzle = applyPuzzleStat(undefined, 'a', WRONG, NOW);
+    const gaps: number[] = [];
+    let at = puzzle.dueAt ?? 0;
+    for (let round = 0; round < 4; round++) {
+      puzzle = applyPuzzleStat(puzzle, 'a', CLEAN, at);
+      const gap = Math.round(((puzzle.dueAt ?? 0) - at) / DAY_MS);
+      gaps.push(gap);
+      at = puzzle.dueAt ?? 0;
+    }
+    expect(gaps.every((gap) => gap >= 1)).toBe(true);
+    expect(gaps).toEqual([...gaps].sort((a, b) => a - b));
+    expect(gaps.at(-1)).toBeGreaterThan(gaps[0] ?? 0);
+    const lapsed = applyPuzzleStat(puzzle, 'a', WRONG, at);
+    expect(Math.round(((lapsed.dueAt ?? 0) - at) / DAY_MS)).toBeLessThan(gaps.at(-1) ?? 0);
+    expect(lapsed.card?.lapses).toBe((puzzle.card?.lapses ?? 0) + 1);
+  });
+
+  it('leaves the schedule alone when a puzzle is tried again before its day', () => {
+    const failed = applyPuzzleStat(undefined, 'a', WRONG, NOW);
+    const again = applyPuzzleStat(failed, 'a', CLEAN, NOW + 60_000);
+    expect(again.card).toEqual(failed.card);
+    expect(again.dueAt).toBe(failed.dueAt);
+    expect(again).toMatchObject({ attempts: 2, clean: 1, lastClean: true });
+  });
+
+  it('starts a card when a puzzle that was once solved is failed later', () => {
+    const solved = applyPuzzleStat(undefined, 'a', CLEAN, YESTERDAY);
+    const failed = applyPuzzleStat(solved, 'a', WRONG, NOW);
+    expect(failed.card).not.toBeNull();
+    expect(failed.dueAt).toBe(startOfNextLocalDay(NOW));
+  });
+
+  it('lists due puzzles, the longest waiting first', () => {
+    const stats = {
+      b: applyPuzzleStat(undefined, 'b', WRONG, NOW - 2 * DAY_MS),
+      a: applyPuzzleStat(undefined, 'a', WRONG, NOW - 5 * DAY_MS),
+      c: applyPuzzleStat(undefined, 'c', WRONG, NOW),
+      d: applyPuzzleStat(undefined, 'd', CLEAN, NOW - 5 * DAY_MS),
+    };
+    expect(duePuzzleIds(stats, NOW)).toEqual(['a', 'b']);
+  });
+
+  it('gives records of the M4 build a card when the last attempt failed', () => {
+    const old = { id: 'a', attempts: 2, clean: 0, lastAt: YESTERDAY, lastClean: false };
+    const migrated = migratePuzzleStat(old);
+    expect(migrated).toMatchObject(old);
+    expect(migrated.card).not.toBeNull();
+    // Due on the day after the failed attempt: the day the old rule brought it back.
+    expect(migrated.dueAt).toBe(startOfNextLocalDay(YESTERDAY));
+    expect(isPuzzleDue(migrated, NOW)).toBe(true);
+    expect(migratePuzzleStat({ ...old, clean: 1, lastClean: true })).toMatchObject({ card: null, dueAt: null });
+    // A record that already has the fields is returned as it is.
+    expect(migratePuzzleStat(migrated)).toBe(migrated);
   });
 
   it('raises the level after a full window solved well enough', () => {

@@ -1,4 +1,4 @@
-// Spaced repetition for learned traps. The only module that talks to ts-fsrs.
+// Spaced repetition for learned traps and failed puzzles. The only module that talks to ts-fsrs.
 
 import { DefaultScheduler, Rating } from 'ts-fsrs';
 import { startOfLocalDay, startOfNextLocalDay } from './days';
@@ -92,9 +92,14 @@ function answer(card: LibCard, grade: Grade, now: number): StoredCard {
   return store(ready().review({ card, grade: RATING[grade], now: new Date(now) }).card);
 }
 
+/** A new card with its first answer at `now`. */
+export function startCard(cardId: string, grade: Grade, now: number): StoredCard {
+  return answer({ ...ready().newCard({ now: new Date(now) }), cardId }, grade, now);
+}
+
 /** The card of a trap that has just been learned: one "good" answer at `now`. */
 export function firstCard(cardId: string, now: number): StoredCard {
-  return answer({ ...ready().newCard({ now: new Date(now) }), cardId }, 'good', now);
+  return startCard(cardId, 'good', now);
 }
 
 export function reviewCard(card: StoredCard, grade: Grade, now: number): StoredCard {

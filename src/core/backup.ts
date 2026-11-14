@@ -1,14 +1,36 @@
 // The progress file for export and import. It is plain JSON with a format number, and every
 // field is checked on the way in: an imported file replaces what is on the device.
 
-import type { AppData, GameEntry, GameOutcome, LineStat, Settings, TrapProgress } from './progress';
+import { DAILY_NORMS, type DailyNorm, type DayRecord, type SessionItem } from './daily';
+import { isDayKey, type DayKey } from './days';
+import { isReminderTime } from './ics';
+import {
+  defaultSettings,
+  type AppData,
+  type GameEntry,
+  type GameOutcome,
+  type LineStat,
+  type Settings,
+  type TrapProgress,
+} from './progress';
 import type { StoredCard } from './schedule';
-import { emptyTactics, TEST_SIZE, type PuzzleStat, type TacticsState, type TestRecord } from './tactics';
+import {
+  emptyTactics,
+  migratePuzzleStat,
+  TEST_SIZE,
+  type PuzzleStat,
+  type TacticsState,
+  type TestRecord,
+} from './tactics';
 import { TOP_LEVEL } from '../../shared/puzzle-types.ts';
 
 export const BACKUP_APP = 'chess-trainer';
-/** Format 2 added puzzles and the tactics level. Files of format 1 are still read. */
-export const BACKUP_FORMAT = 2;
+/**
+ * Format 2 (M4) added puzzles and the tactics level. Format 3 (M5) added the daily log, the
+ * FSRS cards of failed puzzles and new settings. Older files are still read and brought up
+ * to the current shape.
+ */
+export const BACKUP_FORMAT = 3;
 
 export interface BackupFile {
   app: typeof BACKUP_APP;
@@ -142,11 +164,70 @@ function readGame(value: unknown): GameEntry | undefined {
   return { id, trapId, at, outcome: outcome as GameOutcome };
 }
 
-function readSettings(value: unknown): Settings | undefined {
+function readSettings(value: unknown, format: number): Settings | undefined {
   if (!isObject(value)) return undefined;
   const shift = value.clockShiftDays;
   if (!isCount(shift) || shift > 3650) return undefined;
-  return { clockShiftDays: shift };
+  // Formats 1 and 2 had the test clock only.
+  if (format < 3) return { ...defaultSettings(), clockShiftDays: shift };
+  if (!DAILY_NORMS.includes(value.dailyNorm as DailyNorm) || !isReminderTime(value.reminderTime)) return undefined;
+  if (!isTimeOrNull(value.lastBackupAt) || !isTimeOrNull(value.backupSnoozedUntil)) return undefined;
+  return {
+    clockShiftDays: shift,
+    dailyNorm: value.dailyNorm as DailyNorm,
+    reminderTime: value.reminderTime,
+    lastBackupAt: value.lastBackupAt,
+    backupSnoozedUntil: value.backupSnoozedUntil,
+  };
+}
+
+const PUZZLE_ID = /^[A-Za-z0-9]{1,12}$/;
+
+function readSessionItem(value: unknown): SessionItem | undefined {
+  if (!isObject(value) || typeof value.done !== 'boolean') return undefined;
+  if (!(value.clean === null || typeof value.clean === 'boolean')) return undefined;
+  const { done, clean } = value;
+  if (value.kind === 'puzzle') {
+    const role = value.role;
+    if (typeof value.id !== 'string' || !PUZZLE_ID.test(value.id)) return undefined;
+    if (role !== 'warmup' && role !== 'new' && role !== 'review') return undefined;
+    return { kind: 'puzzle', id: value.id, role, done, clean };
+  }
+  if ((value.kind === 'trapReview' || value.kind === 'trapStep') && isId(value.id)) {
+    return { kind: value.kind, id: value.id, done, clean };
+  }
+  return undefined;
+}
+
+function readDay(date: string, value: unknown): DayRecord | undefined {
+  if (!isDayKey(date) || !isObject(value) || value.date !== date) return undefined;
+  const counts = [value.done, value.puzzles, value.cleanPuzzles, value.trapSteps, value.reviews];
+  if (!counts.every(isCount)) return undefined;
+  if (!isTimeOrNull(value.metAt) || !isTimeOrNull(value.sessionDoneAt) || !isTime(value.updatedAt)) return undefined;
+  if (!(value.newTrap === null || isId(value.newTrap))) return undefined;
+  let session: SessionItem[] | null = null;
+  if (value.session !== null) {
+    if (!Array.isArray(value.session) || value.session.length > 40) return undefined;
+    session = [];
+    for (const raw of value.session) {
+      const item = readSessionItem(raw);
+      if (!item) return undefined;
+      session.push(item);
+    }
+  }
+  return {
+    date,
+    done: value.done as number,
+    puzzles: value.puzzles as number,
+    cleanPuzzles: value.cleanPuzzles as number,
+    trapSteps: value.trapSteps as number,
+    reviews: value.reviews as number,
+    metAt: value.metAt,
+    newTrap: value.newTrap,
+    session,
+    sessionDoneAt: value.sessionDoneAt,
+    updatedAt: value.updatedAt,
+  };
 }
 
 function isLevel(value: unknown): value is number {
@@ -157,11 +238,18 @@ function isResults(value: unknown, max: number): value is boolean[] {
   return Array.isArray(value) && value.length <= max && value.every((item) => typeof item === 'boolean');
 }
 
-function readPuzzle(id: string, value: unknown): PuzzleStat | undefined {
-  if (!isObject(value) || value.id !== id || !/^[A-Za-z0-9]{1,12}$/.test(id)) return undefined;
+function readPuzzle(id: string, value: unknown, format: number): PuzzleStat | undefined {
+  if (!isObject(value) || value.id !== id || !PUZZLE_ID.test(id)) return undefined;
   if (!isCount(value.attempts) || !isCount(value.clean) || value.clean > value.attempts) return undefined;
   if (!isTime(value.lastAt) || typeof value.lastClean !== 'boolean') return undefined;
-  return { id, attempts: value.attempts, clean: value.clean, lastAt: value.lastAt, lastClean: value.lastClean };
+  const base = { id, attempts: value.attempts, clean: value.clean, lastAt: value.lastAt, lastClean: value.lastClean };
+  // Format 2 had no cards: a puzzle failed last time gets one, due as the old rule had it.
+  if (format < 3) return migratePuzzleStat(base);
+  const card = readCard(value.card);
+  if (card === undefined || !isTimeOrNull(value.dueAt)) return undefined;
+  // A due date belongs to a card, and a card always has one.
+  if ((card === null) !== (value.dueAt === null)) return undefined;
+  return { ...base, card, dueAt: value.dueAt };
 }
 
 function readTest(value: unknown): TestRecord | null | undefined {
@@ -193,19 +281,29 @@ function readData(value: unknown, format: number): AppData | undefined {
     if (!game) return undefined;
     games.push(game);
   }
-  const settings = readSettings(value.settings);
+  const settings = readSettings(value.settings, format);
   if (!settings) return undefined;
   // Format 1 was written before puzzles existed.
-  if (format < 2) return { traps, games, settings, puzzles: {}, tactics: emptyTactics() };
+  if (format < 2) return { traps, games, settings, puzzles: {}, tactics: emptyTactics(), days: {} };
   if (!isObject(value.puzzles)) return undefined;
   const puzzles: Record<string, PuzzleStat> = {};
   for (const [id, raw] of Object.entries(value.puzzles)) {
-    const puzzle = readPuzzle(id, raw);
+    const puzzle = readPuzzle(id, raw, format);
     if (!puzzle) return undefined;
     puzzles[id] = puzzle;
   }
   const tactics = readTactics(value.tactics);
-  return tactics ? { traps, games, settings, puzzles, tactics } : undefined;
+  if (!tactics) return undefined;
+  // Format 2 was written before the daily log existed: the streak starts from the import.
+  if (format < 3) return { traps, games, settings, puzzles, tactics, days: {} };
+  if (!isObject(value.days)) return undefined;
+  const days: Record<DayKey, DayRecord> = {};
+  for (const [date, raw] of Object.entries(value.days)) {
+    const day = readDay(date, raw);
+    if (!day) return undefined;
+    days[date] = day;
+  }
+  return { traps, games, settings, puzzles, tactics, days };
 }
 
 /**
@@ -223,7 +321,8 @@ export function parseBackup(text: string): ParsedBackup {
     return { ok: false, problem: 'notBackup' };
   }
   if (raw.format > BACKUP_FORMAT) return { ok: false, problem: 'newerFormat' };
-  const data = raw.format === 1 || raw.format === 2 ? readData(raw.data, raw.format) : undefined;
+  const known = Number.isInteger(raw.format) && raw.format >= 1 && raw.format <= BACKUP_FORMAT;
+  const data = known ? readData(raw.data, raw.format) : undefined;
   if (!data || typeof raw.exportedAt !== 'string' || typeof raw.appVersion !== 'string') {
     return { ok: false, problem: 'damaged' };
   }

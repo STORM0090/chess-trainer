@@ -3,7 +3,8 @@
 
 import type { ChainStep } from './chain';
 import { firstCard, nextReviewDay, reviewCard, type Grade, type StoredCard } from './schedule';
-import { startOfNextLocalDay } from './days';
+import { startOfNextLocalDay, type DayKey } from './days';
+import type { DailyNorm, DayRecord } from './daily';
 import { emptyTactics, type PuzzleStat, type TacticsState } from './tactics';
 
 export interface LineStat {
@@ -58,6 +59,18 @@ export interface Settings {
    * checked without waiting. 0 in normal use.
    */
   clockShiftDays: number;
+  /** Finished exercises a day that make the day count for the streak. */
+  dailyNorm: DailyNorm;
+  /** Local time of the calendar reminder, "HH:MM". Used when the `.ics` file is made. */
+  reminderTime: string;
+  /** When the progress file was last saved; `null` when never. */
+  lastBackupAt: number | null;
+  /** The backup hint is not shown before this time. */
+  backupSnoozedUntil: number | null;
+}
+
+export function defaultSettings(): Settings {
+  return { clockShiftDays: 0, dailyNorm: 1, reminderTime: '19:00', lastBackupAt: null, backupSnoozedUntil: null };
 }
 
 export interface AppData {
@@ -67,10 +80,12 @@ export interface AppData {
   /** Puzzles the player has tried, by puzzle id. */
   puzzles: Record<string, PuzzleStat>;
   tactics: TacticsState;
+  /** The daily log, by local date. */
+  days: Record<DayKey, DayRecord>;
 }
 
 export function emptyData(): AppData {
-  return { traps: {}, games: [], settings: { clockShiftDays: 0 }, puzzles: {}, tactics: emptyTactics() };
+  return { traps: {}, games: [], settings: defaultSettings(), puzzles: {}, tactics: emptyTactics(), days: {} };
 }
 
 export function emptyProgress(id: string): TrapProgress {
