@@ -1,0 +1,158 @@
+{
+  "app": "chess-trainer",
+  "format": 2,
+  "exportedAt": "2026-11-12T20:15:00.000Z",
+  "appVersion": "0.5.0",
+  "data": {
+    "traps": {
+      "fools-mate": {
+        "id": "fools-mate",
+        "seenAt": 1794346200000,
+        "chainDepth": 2,
+        "lines": {
+          "0123abcd": {
+            "clean": 0,
+            "failed": 1,
+            "skipped": false
+          }
+        },
+        "runs": {
+          "clean": 2,
+          "failed": 1
+        },
+        "learnedAt": 1794346200000,
+        "knownAt": null,
+        "card": {
+          "cardId": "fools-mate",
+          "stability": 7.60387644,
+          "stabilityFast": 117.53970348,
+          "difficulty": 3.49771674,
+          "state": 2,
+          "scheduleStatus": "review",
+          "dueAt": 1795783906326,
+          "lastReviewAt": 1794387600000,
+          "reps": 2,
+          "lapses": 0,
+          "scheduledDays": 16.16095285321785,
+          "learningStep": 0
+        },
+        "dueAt": 1795737600000,
+        "reviews": 1,
+        "masteredAt": 1794387600000,
+        "updatedAt": 1794387600000
+      },
+      "fools-mate-white": {
+        "id": "fools-mate-white",
+        "seenAt": 1794387600000,
+        "chainDepth": 3,
+        "lines": {},
+        "runs": {
+          "clean": 0,
+          "failed": 0
+        },
+        "learnedAt": 1794387600000,
+        "knownAt": 1794387600000,
+        "card": {
+          "cardId": "fools-mate-white",
+          "stability": 3.9221,
+          "stabilityFast": 3.13768,
+          "difficulty": 3.53072398,
+          "state": 2,
+          "scheduleStatus": "review",
+          "dueAt": 1794800395164,
+          "lastReviewAt": 1794387600000,
+          "reps": 1,
+          "lapses": 0,
+          "scheduledDays": 4.777721809269842,
+          "learningStep": 0
+        },
+        "dueAt": 1794441600000,
+        "reviews": 0,
+        "masteredAt": null,
+        "updatedAt": 1794387600000
+      },
+      "scholars-mate": {
+        "id": "scholars-mate",
+        "seenAt": 1794514500000,
+        "chainDepth": 1,
+        "lines": {},
+        "runs": {
+          "clean": 1,
+          "failed": 0
+        },
+        "learnedAt": null,
+        "knownAt": null,
+        "card": null,
+        "dueAt": null,
+        "reviews": 0,
+        "masteredAt": null,
+        "updatedAt": 1794514500000
+      }
+    },
+    "games": [
+      {
+        "id": "g1",
+        "trapId": "fools-mate",
+        "at": 1794387600000,
+        "outcome": "declined"
+      },
+      {
+        "id": "g2",
+        "trapId": "fools-mate",
+        "at": 1794514500000,
+        "outcome": "worked"
+      }
+    ],
+    "settings": {
+      "clockShiftDays": 0
+    },
+    "puzzles": {
+      "cfxZa": {
+        "id": "cfxZa",
+        "attempts": 1,
+        "clean": 1,
+        "lastAt": 1794387600000,
+        "lastClean": true
+      },
+      "9j0SG": {
+        "id": "9j0SG",
+        "attempts": 2,
+        "clean": 1,
+        "lastAt": 1794514500000,
+        "lastClean": true
+      },
+      "VJHBV": {
+        "id": "VJHBV",
+        "attempts": 1,
+        "clean": 0,
+        "lastAt": 1794514500000,
+        "lastClean": false
+      }
+    },
+    "tactics": {
+      "level": 1,
+      "test": {
+        "at": 1794387600000,
+        "results": [
+          true,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false,
+          true,
+          true,
+          false
+        ],
+        "level": 1
+      },
+      "recent": [
+        true,
+        false,
+        true
+      ],
+      "updatedAt": 1794514500000
+    }
+  }
+}
