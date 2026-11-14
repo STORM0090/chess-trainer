@@ -12,7 +12,7 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M1b (done) | Verified trap content, verify script, two-year roadmap | `docs/QA/M1b-content.md` | |
 | M2 (done) | Learning modes: View and Learn on all 32 traps, ШВУ hints, reliability label | `docs/QA/M2.md` | |
 | M3 (done) | Progression: backward chain, FSRS reviews, stages and unlocking, collection, game log, export and import | `docs/QA/M3.md` | |
-| M4 (built, waits for the phone checklist and the review of the explanations) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
+| M4 (built; the phone checklist waits for the owner) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
 | M5 | Daily session, trap of the day, soft streak, settings, `.ics` reminder | A week of sessions; add the calendar reminder | medium |
 | M6 | Bot below 800 (Stockfish lite plus a human-error layer), ШВУ checklist | Three games; watch heat and battery | large |
 | M7 | Signed APK from GitHub Actions, local notifications | Install, move the progress over, get a notification the next morning | medium |
@@ -23,6 +23,68 @@ the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3; appr
 2026-11-14), the Capacitor packages including
 `@capacitor/local-notifications`, `@capacitor/filesystem` and `@capacitor/share` (M7), and a JDK
 for `keytool` (M7).
+
+## Autonomous mode (from 2026-11-14 until the owner is back)
+
+The owner is away for about two days or longer and gave new rules for that time. They replace
+"stop after every stage" and "merge only after the phone checklist"; everything else in
+`CLAUDE.md` stays.
+
+- Stages are built one after another without waiting: `m5` from `m4`, `m6` from `m5`, and
+  so on. Every branch has a preview and a green CI. Nothing goes into `main`, no tags.
+- Dependencies: only the Capacitor packages of M7 are approved in advance. Anything else is
+  written into `docs/PENDING.md` and worked around.
+- Only the owner decides: the APK signing key and GitHub secrets, a Lichess token, deleting
+  branches or tags, force-push, the license, the visibility of the repository, anything that
+  touches the owner's data.
+- `docs/PROGRESS.md` says where the work is. `docs/RETURN.md` (last branch) is the hand-over.
+- Depth before width: a stage is finished completely before the next one starts. Priority:
+  M5, M6, M7, then M8.
+
+### Quality bar for every stage
+
+1. Green: typecheck, unit tests, e2e on the phone-sized screen including one offline run,
+   `verify:check`, `check:privacy`, and the size budget below.
+2. Data: the IndexedDB schema and the progress file are versioned; migrations have tests;
+   files written in M3 (format 1) and M4 (format 2) must open.
+3. An independent review by a fresh context that has not seen the implementation, before the
+   stage is closed. What it finds is fixed first.
+4. What cannot be checked without the device is marked "not checked on the device" and is
+   built so that a failure is harmless.
+5. New UI texts: Russian, short, no pressure.
+
+### Size budget (checked by `npm run check:size` after the build, from M5)
+
+| What | Budget | At the end of M4 |
+| --- | --- | --- |
+| Precache (everything installed for offline use, without the engine) | 1,200 KiB | 587 KiB |
+| Largest script chunk, gzipped | 130 kB | 85 kB |
+| Start-up scripts (entry chunk and what it imports statically), gzipped | 130 kB | 80 kB |
+
+The engine (1.9 MB) stays outside the precache and is cached on first use. A stage that needs
+more than the budget says why in `docs/DECISIONS.md` and changes the number in the script.
+
+### Changes to the stage plan
+
+- **M4** is closed without the phone checklist: the owner approved the batch 1 texts with
+  edits and gave defaults for the open questions. The checklist is done after the return.
+- **M5** adds FSRS for failed puzzles (instead of "on another day"), the size check, the
+  offline e2e run, and a check of day boundaries under clock changes. Batch 2.
+- **M6**: the bot ladder is calibrated by matches of the bundled engine against itself at
+  fixed nodes; the real ranges of its options are read from its own `uci` output. Trap
+  practice against the bot and the ШВУ checklist belong to this stage. A short game review is
+  optional. Batch 3.
+- **M7**: the debug APK is built in GitHub Actions. A `workflow_dispatch` workflow can be
+  started only once its file is on `main`, so on the stage branch the same job also runs on
+  pushes to that branch; the release workflow is prepared and stays idle without the secrets.
+  Notifications are written against the current Capacitor and Android documentation and
+  cannot be checked without the phone. Batch 4.
+- **M8** is split into branches in order of use: `m8a` exercises from the owner's own games
+  (PGN, on the device only), `m8b` basic mates, `m8c` simple endgames, `m8d` opening
+  principles; batches 5 to 7 go with them.
+- **Moved to after the return:** every check on a real device, the signing key and the
+  release build, the 25-game review of the Englund Gambit, new puzzle themes for levels 4 and
+  5 (need approval), anything that needs a Lichess token or the chess.com API.
 
 ## Owner's requests of 2026-11-14
 
