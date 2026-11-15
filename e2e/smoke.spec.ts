@@ -60,7 +60,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   await playMove(page, 'd8h4', 'black');
   await expect(page.getByText('Шаг пройден без ошибок и подсказок.')).toBeVisible();
   // The reviewed text about the line, with its source mark.
-  await expect(page.getByText(/Ходы f3 и g4 открыли диагональ/)).toBeVisible();
+  await expect(page.getByText(/Ход f3 открыл диагональ от h4 к королю/)).toBeVisible();
   await expect(page.getByText('Проверено по доске.')).toBeVisible();
 
   // Step 2 starts at move 1: White moves first, by itself.

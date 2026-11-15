@@ -26,7 +26,7 @@ are in the trap files (`npm run explain:apply`) and the app shows them under the
 
 | # | Line | Text | Source | Checked |
 | --- | --- | --- | --- | --- |
-| 1 | Main: 1.f3 e5 2.g4?? Qh4# | Ходы f3 и g4 открыли диагональ от h4 к королю, и ферзь с h4 ставит мат. Королю некуда уйти: поля вокруг заняты своими фигурами, f2 бьёт ферзь, а взять ферзя или закрыться от шаха нечем. | по доске | Checkmate. King e1: d1, d2, e2, f1 blocked by own pieces, f2 covered by the queen. The queen on h4 is attacked by nobody. |
+| 1 | Main: 1.f3 e5 2.g4?? Qh4# | Ход f3 открыл диагональ от h4 к королю, а после g4 пешкой на g3 уже не закрыться: ферзь с h4 ставит мат. Королю некуда уйти: поля вокруг заняты своими фигурами и пешками, f2 бьёт ферзь, а взять ферзя или закрыться от шаха нечем. | по доске | The diagonal h4-g3-f2-e1: f2 was emptied by 1.f3, the g-pawn left g2 for g4. Checkmate. King e1: d1, d2, e2, f1 blocked by own pieces, f2 covered by the queen. The queen on h4 is attacked by nobody. |
 | 2 | 1.g4 e5 2.f3?? Qh4# | Те же два хода пешками в другом порядке: мат тот же. | по доске | Same final position, checkmate. |
 | 3 | 1.f3 e5 2.h3? Qh4+ 3.g3 Qxg3# | Белые сыграли h3 вместо g4: после шаха с h4 у них единственный ход g3, и ферзь берёт эту пешку с матом. | по доске | After 2...Qh4+ White has 1 legal move (g3). The pawn g3 is defended by nobody. 3...Qxg3 is checkmate. |
 | 4 | 1.f3 e5 2.e4 | Белые не двигают пешку g: мата нет, но у вас лучше. | по оценке движка | No mate. Engine: +0.80. |
@@ -36,7 +36,7 @@ are in the trap files (`npm run explain:apply`) and the app shows them under the
 
 | # | Line | Text | Source | Checked |
 | --- | --- | --- | --- | --- |
-| 6 | Main: 1.e4 g5 2.d4 f6?? 3.Qh5# | Чёрные двинули пешки g и f и открыли диагональ от h5 к королю: ферзь с h5 ставит мат. Король зажат своими фигурами, f7 бьёт ферзь, а взять ферзя или закрыться от шаха нечем. | по доске | Checkmate. King e8: d7, d8, e7, f8 blocked by own pieces, f7 covered by the queen. The queen on h5 is attacked by nobody. |
+| 6 | Main: 1.e4 g5 2.d4 f6?? 3.Qh5# | Ход f6 открыл диагональ от h5 к королю, а после g5 пешкой на g6 уже не закрыться: ферзь с h5 ставит мат. Король зажат своими фигурами и пешками, f7 бьёт ферзь, а взять ферзя или закрыться от шаха нечем. | по доске | The diagonal h5-g6-f7-e8: f7 was emptied by ...f6, the g-pawn left g7 for g5. Checkmate. King e8: d7, d8, e7, f8 blocked by own pieces, f7 covered by the queen. The queen on h5 is attacked by nobody. |
 | 7 | 1.e4 f6 2.d4 g5?? 3.Qh5# | Те же два хода пешками в другом порядке: мат тот же. | по доске | Same final position, checkmate. |
 | 8 | 1.e4 g5 2.d4 h6 | Чёрные не трогают пешку f: мата нет, но у вас большой перевес. | по оценке движка | No mate. Engine: +2.15. |
 | 9 | 1.e4 f6 2.d4 e6 | Чёрные не двигают пешку g: мата нет, но у вас лучше. | по оценке движка | No mate. Engine: +1.51. |
@@ -48,7 +48,7 @@ are in the trap files (`npm run explain:apply`) and the app shows them under the
 | 10 | Main: 1.e4 e5 2.Qh5 Nc6 3.Bc4 Nf6?? 4.Qxf7# | Ферзь и слон вдвоём нападают на пешку f7, а защищает её только король. Конь с f6 напал на ферзя, но f7 не прикрыл: ферзь берёт на f7 под защитой слона, и это мат. | по доске | Before 4.Qxf7 the pawn f7 is attacked by the queen h5 and the bishop c4 and defended by the king only. 3...Nf6 attacks the queen h5. The queen on f7 is defended by the bishop c4. Checkmate. |
 | 11 | 1.e4 e5 2.Bc4 Nc6 3.Qh5 Nf6?? 4.Qxf7# | Слон и ферзь выходят в другом порядке: удар по f7 тот же. | по доске | Same final position, checkmate. |
 | 12 | 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nd4?? 5.Qxf7# | Чёрные прогнали ферзя ходом g6, но с f3 он снова бьёт на f7: конь на d4 напал на ферзя и не защитил f7, мат. | по доске | 3...g6 attacks the queen h5. 4.Qf3 attacks f7. 4...Nd4 attacks the queen f3. Before 5.Qxf7 the pawn is attacked by the bishop c4 and the queen f3, defended by the king only. Checkmate. |
-| 13 | 1.e4 e5 2.Qh5 g6?? 3.Qxe5+ Qe7 4.Qxh8 | Чёрные прогоняют ферзя, не защитив пешку e5: ферзь берёт её с шахом, нападает на ладью h8 и следующим ходом забирает её. | по доске | Before 3.Qxe5 the pawn e5 is attacked by the queen and defended by nobody. From e5 the queen attacks the king e8 and the rook h8. The rook h8 is defended by nobody. Material at the end: +6 for the player. |
+| 13 | 1.e4 e5 2.Qh5 g6?? 3.Qxe5+ Qe7 4.Qxh8 | Чёрные прогоняют ферзя, не защитив пешку e5: ферзь берёт её с шахом, нападает на ладью h8 и следующим ходом забирает ладью. | по доске | Before 3.Qxe5 the pawn e5 is attacked by the queen and defended by nobody. From e5 the queen attacks the king e8 and the rook h8. The rook h8 is defended by nobody. Material at the end: +6 for the player. |
 | 14 | 1.e4 e5 2.Qh5 Ke7?? 3.Qxe5# | Король вышел на e7, а пешка e5 осталась без защиты: ферзь берёт её с матом. | по доске | The pawn e5 is defended by nobody. 3.Qxe5 is checkmate. |
 | 15 | 1.e4 e5 2.Qh5 Nf6 3.Qxe5+ Be7 | Чёрные отдали пешку e5: у вас лишняя пешка, но по оценке позиция примерно равна. | по оценке движка | Material at the end: +1 for the player. Engine: -0.13. |
 | 16 | 1.e4 e5 2.Qh5 Nc6 3.Bc4 g6 4.Qf3 Nf6 | Правильная защита: g6 прогоняет ферзя, конь на f6 закрывает ему путь к f7. Позиция примерно равна. | по доске; по оценке движка | 3...g6 attacks the queen h5. After 4.Qf3 the queen attacks f7; after 4...Nf6 only the bishop c4 attacks f7. Engine: -0.24. |
@@ -78,3 +78,11 @@ The owner's answer of 2026-11-14:
    piece), and its output for this line is in the "Checked" column and in
    [batch-1-facts.txt](batch-1-facts.txt).
 5. Texts 2, 7, 11 and the rest stay as they were.
+
+Corrected after an independent review on 2026-11-15, in autonomous mode (waits for the
+owner's read-through, see `docs/PENDING.md`):
+
+- Texts 1 and 6 said that both pawn moves "opened the diagonal". Only f3 (f6) opens it; the
+  other pawn move takes away the block on g3 (g6). The texts now say so.
+- Texts 1 and 6: "своими фигурами и пешками", because some of the blocking men are pawns.
+- Text 13: "забирает ладью" instead of "забирает её", which could be read as the pawn.
