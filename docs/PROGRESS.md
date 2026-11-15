@@ -13,7 +13,7 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
 | --- | --- | --- |
 | M4 puzzles, entry test, batch 1 texts | `m4` | done: CI green, preview published; phone checklist waits for the owner |
 | M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | done: reviewed, findings fixed, CI green |
-| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | in work: bot, levels, game screens done; batch 3, docs, review left |
+| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | in work: bot, levels, games, trap practice, checklist, review screen done and tested; left: batch 3 texts (facts in docs/explanations/batch-3-facts.txt), docs/QA/M6.md, DECISIONS, version 0.7.0, independent review |
 | M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | not started |
 | M8 parts: own games (PGN), basic mates, endgames, opening principles, batches 5-7 | `m8a`... | not started |
 | `docs/RETURN.md` | last branch | not started |
@@ -31,6 +31,8 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
   2026-11-20). Findings fixed on `m5`, texts of batch 1 on `m4`; merged forward.
 - 2026-11-15: M6 on `m6`: bot policy, calibration (1,320 + 480 games), 13 levels, games,
   trap practice, ШВУ checklist, game review, format 4.
+
+- 2026-11-15: usage limit reached. Next: the rest of M6 (see the table), then M7.
 
 ## Working notes
 
