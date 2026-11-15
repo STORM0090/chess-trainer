@@ -1,0 +1,672 @@
+{
+  "runs": [
+    {
+      "label": "grid-v1",
+      "engine": "Stockfish 19 Lite WASM (the stockfish npm package, lite-single)",
+      "games": 1320,
+      "gamesPerPairing": 60,
+      "reach": 2,
+      "ends": {
+        "mate": 1071,
+        "draw": 136,
+        "material": 80,
+        "long": 33
+      },
+      "averagePlies": 114,
+      "players": [
+        {
+          "name": "s0.000",
+          "strength": 0,
+          "params": {
+            "nodes": 300,
+            "multipv": 8,
+            "tunnel": 0.6,
+            "look": 0.15,
+            "temperature": 220
+          },
+          "reference": null,
+          "rating": 0,
+          "games": 120,
+          "score": 43.5,
+          "tunnelShare": 0.598,
+          "averageLossCp": 92,
+          "blundersPer100": 8.1
+        },
+        {
+          "name": "s0.125",
+          "strength": 0.125,
+          "params": {
+            "nodes": 476,
+            "multipv": 8,
+            "tunnel": 0.5275,
+            "look": 0.24375,
+            "temperature": 196.25
+          },
+          "reference": null,
+          "rating": 50,
+          "games": 180,
+          "score": 72,
+          "tunnelShare": 0.513,
+          "averageLossCp": 86,
+          "blundersPer100": 7.3
+        },
+        {
+          "name": "s0.250",
+          "strength": 0.25,
+          "params": {
+            "nodes": 754,
+            "multipv": 8,
+            "tunnel": 0.45499999999999996,
+            "look": 0.3375,
+            "temperature": 172.5
+          },
+          "reference": null,
+          "rating": 147,
+          "games": 240,
+          "score": 118.5,
+          "tunnelShare": 0.449,
+          "averageLossCp": 72,
+          "blundersPer100": 6
+        },
+        {
+          "name": "s0.375",
+          "strength": 0.375,
+          "params": {
+            "nodes": 1196,
+            "multipv": 8,
+            "tunnel": 0.3825,
+            "look": 0.43125,
+            "temperature": 148.75
+          },
+          "reference": null,
+          "rating": 223,
+          "games": 240,
+          "score": 111,
+          "tunnelShare": 0.378,
+          "averageLossCp": 73,
+          "blundersPer100": 5.5
+        },
+        {
+          "name": "s0.500",
+          "strength": 0.5,
+          "params": {
+            "nodes": 1897,
+            "multipv": 8,
+            "tunnel": 0.31,
+            "look": 0.525,
+            "temperature": 125
+          },
+          "reference": null,
+          "rating": 339,
+          "games": 240,
+          "score": 109.5,
+          "tunnelShare": 0.308,
+          "averageLossCp": 62,
+          "blundersPer100": 4.4
+        },
+        {
+          "name": "s0.625",
+          "strength": 0.625,
+          "params": {
+            "nodes": 3009,
+            "multipv": 8,
+            "tunnel": 0.2375,
+            "look": 0.61875,
+            "temperature": 101.25
+          },
+          "reference": null,
+          "rating": 491,
+          "games": 240,
+          "score": 111,
+          "tunnelShare": 0.241,
+          "averageLossCp": 55,
+          "blundersPer100": 3
+        },
+        {
+          "name": "s0.750",
+          "strength": 0.75,
+          "params": {
+            "nodes": 4772,
+            "multipv": 8,
+            "tunnel": 0.16500000000000004,
+            "look": 0.7125,
+            "temperature": 77.5
+          },
+          "reference": null,
+          "rating": 687,
+          "games": 360,
+          "score": 188.5,
+          "tunnelShare": 0.165,
+          "averageLossCp": 50,
+          "blundersPer100": 2
+        },
+        {
+          "name": "s0.875",
+          "strength": 0.875,
+          "params": {
+            "nodes": 7567,
+            "multipv": 8,
+            "tunnel": 0.09250000000000003,
+            "look": 0.80625,
+            "temperature": 53.75
+          },
+          "reference": null,
+          "rating": 917,
+          "games": 300,
+          "score": 212.5,
+          "tunnelShare": 0.093,
+          "averageLossCp": 34,
+          "blundersPer100": 0.8
+        },
+        {
+          "name": "s1.000",
+          "strength": 1,
+          "params": {
+            "nodes": 12000,
+            "multipv": 8,
+            "tunnel": 0.020000000000000018,
+            "look": 0.9,
+            "temperature": 30
+          },
+          "reference": null,
+          "rating": 1338,
+          "games": 240,
+          "score": 234,
+          "tunnelShare": 0.02,
+          "averageLossCp": 19,
+          "blundersPer100": 0.1
+        },
+        {
+          "name": "skill0",
+          "strength": null,
+          "params": null,
+          "reference": {
+            "option": "Skill Level",
+            "value": 0,
+            "nodes": 12000
+          },
+          "rating": 559,
+          "games": 240,
+          "score": 50.5,
+          "tunnelShare": 0,
+          "averageLossCp": null,
+          "blundersPer100": null
+        },
+        {
+          "name": "elo1320",
+          "strength": null,
+          "params": null,
+          "reference": {
+            "option": "UCI_Elo",
+            "value": 1320,
+            "nodes": 12000
+          },
+          "rating": 621,
+          "games": 240,
+          "score": 69,
+          "tunnelShare": 0,
+          "averageLossCp": null,
+          "blundersPer100": null
+        }
+      ],
+      "pairs": [
+        {
+          "a": "s0.000",
+          "b": "s0.125",
+          "games": 60,
+          "scoreOfA": 27.5
+        },
+        {
+          "a": "s0.000",
+          "b": "s0.250",
+          "games": 60,
+          "scoreOfA": 16
+        },
+        {
+          "a": "s0.125",
+          "b": "s0.250",
+          "games": 60,
+          "scoreOfA": 20
+        },
+        {
+          "a": "s0.125",
+          "b": "s0.375",
+          "games": 60,
+          "scoreOfA": 19.5
+        },
+        {
+          "a": "s0.250",
+          "b": "s0.375",
+          "games": 60,
+          "scoreOfA": 20
+        },
+        {
+          "a": "s0.250",
+          "b": "s0.500",
+          "games": 60,
+          "scoreOfA": 14.5
+        },
+        {
+          "a": "s0.375",
+          "b": "s0.500",
+          "games": 60,
+          "scoreOfA": 22.5
+        },
+        {
+          "a": "s0.375",
+          "b": "s0.625",
+          "games": 60,
+          "scoreOfA": 8
+        },
+        {
+          "a": "s0.500",
+          "b": "s0.625",
+          "games": 60,
+          "scoreOfA": 17.5
+        },
+        {
+          "a": "s0.500",
+          "b": "s0.750",
+          "games": 60,
+          "scoreOfA": 9
+        },
+        {
+          "a": "s0.625",
+          "b": "s0.750",
+          "games": 60,
+          "scoreOfA": 13.5
+        },
+        {
+          "a": "s0.625",
+          "b": "s0.875",
+          "games": 60,
+          "scoreOfA": 3
+        },
+        {
+          "a": "s0.750",
+          "b": "s0.875",
+          "games": 60,
+          "scoreOfA": 12.5
+        },
+        {
+          "a": "s0.750",
+          "b": "s1.000",
+          "games": 60,
+          "scoreOfA": 1
+        },
+        {
+          "a": "s0.750",
+          "b": "skill0",
+          "games": 60,
+          "scoreOfA": 40
+        },
+        {
+          "a": "s0.750",
+          "b": "elo1320",
+          "games": 60,
+          "scoreOfA": 37.5
+        },
+        {
+          "a": "s0.875",
+          "b": "s1.000",
+          "games": 60,
+          "scoreOfA": 3.5
+        },
+        {
+          "a": "s0.875",
+          "b": "skill0",
+          "games": 60,
+          "scoreOfA": 49.5
+        },
+        {
+          "a": "s0.875",
+          "b": "elo1320",
+          "games": 60,
+          "scoreOfA": 55
+        },
+        {
+          "a": "s1.000",
+          "b": "skill0",
+          "games": 60,
+          "scoreOfA": 60
+        },
+        {
+          "a": "s1.000",
+          "b": "elo1320",
+          "games": 60,
+          "scoreOfA": 58.5
+        },
+        {
+          "a": "skill0",
+          "b": "elo1320",
+          "games": 60,
+          "scoreOfA": 20
+        }
+      ]
+    },
+    {
+      "label": "levels-v1",
+      "engine": "Stockfish 19 Lite WASM (the stockfish npm package, lite-single)",
+      "games": 480,
+      "gamesPerPairing": 40,
+      "reach": 1,
+      "ends": {
+        "mate": 400,
+        "draw": 39,
+        "material": 27,
+        "long": 14
+      },
+      "averagePlies": 123,
+      "players": [
+        {
+          "name": "s0.000",
+          "strength": 0,
+          "params": {
+            "nodes": 300,
+            "multipv": 8,
+            "tunnel": 0.6,
+            "look": 0.15,
+            "temperature": 220
+          },
+          "reference": null,
+          "rating": 0,
+          "games": 40,
+          "score": 15,
+          "tunnelShare": 0.61,
+          "averageLossCp": 83,
+          "blundersPer100": 6.2
+        },
+        {
+          "name": "s0.189",
+          "strength": 0.189,
+          "params": {
+            "nodes": 602,
+            "multipv": 8,
+            "tunnel": 0.49038,
+            "look": 0.29174999999999995,
+            "temperature": 184.09
+          },
+          "reference": null,
+          "rating": 86,
+          "games": 80,
+          "score": 36.5,
+          "tunnelShare": 0.484,
+          "averageLossCp": 75,
+          "blundersPer100": 6
+        },
+        {
+          "name": "s0.337",
+          "strength": 0.337,
+          "params": {
+            "nodes": 1040,
+            "multipv": 8,
+            "tunnel": 0.40454,
+            "look": 0.40275000000000005,
+            "temperature": 155.97
+          },
+          "reference": null,
+          "rating": 240,
+          "games": 80,
+          "score": 43.5,
+          "tunnelShare": 0.4,
+          "averageLossCp": 75,
+          "blundersPer100": 5.2
+        },
+        {
+          "name": "s0.458",
+          "strength": 0.458,
+          "params": {
+            "nodes": 1625,
+            "multipv": 8,
+            "tunnel": 0.33436,
+            "look": 0.49350000000000005,
+            "temperature": 132.98
+          },
+          "reference": null,
+          "rating": 326,
+          "games": 80,
+          "score": 39,
+          "tunnelShare": 0.317,
+          "averageLossCp": 76,
+          "blundersPer100": 5.1
+        },
+        {
+          "name": "s0.550",
+          "strength": 0.55,
+          "params": {
+            "nodes": 2282,
+            "multipv": 8,
+            "tunnel": 0.28099999999999997,
+            "look": 0.5625,
+            "temperature": 115.49999999999999
+          },
+          "reference": null,
+          "rating": 431,
+          "games": 80,
+          "score": 40,
+          "tunnelShare": 0.277,
+          "averageLossCp": 68,
+          "blundersPer100": 3.8
+        },
+        {
+          "name": "s0.631",
+          "strength": 0.631,
+          "params": {
+            "nodes": 3076,
+            "multipv": 8,
+            "tunnel": 0.23402,
+            "look": 0.62325,
+            "temperature": 100.11
+          },
+          "reference": null,
+          "rating": 536,
+          "games": 80,
+          "score": 43,
+          "tunnelShare": 0.23,
+          "averageLossCp": 58,
+          "blundersPer100": 2.7
+        },
+        {
+          "name": "s0.695",
+          "strength": 0.695,
+          "params": {
+            "nodes": 3895,
+            "multipv": 8,
+            "tunnel": 0.19690000000000002,
+            "look": 0.67125,
+            "temperature": 87.95000000000002
+          },
+          "reference": null,
+          "rating": 587,
+          "games": 80,
+          "score": 32,
+          "tunnelShare": 0.192,
+          "averageLossCp": 52,
+          "blundersPer100": 2.2
+        },
+        {
+          "name": "s0.757",
+          "strength": 0.757,
+          "params": {
+            "nodes": 4896,
+            "multipv": 8,
+            "tunnel": 0.16094000000000003,
+            "look": 0.71775,
+            "temperature": 76.16999999999999
+          },
+          "reference": null,
+          "rating": 795,
+          "games": 80,
+          "score": 45,
+          "tunnelShare": 0.166,
+          "averageLossCp": 50,
+          "blundersPer100": 1.8
+        },
+        {
+          "name": "s0.811",
+          "strength": 0.811,
+          "params": {
+            "nodes": 5976,
+            "multipv": 8,
+            "tunnel": 0.12961999999999996,
+            "look": 0.7582500000000001,
+            "temperature": 65.91
+          },
+          "reference": null,
+          "rating": 900,
+          "games": 80,
+          "score": 41.5,
+          "tunnelShare": 0.133,
+          "averageLossCp": 40,
+          "blundersPer100": 1
+        },
+        {
+          "name": "s0.866",
+          "strength": 0.866,
+          "params": {
+            "nodes": 7320,
+            "multipv": 8,
+            "tunnel": 0.09772000000000003,
+            "look": 0.7995,
+            "temperature": 55.46000000000001
+          },
+          "reference": null,
+          "rating": 977,
+          "games": 80,
+          "score": 41.5,
+          "tunnelShare": 0.097,
+          "averageLossCp": 38,
+          "blundersPer100": 0.8
+        },
+        {
+          "name": "s0.900",
+          "strength": 0.9,
+          "params": {
+            "nodes": 8298,
+            "multipv": 8,
+            "tunnel": 0.07799999999999996,
+            "look": 0.8250000000000001,
+            "temperature": 49
+          },
+          "reference": null,
+          "rating": 1029,
+          "games": 80,
+          "score": 34,
+          "tunnelShare": 0.078,
+          "averageLossCp": 20,
+          "blundersPer100": 0.6
+        },
+        {
+          "name": "s0.944",
+          "strength": 0.944,
+          "params": {
+            "nodes": 9760,
+            "multipv": 8,
+            "tunnel": 0.05248000000000008,
+            "look": 0.858,
+            "temperature": 40.640000000000015
+          },
+          "reference": null,
+          "rating": 1192,
+          "games": 80,
+          "score": 38.5,
+          "tunnelShare": 0.052,
+          "averageLossCp": 22,
+          "blundersPer100": 0.2
+        },
+        {
+          "name": "s0.989",
+          "strength": 0.989,
+          "params": {
+            "nodes": 11523,
+            "multipv": 8,
+            "tunnel": 0.02638000000000007,
+            "look": 0.89175,
+            "temperature": 32.09
+          },
+          "reference": null,
+          "rating": 1389,
+          "games": 40,
+          "score": 30.5,
+          "tunnelShare": 0.026,
+          "averageLossCp": 18,
+          "blundersPer100": 0.2
+        }
+      ],
+      "pairs": [
+        {
+          "a": "s0.000",
+          "b": "s0.189",
+          "games": 40,
+          "scoreOfA": 15
+        },
+        {
+          "a": "s0.189",
+          "b": "s0.337",
+          "games": 40,
+          "scoreOfA": 11.5
+        },
+        {
+          "a": "s0.337",
+          "b": "s0.458",
+          "games": 40,
+          "scoreOfA": 15
+        },
+        {
+          "a": "s0.458",
+          "b": "s0.550",
+          "games": 40,
+          "scoreOfA": 14
+        },
+        {
+          "a": "s0.550",
+          "b": "s0.631",
+          "games": 40,
+          "scoreOfA": 14
+        },
+        {
+          "a": "s0.631",
+          "b": "s0.695",
+          "games": 40,
+          "scoreOfA": 17
+        },
+        {
+          "a": "s0.695",
+          "b": "s0.757",
+          "games": 40,
+          "scoreOfA": 9
+        },
+        {
+          "a": "s0.757",
+          "b": "s0.811",
+          "games": 40,
+          "scoreOfA": 14
+        },
+        {
+          "a": "s0.811",
+          "b": "s0.866",
+          "games": 40,
+          "scoreOfA": 15.5
+        },
+        {
+          "a": "s0.866",
+          "b": "s0.900",
+          "games": 40,
+          "scoreOfA": 17
+        },
+        {
+          "a": "s0.900",
+          "b": "s0.944",
+          "games": 40,
+          "scoreOfA": 11
+        },
+        {
+          "a": "s0.944",
+          "b": "s0.989",
+          "games": 40,
+          "scoreOfA": 9.5
+        }
+      ]
+    }
+  ]
+}
