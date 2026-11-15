@@ -34,6 +34,12 @@ const STORES = ['traps', 'games', 'settings', 'puzzles', 'days'] as const;
 
 let opening: Promise<IDBPDatabase<Schema>> | undefined;
 
+/**
+ * Called when another tab holds an older version of the database open (the upgrade waits
+ * for it), or when a newer build in another tab wants to upgrade this one.
+ */
+export const databaseEvents: { onBlocked?: () => void; onOutdated?: () => void } = {};
+
 function database(): Promise<IDBPDatabase<Schema>> {
   opening ??= openDB<Schema>(DB_NAME, DB_VERSION, {
     upgrade(db, oldVersion) {
@@ -44,6 +50,14 @@ function database(): Promise<IDBPDatabase<Schema>> {
       }
       if (oldVersion < 2) db.createObjectStore('puzzles', { keyPath: 'id' });
       if (oldVersion < 3) db.createObjectStore('days', { keyPath: 'date' });
+    },
+    blocked() {
+      databaseEvents.onBlocked?.();
+    },
+    blocking() {
+      // A newer build wants to upgrade: let it, and stop writing from this old page.
+      void opening?.then((db) => db.close());
+      databaseEvents.onOutdated?.();
     },
   });
   return opening;

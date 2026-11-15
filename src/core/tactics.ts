@@ -219,13 +219,18 @@ export function applyPuzzleStat(
   id: string,
   result: AttemptResult,
   now: number,
+  /**
+   * False for the entry test: it reaches far above the player's level on purpose, and its
+   * misses are a measurement, not something to repeat. Nothing is scheduled then.
+   */
+  schedule = true,
 ): PuzzleStat {
   const clean = result.errors === 0 && result.hints === 0;
   const grade = gradeOfAttempt(result);
   let card = stat?.card ?? null;
   let dueAt = stat?.dueAt ?? null;
   if (card === null) {
-    if (!clean) {
+    if (!clean && schedule) {
       card = startCard(id, grade, now);
       dueAt = nextReviewDay(card, now);
     }

@@ -11,16 +11,22 @@ import { trapOrder } from '../trap/access';
 /** The open trap that is not learned yet and may be practised today. */
 export function trapOfTheDay(data: AppData, day: DayRecord): { id: string; stepsLeft: number; isNew: boolean } | undefined {
   const open = unlockedIds(trapOrder(), data.traps);
-  const file = allTraps().find((trap) => open.has(trap.id) && (data.traps[trap.id]?.learnedAt ?? null) === null);
-  const trap = file && getTrap(file.id);
-  if (!trap) return undefined;
-  const progress = data.traps[trap.file.id] ?? emptyProgress(trap.file.id);
-  const hasRuns = progress.runs.clean + progress.runs.failed > 0;
-  if (newTrapHeldBack(day, trap.file.id, hasRuns)) return undefined;
+  const candidates = allTraps()
+    .filter((trap) => open.has(trap.id) && (data.traps[trap.id]?.learnedAt ?? null) === null)
+    .map((file) => {
+      const progress = data.traps[file.id] ?? emptyProgress(file.id);
+      return { file, progress, hasRuns: progress.runs.clean + progress.runs.failed > 0 };
+    });
+  // A trap in progress comes first: it may have been started from the list, out of order.
+  const chosen =
+    candidates.find((candidate) => candidate.hasRuns) ??
+    candidates.find((candidate) => !newTrapHeldBack(day, candidate.file.id, candidate.hasRuns));
+  const trap = chosen && getTrap(chosen.file.id);
+  if (!chosen || !trap) return undefined;
   return {
     id: trap.file.id,
-    stepsLeft: Math.max(0, chainLength(trap) - progress.chainDepth),
-    isNew: !hasRuns,
+    stepsLeft: Math.max(0, chainLength(trap) - chosen.progress.chainDepth),
+    isNew: !chosen.hasRuns,
   };
 }
 

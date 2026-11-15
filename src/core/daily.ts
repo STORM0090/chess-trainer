@@ -99,27 +99,37 @@ export interface StreakState {
   toNextFreeze: number;
 }
 
-/** Two sessions less than this apart are "one day after another", whatever the calendar says. */
-const TRAVEL_GRACE_MS = 36 * 60 * 60 * 1000;
+/**
+ * Without a change of time zone, sessions on the two dates around a skipped date are always
+ * at least 24 hours apart. Less than that means the calendar jumped, not the player.
+ */
+const TRAVEL_GRACE_MS = 24 * 60 * 60 * 1000;
 
 /**
- * A flight east can skip a local date: practice on the evening of the 14th at home and
- * twenty hours later on the 16th, just after midnight, somewhere else. The 15th has no
- * record, yet no day was missed. A single date without a record does not count as missed
- * when the sessions on both sides of it are less than 36 hours apart.
+ * Missed dates between two active days. A flight east can skip a local date: practice on the
+ * evening of the 14th at home and twenty hours later on the 16th, just after midnight,
+ * somewhere else. One skipped date with less than 24 hours between the two sessions is not
+ * a missed day. (The only false positive left is a 23-hour day at the start of summer time.)
  */
-function skippedByTravel(days: Record<DayKey, DayRecord>, active: DayKey[], key: DayKey): boolean {
-  const before = days[addDays(key, -1)]?.metAt;
-  const after = days[addDays(key, 1)]?.metAt;
-  if (before == null || after == null || !active.includes(addDays(key, 1))) return false;
-  return after - before > 0 && after - before < TRAVEL_GRACE_MS;
+function missedBetween(days: Record<DayKey, DayRecord>, from: DayKey, to: DayKey): DayKey[] {
+  const gap = daysBetweenKeys(from, to) - 1;
+  if (gap <= 0) return [];
+  const before = days[from]?.metAt;
+  const after = days[to]?.metAt;
+  if (gap === 1 && before != null && after != null && after > before && after - before < TRAVEL_GRACE_MS) return [];
+  return Array.from({ length: gap }, (_, index) => addDays(from, index + 1));
 }
 
 /**
  * The streak, worked out from the log alone, so an imported file or a changed clock cannot
- * leave a stale counter behind. A missed day spends a freeze when there is one; without a
- * freeze the streak quietly starts again. Today never breaks anything: it is still going on.
- * If the log has days after `today` (the clock was moved back), they count as they are.
+ * leave a stale counter behind.
+ *
+ * - A gap of missed days is covered by freezes only when there are enough of them for the
+ *   whole gap; then they are spent by themselves. Otherwise the streak quietly starts again
+ *   and the freezes are kept: nothing is spent on a gap that cannot be saved.
+ * - Today never counts as missed while it lasts.
+ * - Records after today (the clock was moved back, or a file from such a device) count in
+ *   "days of practice" but play no part in the streak, which runs up to today.
  */
 export function streakState(days: Record<DayKey, DayRecord>, today: DayKey): StreakState {
   const active = Object.keys(days)
@@ -134,39 +144,32 @@ export function streakState(days: Record<DayKey, DayRecord>, today: DayKey): Str
     frozen: [],
     toNextFreeze: FREEZE_EVERY,
   };
-  const first = active[0];
-  const last = active.at(-1);
-  if (first === undefined || last === undefined) return state;
-
-  const isActive = new Set(active);
-  const end = last > today ? last : today;
+  const past = active.filter((key) => key <= today);
   let counted = 0;
-  // A gap longer than the freezes can cover always resets the streak, so it is not walked
-  // day by day: after MAX_FREEZES + 1 missed days in a row the loop jumps to the next
-  // active day.
-  let key = first;
-  while (key <= end) {
-    if (isActive.has(key)) {
-      state.current++;
-      counted++;
-      if (counted % FREEZE_EVERY === 0) state.freezes = Math.min(MAX_FREEZES, state.freezes + 1);
-      state.best = Math.max(state.best, state.current);
-    } else if (key !== today || key < end) {
-      // A day that is over (or lies before a later record) without the norm.
-      if (state.current > 0 && skippedByTravel(days, active, key)) {
-        // Not a missed day: the calendar jumped, the player did not.
-      } else if (state.current > 0 && state.freezes > 0) {
-        state.freezes--;
-        state.frozen.push(key);
-      } else if (state.current > 0) {
-        state.current = 0;
-        const next = active.find((candidate) => candidate > key);
-        if (next === undefined) break;
-        key = next;
-        continue;
-      }
+
+  const cover = (missed: DayKey[]) => {
+    if (missed.length === 0 || state.current === 0) return;
+    if (missed.length <= state.freezes) {
+      state.freezes -= missed.length;
+      state.frozen.push(...missed);
+    } else {
+      state.current = 0;
     }
-    key = addDays(key, 1);
+  };
+
+  let previous: DayKey | undefined;
+  for (const key of past) {
+    if (previous !== undefined) cover(missedBetween(days, previous, key));
+    state.current++;
+    counted++;
+    if (counted % FREEZE_EVERY === 0) state.freezes = Math.min(MAX_FREEZES, state.freezes + 1);
+    state.best = Math.max(state.best, state.current);
+    previous = key;
+  }
+  // The days after the last practice, up to yesterday. Today is still going on.
+  if (previous !== undefined && previous < today) {
+    const gap = daysBetweenKeys(previous, today) - 1;
+    cover(Array.from({ length: gap }, (_, index) => addDays(previous, index + 1)));
   }
   state.toNextFreeze = state.freezes >= MAX_FREEZES ? 0 : FREEZE_EVERY - (counted % FREEZE_EVERY);
   return state;
@@ -330,12 +333,19 @@ export function sessionShape(items: SessionItem[]): SessionShape {
   return reviews > 0 ? 'review' : 'puzzles';
 }
 
-export function sessionProgress(items: SessionItem[] | null): { done: number; total: number } {
-  return { done: items?.filter((item) => item.done).length ?? 0, total: items?.length ?? 0 };
+export function sessionProgress(items: SessionItem[] | null): { done: number; total: number; played: number } {
+  return {
+    done: items?.filter((item) => item.done).length ?? 0,
+    total: items?.length ?? 0,
+    played: items?.filter((item) => item.done && item.clean !== null).length ?? 0,
+  };
 }
 
-/** Marks one item of the plan as finished. The session is over when every item is. */
-export function completeItem(day: DayRecord, index: number, clean: boolean, now: number): DayRecord {
+/**
+ * Marks one item of the plan as finished. `clean` is `null` for an item that was skipped
+ * because it was done outside the session meanwhile. The session is over when every item is.
+ */
+export function completeItem(day: DayRecord, index: number, clean: boolean | null, now: number): DayRecord {
   const current = day.session?.[index];
   if (!day.session || !current || current.done) return day;
   const session = day.session.map((item, at) => (at === index ? { ...item, done: true, clean } : item));
