@@ -25,7 +25,7 @@ check can be told from a direct one ("check from White queen e2" after a knight 
 
 | # | Line | Text | Source | Checked |
 | --- | --- | --- | --- | --- |
-| 1 | Main: 1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.Ke2 Qxe4# | Белые взяли пешку e5, а их король остался открыт для шаха с h4. У белых два ответа; на Ke2 ферзь берёт незащищённую пешку e4, и это мат: поля вокруг короля заняты своими фигурами или биты ферзём и слоном c5. | по доске | 3...Qh4+ is check; White has 2 legal moves (g3, Ke2). The pawn e4 is defended by nobody. 4...Qxe4 is checkmate: d1, d2, f1 blocked by own pieces; d3, e1, f3 covered by the queen; e3 by the queen and the bishop c5; f2 by the bishop c5. |
+| 1 | Main: 1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.Ke2 Qxe4# | Белые взяли пешку e5, а их король остался открыт для шаха с h4. У белых два ответа; на Ke2 ферзь берёт незащищённую пешку e4, и это мат: поля вокруг короля заняты своими фигурами и пешками или биты ферзём и слоном c5. | по доске | 3...Qh4+ is check; White has 2 legal moves (g3, Ke2). The pawn e4 is defended by nobody. 4...Qxe4 is checkmate: d1, d2, f1 blocked by own pieces; d3, e1, f3 covered by the queen; e3 by the queen and the bishop c5; f2 by the bishop c5. |
 | 2 | 1.e4 e5 2.f4 Bc5 3.fxe5?? Qh4+ 4.g3 Qxe4+ 5.Qe2 Qxh1 | Белые закрылись пешкой g3: ферзь берёт e4 с шахом, нападая заодно на ладью h1, и следующим ходом забирает её. | по доске | 4...Qxe4+ attacks the king e1 and the rook h1. The rook h1 is defended by nobody. Material at the end: +5 for the player. |
 | 3 | 1.e4 e5 2.f4 Bc5 3.Nf3 d6 | Белые сначала выводят коня: ловушки нет. Пешку e5 вы защищаете ходом d6, позиция примерно равна. | по доске; по оценке движка | The pawn e5 is attacked by the pawn f4 and the knight f3 and defended by the pawn d6. Engine: -0.28. |
 | 4 | 1.e4 e5 2.f4 Bc5 3.Nf3 d6 4.c3 | Спокойное продолжение 4.c3: позиция примерно равна. | по оценке движка | Engine: -0.07. |
@@ -38,7 +38,7 @@ check can be told from a direct one ("check from White queen e2" after a knight 
 | 6 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Be7?? 5.Nxf7 | Слон на e7 не защищает f7: та же вилка на ферзя и ладью. | по доске | Before 5.Nxf7 the pawn f7 is defended by the king e8 only. From f7 the knight attacks the queen d8 and the rook h8; the rook is defended by nobody. |
 | 7 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d6?? 5.Nxf7 | Ход d6 тоже не защищает f7: конь берёт с вилкой на ферзя и ладью. | по доске | Before 5.Nxf7 the pawn f7 is defended by the king e8 only. From f7 the knight attacks the queen d8 and the rook h8; the rook is defended by nobody. |
 | 8 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Qe7 5.Bxf7+ Kd8 6.Bb3 | Чёрные защитили f7 ферзём, но слон всё равно берёт пешку с шахом под защитой коня: у вас лишняя пешка и большой перевес. | по доске; по оценке движка | Before 5.Bxf7+ the pawn is defended by the king e8 and the queen e7; on f7 the bishop is defended by the knight g5. Material at the end: +1. Engine: +2.47. |
-| 9 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3 | Лучшая защита: пешка d5 нападает на слона c4. У вас остаётся лишняя пешка, но по оценке позиция примерно равна. | по доске; по оценке движка | 4...d5 attacks the bishop c4. Material at the end: +1. Engine: +0.16. |
+| 9 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3 | Чёрные отвечают d5: пешка нападает на слона c4. У вас остаётся лишняя пешка, но по оценке позиция примерно равна. | по доске; по оценке движка | 4...d5 attacks the bishop c4. Material at the end: +1. Engine: +0.16. |
 | 10 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 Bc5 5.Bxf7+ Ke7 6.Bd5 | Чёрные не защищают f7, а сами нападают на f2: вы берёте пешку f7 слоном с шахом, и по оценке у вас лучше. | по доске; по оценке движка | 4...Bc5 attacks the pawn f2. 5.Bxf7+ is check; material at the end: +1. Engine: +0.86. |
 
 ## 3. Русская партия: вскрытый шах (`petrov-damiano`), вы играете белыми
@@ -79,6 +79,8 @@ check can be told from a direct one ("check from White queen e2" after a knight 
    than 3.Nf3: that reason (the knight would cover h4) is not printed by the facts script, so
    it is left out rather than written from memory.
 3. Text 9 names what 4...d5 attacks, not that it blocks the bishop's diagonal, for the same
-   reason.
+   reason. After an independent review on 2026-11-15 it no longer calls 4...d5 "the best
+   defence": the facts script does not say so.
+5. Text 1: "своими фигурами и пешками" (after the same review): d2 is a pawn.
 4. Texts 3, 9, 16 and 23 have two short sentences although they are side lines: each carries
    an idea and a verdict.
