@@ -16,11 +16,14 @@ Things that only the owner decides or checks. Nothing here was done on the owner
 ## Texts waiting for a read-through before merge
 
 - Batch 1 (stage 0, 23 lines): approved by the owner on 2026-11-14 with edits; the edits are
-  applied. Text 21 got one more sentence from a program check, see `docs/explanations/batch-1.md`.
+  applied. Text 21 got one more sentence from a program check. **Texts 1, 6 and 13 were
+  corrected after the independent review of 2026-11-15** (only f3 or f6 opens the diagonal;
+  see the end of `docs/explanations/batch-1.md`). Please read them again.
 
-- Batch 2 (stage 1, 26 lines): written in autonomous mode, in the trap files as one commit
-  ("content: explanation texts of batch 2..."). Revert that commit to take the texts out;
-  the app then shows the general sentences again and the tests stay green.
+- Batch 2 (stage 1, 26 lines): written in autonomous mode, in the trap files in two commits
+  ("content: explanation texts of batch 2..." and "content: batch 2 texts 1 and 9..."). Revert
+  both to take the texts out; the app then shows the general sentences again and the tests
+  stay green.
 
 ## Decisions to confirm
 

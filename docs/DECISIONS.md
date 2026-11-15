@@ -436,15 +436,16 @@ Built without the owner; every item here is the developer's decision unless it s
   next day began an hour late. Fixed.
 - **Streak (plan: soft, no punishments).** Worked out from the log every time, so there is
   no counter that an import or a clock change could leave wrong. The big number is "Дней
-  занятий" (days with the norm met, never goes down); the streak is the small one. A missed
-  day spends a freeze by itself; without a freeze the streak starts again without a word.
+  занятий" (days with the norm met, never goes down); the streak is the small one. A gap of
+  missed days is covered by freezes, spent by themselves, only when there are enough for the
+  whole gap; otherwise the streak starts again without a word and the freezes are kept.
   One freeze per seven active days (counted over all time, not per streak), two at most.
   Today never breaks anything while it lasts.
 - **Travel.** A flight east can skip a local date without a missed day. One date without a
-  record is not "missed" when the sessions on both sides are less than 36 hours apart.
-- **Clock set back or forward by hand.** Records are taken as they are. If the log has days
-  after "today", the streak is counted up to the last of them. The worst case is a streak
-  that is a little too kind.
+  record is not "missed" when the sessions on both sides are less than 24 hours apart, which
+  cannot happen without a change of time zone (or the 23-hour day of the spring clock change).
+- **Clock set back or forward by hand.** The streak runs up to the date the device shows.
+  Records after it count in "Дней занятий" only.
 - **The norm** is 1, 3 or 5 exercises a day (plan: one puzzle; default 1). A day that met
   the norm stays met when the norm is raised later.
 - **Session (plan: a trap step, three puzzles, due reviews).** About six items: a warm-up
@@ -487,6 +488,37 @@ Built without the owner; every item here is the developer's decision unless it s
   the service worker on and the network off.
 - **Not done in M5:** an optional bot game in the session (M6), notifications (M7), a
   bottom navigation bar, weekly or monthly summaries.
+
+## Independent review of M4 and M5 (2026-11-15)
+
+A fresh context that had not seen the code reviewed M4 and M5 (logic, data, texts). Fixed
+on `m5` (texts of batch 1 on `m4`):
+
+- **Travel rule forgave ordinary missed days.** The limit was 36 hours; 21:00 on Monday and
+  08:00 on Wednesday is 35. Now 24 hours.
+- **One record after today broke the streak.** The walk ran to the last record and counted
+  every empty day up to it as missed. The streak now runs up to today.
+- **Freezes were spent on a gap they could not cover**, and then the streak reset anyway.
+  Now a gap is covered whole or not at all.
+- **Misses in the entry test got FSRS cards**, so puzzles far above the player's level came
+  back as reviews. The test no longer schedules anything.
+- **The session looked only at the first open trap**, so a trap started out of order from
+  the list was never offered. A trap in progress now comes first.
+- **An older build open in another tab** held the database upgrade forever: a blank screen.
+  The app now starts from memory and says to close the other tab; a page that is outdated by
+  a newer build in another tab stops writing and asks for a reload.
+- **Imported FSRS cards** were checked by type only. Now the state must be 0 to 3, stability
+  positive, counters whole, times real, and only the known fields are kept.
+- **The calendar file** promised that a second import replaces the first. It now has a
+  sequence number, and the settings screen says to delete the old event first.
+- **Session summary** counted items skipped because they were done elsewhere; an empty plan
+  showed "session done" with nothing done; the plan was stored while rendering. Fixed.
+- **Texts:** batch 1 texts 1 and 6 said both pawn moves "opened the diagonal"; only f3 (f6)
+  does. Text 13 named the rook. Batch 2 text 9 called 4...d5 "the best defence" without a
+  program check; text 1 now says "фигурами и пешками".
+- Checked and found correct by the reviewer: every mate and legal-move count in batches 1
+  and 2, the card and due-date invariant, no double counting, every state the app produces
+  imports again, the fixtures are read, folding of the calendar file, the database upgrade.
 
 ## Known open points
 
