@@ -93,7 +93,7 @@ test('the daily session, the streak, the settings and the calendar file', async 
 
   // Settings: the norm and the calendar file.
   await page.getByRole('link', { name: 'Ещё' }).tap();
-  await expect(page.locator('.trap-card')).toHaveCount(4);
+  await expect(page.locator('.trap-card')).toHaveCount(5);
   await page.getByRole('link', { name: /Настройки/ }).tap();
   await page.getByRole('radio', { name: '3 упражнения' }).tap();
   await expect(page.getByRole('radio', { name: '3 упражнения' })).toHaveAttribute('aria-checked', 'true');
