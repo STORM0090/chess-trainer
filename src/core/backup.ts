@@ -84,8 +84,11 @@ function isCount(value: unknown): value is number {
   return typeof value === 'number' && Number.isInteger(value) && value >= 0;
 }
 
+/** The largest time a Date can hold. Anything above is not a real time. */
+const MAX_TIME = 8.64e15;
+
 function isTime(value: unknown): value is number {
-  return typeof value === 'number' && Number.isFinite(value) && value >= 0;
+  return typeof value === 'number' && Number.isFinite(value) && value >= 0 && value <= MAX_TIME;
 }
 
 function isTimeOrNull(value: unknown): value is number | null {
@@ -98,6 +101,11 @@ function isId(value: unknown): value is string {
 
 const CARD_NUMBERS = ['stability', 'stabilityFast', 'difficulty', 'state', 'reps', 'lapses', 'scheduledDays', 'learningStep'];
 
+/**
+ * An FSRS card. Every number must be finite, the learning state one of the four FSRS states,
+ * stability positive and the counters whole: a card the scheduler cannot work with would
+ * fail later, in the middle of an exercise. Only the known fields are copied.
+ */
 function readCard(value: unknown): StoredCard | null | undefined {
   if (value === null) return null;
   if (!isObject(value)) return undefined;
@@ -105,9 +113,28 @@ function readCard(value: unknown): StoredCard | null | undefined {
     const field = value[name];
     if (typeof field !== 'number' || !Number.isFinite(field)) return undefined;
   }
+  const card = value as unknown as StoredCard;
+  if (!Number.isInteger(card.state) || card.state < 0 || card.state > 3) return undefined;
+  if (!(card.stability > 0) || card.difficulty < 0 || card.stabilityFast < 0) return undefined;
+  if (!isCount(card.reps) || !isCount(card.lapses) || !isCount(card.learningStep)) return undefined;
+  if (card.scheduledDays < 0) return undefined;
   if (!isTime(value.dueAt) || !isTimeOrNull(value.lastReviewAt)) return undefined;
-  if (typeof value.cardId !== 'string' || typeof value.scheduleStatus !== 'string') return undefined;
-  return value as unknown as StoredCard;
+  if (typeof value.cardId !== 'string' || value.cardId.length > 80) return undefined;
+  if (typeof value.scheduleStatus !== 'string' || !/^[a-z]{1,20}$/.test(value.scheduleStatus)) return undefined;
+  return {
+    cardId: card.cardId,
+    stability: card.stability,
+    stabilityFast: card.stabilityFast,
+    difficulty: card.difficulty,
+    state: card.state,
+    scheduleStatus: card.scheduleStatus,
+    dueAt: card.dueAt,
+    lastReviewAt: card.lastReviewAt,
+    reps: card.reps,
+    lapses: card.lapses,
+    scheduledDays: card.scheduledDays,
+    learningStep: card.learningStep,
+  };
 }
 
 function readLines(value: unknown): Record<string, LineStat> | undefined {

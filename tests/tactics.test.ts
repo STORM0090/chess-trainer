@@ -223,6 +223,10 @@ describe('progress in puzzles', () => {
     expect(again).toMatchObject({ attempts: 2, clean: 1, lastClean: true });
   });
 
+  it('schedules nothing for a miss in the entry test', () => {
+    expect(applyPuzzleStat(undefined, 'a', WRONG, NOW, false)).toMatchObject({ attempts: 1, clean: 0, card: null, dueAt: null });
+  });
+
   it('starts a card when a puzzle that was once solved is failed later', () => {
     const solved = applyPuzzleStat(undefined, 'a', CLEAN, YESTERDAY);
     const failed = applyPuzzleStat(solved, 'a', WRONG, NOW);

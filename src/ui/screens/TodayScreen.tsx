@@ -21,7 +21,7 @@ export function TodayScreen() {
   const streak = streakState(data.days, date);
   const week = recentDays(data.days, date, 7);
   const progress = sessionProgress(day.session);
-  const sessionDone = day.session !== null && progress.done >= progress.total;
+  const sessionDone = day.session !== null && progress.total > 0 && progress.done >= progress.total;
   const sessionHref = routeHref({ name: 'session' });
   const norm = data.settings.dailyNorm;
 

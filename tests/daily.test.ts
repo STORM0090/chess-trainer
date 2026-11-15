@@ -84,24 +84,43 @@ describe('streakState', () => {
     });
   });
 
-  it('spends what it has on a long break and then starts again', () => {
+  it('keeps its freezes on a break they cannot cover, and starts again', () => {
     const days = log(...range(0, 13), 20);
     const state = streakState(days, addDays(START, 20));
-    expect(state).toMatchObject({ current: 1, best: 14, totalDays: 15, freezes: 0 });
-    expect(state.frozen).toEqual([addDays(START, 14), addDays(START, 15)]);
+    expect(state).toMatchObject({ current: 1, best: 14, totalDays: 15, freezes: 2, frozen: [] });
+    // One freeze, two missed days: nothing is spent.
+    expect(streakState(log(...range(0, 6), 9), addDays(START, 9))).toMatchObject({ current: 1, freezes: 1, frozen: [] });
+    // Two freezes cover two missed days in a row.
+    expect(streakState(log(...range(0, 13), 16), addDays(START, 16))).toMatchObject({
+      current: 15,
+      freezes: 0,
+      frozen: [addDays(START, 14), addDays(START, 15)],
+    });
   });
 
   it('counts a freeze for yesterday as soon as yesterday is over', () => {
     const days = log(...range(0, 6));
     // Day 7 was missed; on day 8 nothing is done yet.
     expect(streakState(days, addDays(START, 8))).toMatchObject({ current: 7, freezes: 0, frozen: [addDays(START, 7)] });
-    // Day 8 over as well: no freeze left.
-    expect(streakState(days, addDays(START, 9))).toMatchObject({ current: 0, totalDays: 7 });
+    // Day 8 over as well: two missed days and one freeze. The streak is over, the freeze is kept.
+    expect(streakState(days, addDays(START, 9))).toMatchObject({ current: 0, totalDays: 7, freezes: 1, frozen: [] });
   });
 
   it('survives a year without practice', () => {
     const days = { ...log(...range(0, 9)), ...log(400, 401) };
     expect(streakState(days, addDays(START, 401))).toMatchObject({ current: 2, best: 10, totalDays: 12 });
+  });
+
+  it('does not take an ordinary missed day for travel', () => {
+    // 21:00 on day 1, nothing on day 2, 08:00 on day 3: 35 hours, no time zone change.
+    const days = log(0, 1);
+    const late = addDays(START, 3);
+    days[late] = { ...emptyDay(late), done: 1, metAt: (days[addDays(START, 1)]?.metAt ?? 0) + 35 * 3_600_000, updatedAt: 1 };
+    expect(streakState(days, late)).toMatchObject({ current: 1 });
+    // 23:50 and then 00:10 two dates later: 24 hours 20 minutes.
+    const night = log(0, 1);
+    night[late] = { ...emptyDay(late), done: 1, metAt: (night[addDays(START, 1)]?.metAt ?? 0) + 24 * 3_600_000 + 20 * 60_000, updatedAt: 1 };
+    expect(streakState(night, late)).toMatchObject({ current: 1 });
   });
 
   it('skips exactly one date for a flight east and no more', () => {
@@ -115,10 +134,14 @@ describe('streakState', () => {
     expect(streakState(slow, gap1)).toMatchObject({ current: 1 });
   });
 
-  it('takes the log as it is when the clock was moved back', () => {
+  it('counts the streak up to today when the clock was moved back', () => {
     // Records up to day 5, but the device now says it is day 2.
     const days = log(...range(0, 5));
-    expect(streakState(days, addDays(START, 2))).toMatchObject({ current: 6, totalDays: 6, todayDone: true });
+    expect(streakState(days, addDays(START, 2))).toMatchObject({ current: 3, totalDays: 6, todayDone: true });
+    // One stray record far ahead does not touch the streak, and no freeze is spent on today.
+    const stray = log(...range(0, 20), 400);
+    expect(streakState(stray, addDays(START, 20))).toMatchObject({ current: 21, best: 21, totalDays: 22, frozen: [] });
+    expect(streakState(log(...range(0, 6), 8), addDays(START, 7))).toMatchObject({ current: 7, frozen: [] });
     // A hole "today" with later records after it is a missed day like any other.
     expect(streakState(log(0, 1, 3, 4), addDays(START, 2))).toMatchObject({ current: 2, totalDays: 4 });
   });
@@ -262,7 +285,7 @@ describe('planSession', () => {
   it('finishes when every item is done', () => {
     let day: DayRecord = { ...emptyDay(START), session: planSession(input()).slice(0, 2) };
     day = completeItem(day, 0, true, 10);
-    expect(sessionProgress(day.session)).toEqual({ done: 1, total: 2 });
+    expect(sessionProgress(day.session)).toEqual({ done: 1, total: 2, played: 1 });
     expect(day.sessionDoneAt).toBeNull();
     // Doing the same item again changes nothing.
     expect(completeItem(day, 0, false, 20)).toBe(day);
@@ -289,5 +312,21 @@ describe('backupHintDue', () => {
   it('stays away while it is snoozed', () => {
     expect(backupHintDue({ lastBackupAt: null, backupSnoozedUntil: now + DAY }, log(-40), now)).toBe(false);
     expect(backupHintDue({ lastBackupAt: null, backupSnoozedUntil: now - DAY }, log(-40), now)).toBe(true);
+  });
+});
+
+describe('session progress', () => {
+  it('does not count an item skipped because it was done elsewhere as played', () => {
+    let day: DayRecord = {
+      ...emptyDay(START),
+      session: [
+        { kind: 'trapReview', id: 'fools-mate', done: false, clean: null },
+        { kind: 'puzzle', id: 'a', role: 'new', done: false, clean: null },
+      ],
+    };
+    day = completeItem(day, 0, null, 5);
+    day = completeItem(day, 1, true, 6);
+    expect(sessionProgress(day.session)).toEqual({ done: 2, total: 2, played: 1 });
+    expect(day.sessionDoneAt).toBe(6);
   });
 });

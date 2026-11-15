@@ -14,7 +14,11 @@ export interface ReminderEvent {
   createdAt: number;
 }
 
-/** One calendar per app address: importing the file again replaces the old reminder. */
+/**
+ * One identifier per app address, and a sequence number that grows with every file, so a
+ * calendar that follows the standard replaces the old event. Not every calendar app does:
+ * the settings screen says to delete the old event first.
+ */
 export const REMINDER_UID_PREFIX = 'daily-reminder';
 
 export function isReminderTime(value: unknown): value is string {
@@ -86,6 +90,8 @@ export function reminderCalendar(event: ReminderEvent): string {
     'BEGIN:VEVENT',
     `UID:${REMINDER_UID_PREFIX}${path ? `-${path}` : ''}@${hostOf(event.url)}`,
     `DTSTAMP:${utcStamp(event.createdAt)}`,
+    // Seconds since 2026: a whole number that grows with every file and stays small.
+    `SEQUENCE:${Math.max(0, Math.floor((event.createdAt - Date.UTC(2026, 0, 1)) / 1000))}`,
     `DTSTART:${start}`,
     'DURATION:PT5M',
     'RRULE:FREQ=DAILY',

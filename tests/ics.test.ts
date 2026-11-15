@@ -29,6 +29,10 @@ describe('reminderCalendar', () => {
     expect(lines).toContain('RRULE:FREQ=DAILY');
     expect(lines).toContain('DURATION:PT5M');
     expect(lines).toContain('DTSTAMP:20261114T093015Z');
+    // Grows with every file, so a calendar that follows the standard replaces the old event.
+    const sequence = Number(lines.find((line) => line.startsWith('SEQUENCE:'))?.slice(9));
+    const later = unfold(reminderCalendar({ ...EVENT, createdAt: EVENT.createdAt + 60_000 }));
+    expect(Number(later.find((line) => line.startsWith('SEQUENCE:'))?.slice(9))).toBe(sequence + 60);
     expect(lines).toContain('BEGIN:VALARM');
     expect(lines).toContain('TRIGGER:PT0M');
     expect(lines).toContain('ACTION:DISPLAY');

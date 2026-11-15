@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useState } from 'preact/hooks';
 import type { PuzzleEntry } from '../../../shared/puzzle-types.ts';
 import { usePuzzles } from '../../content/puzzles';
 import { getTrap } from '../../content/traps';
@@ -48,7 +48,7 @@ function nextPlayable(date: DayKey, from: number, puzzles: PuzzleEntry[]): numbe
     const item = data.days[date]?.session?.[index];
     if (!item) return index;
     if (isPlayable(item, data, puzzles, now)) return index;
-    if (!item.done) finishSessionItem(date, index, false);
+    if (!item.done) finishSessionItem(date, index, null);
     index++;
   }
 }
@@ -56,12 +56,41 @@ function nextPlayable(date: DayKey, from: number, puzzles: PuzzleEntry[]): numbe
 function Session({ puzzles }: { puzzles: PuzzleEntry[] }) {
   // The plan is made on the first visit of the day and stays the same after that. The date
   // is fixed for this visit: a session that runs past midnight still finishes its own plan.
-  const [date] = useState(() => {
+  // It is stored after the first render: a component must not change the store while it
+  // renders.
+  const [started, setStarted] = useState<{ date: DayKey; index: number; empty: boolean }>();
+  useEffect(() => {
     const now = appNow();
     const { data } = getStore();
-    return startSession(buildSessionPlan(data, today(now), puzzles, now)).date;
-  });
-  const [index, setIndex] = useState(() => nextPlayable(date, 0, puzzles));
+    const day = startSession(buildSessionPlan(data, today(now), puzzles, now));
+    setStarted({ date: day.date, index: nextPlayable(day.date, 0, puzzles), empty: day.session === null });
+  }, []);
+  if (!started) return <p class="hint">{t.loading}</p>;
+  if (started.empty) return <EmptySession />;
+  return <SessionItems puzzles={puzzles} date={started.date} first={started.index} />;
+}
+
+function EmptySession() {
+  return (
+    <div class="screen list-screen">
+      <h1 class="screen-title">{t.session.emptyTitle}</h1>
+      <section class="panel">
+        <p>{t.session.empty}</p>
+        <div class="panel-actions">
+          <a class="button button-primary" href={routeHref({ name: 'puzzles' })}>
+            {t.session.morePuzzles}
+          </a>
+          <a class="button" href={routeHref({ name: 'today' })}>
+            {t.session.toToday}
+          </a>
+        </div>
+      </section>
+    </div>
+  );
+}
+
+function SessionItems({ puzzles, date, first }: { puzzles: PuzzleEntry[]; date: DayKey; first: number }) {
+  const [index, setIndex] = useState(first);
   const { data } = useStore();
   const items = data.days[date]?.session ?? [];
   const item = items[index];
@@ -300,7 +329,7 @@ function SessionSummary({ date }: { date: DayKey }) {
       <h1 class="screen-title">{t.session.doneTitle}</h1>
       <section class="panel today" aria-live="polite">
         <p class="verdict verdict-ok">
-          {fmt(t.session.doneCount, { n: progress.total, clean: cleanItems })}
+          {fmt(t.session.doneCount, { n: progress.played, clean: cleanItems })}
         </p>
         <p>
           {fmt(t.today.totalDays, { n: streak.totalDays })}{' '}

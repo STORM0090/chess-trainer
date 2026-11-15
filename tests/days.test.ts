@@ -179,7 +179,8 @@ describe('the daily log across time zones and clock changes', () => {
       // The clock is set two days back: practice lands on days that already have records.
       practise(days, base + DAY_MS);
       expect(Object.keys(days)).toHaveLength(4);
-      expect(streakState(days, dayKey(base + DAY_MS))).toMatchObject({ current: 4, totalDays: 4 });
+      // The streak runs up to the day the device shows; later records count as days of practice.
+      expect(streakState(days, dayKey(base + DAY_MS))).toMatchObject({ current: 2, totalDays: 4 });
       // The clock is set a month ahead and back again: one far record, no crash, no lost total.
       practise(days, base + 30 * DAY_MS);
       const state = streakState(days, dayKey(base + 4 * DAY_MS));

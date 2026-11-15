@@ -43,8 +43,10 @@ export interface StoreState {
   /**
    * `saved`: changes reach IndexedDB. `memory`: the database could not be opened (for example
    * a private window), progress lives until the page is closed. `failed`: a write failed.
+   * `blocked`: another tab of an older version holds the database. `outdated`: a newer
+   * version was opened in another tab; this page must be reloaded.
    */
-  storage: 'saved' | 'memory' | 'failed';
+  storage: 'saved' | 'memory' | 'failed' | 'blocked' | 'outdated';
 }
 
 let state: StoreState = { data: emptyData(), storage: 'saved' };
@@ -61,7 +63,7 @@ function setData(data: AppData): void {
 
 /** Runs a write and remembers when it fails, so the UI can say that progress is not saved. */
 function persist(write: () => Promise<void>): void {
-  if (state.storage === 'memory') return;
+  if (state.storage !== 'saved' && state.storage !== 'failed') return;
   write().then(
     () => void askForPersistentStorage(),
     () => publish({ ...state, storage: 'failed' }),
@@ -86,8 +88,16 @@ async function askForPersistentStorage(): Promise<void> {
 
 /** Reads the saved state. Called once before the first render. */
 export async function loadStore(): Promise<void> {
+  db.databaseEvents.onOutdated = () => publish({ ...state, storage: 'outdated' });
+  // The upgrade of the database waits while an older version is open in another tab. The
+  // app does not wait with a blank screen: it starts from memory and says why.
+  const blocked = new Promise<'blocked'>((resolve) => {
+    db.databaseEvents.onBlocked = () => resolve('blocked');
+  });
   try {
-    publish({ data: await db.loadAll(), storage: 'saved' });
+    const loaded = await Promise.race([db.loadAll(), blocked]);
+    if (loaded === 'blocked') publish({ data: emptyData(), storage: 'blocked' });
+    else publish({ data: loaded, storage: 'saved' });
   } catch {
     publish({ data: emptyData(), storage: 'memory' });
   }
@@ -167,7 +177,7 @@ export function recordPuzzle(id: string, rating: number, result: AttemptResult, 
   const now = appNow();
   const before = state.data.puzzles[id];
   const clean = result.errors === 0 && result.hints === 0;
-  const stat = applyPuzzleStat(before, id, result, now);
+  const stat = applyPuzzleStat(before, id, result, now, counts);
   const applied =
     counts && before === undefined
       ? applyPuzzleToLevel(state.data.tactics, rating, clean, now)
@@ -246,11 +256,14 @@ export function recordReview(id: string, grade: Grade): void {
   saveTrapRun(id, after, dayWith('review', grade === 'good', now));
 }
 
-/** Stores today's session plan. A plan that exists is kept: the session stays the same all day. */
+/**
+ * Stores today's session plan. A plan that exists is kept: the session stays the same all
+ * day. An empty plan is not stored, so a later visit can plan again.
+ */
 export function startSession(plan: SessionItem[]): DayRecord {
   const now = appNow();
   const day = today(now);
-  if (day.session !== null) return day;
+  if (day.session !== null || plan.length === 0) return day;
   const next: DayRecord = { ...day, session: plan, updatedAt: now };
   setData({ ...state.data, days: { ...state.data.days, [next.date]: next } });
   persist(() => db.saveDay(next));
@@ -258,7 +271,7 @@ export function startSession(plan: SessionItem[]): DayRecord {
 }
 
 /** Marks one item of the session plan of `date` as finished. */
-export function finishSessionItem(date: DayKey, index: number, clean: boolean): void {
+export function finishSessionItem(date: DayKey, index: number, clean: boolean | null): void {
   const day = state.data.days[date];
   if (!day) return;
   const next = completeItem(day, index, clean, appNow());
@@ -269,7 +282,7 @@ export function finishSessionItem(date: DayKey, index: number, clean: boolean): 
 
 /** Replaces everything with imported data. Resolves to `false` when it could not be saved. */
 export async function replaceData(data: AppData): Promise<boolean> {
-  if (state.storage !== 'memory') {
+  if (state.storage === 'saved' || state.storage === 'failed') {
     try {
       await db.replaceAll(data);
     } catch {
@@ -277,6 +290,6 @@ export async function replaceData(data: AppData): Promise<boolean> {
       return false;
     }
   }
-  publish({ data, storage: state.storage === 'memory' ? 'memory' : 'saved' });
+  publish({ data, storage: state.storage === 'failed' ? 'saved' : state.storage });
   return true;
 }

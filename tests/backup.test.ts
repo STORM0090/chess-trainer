@@ -96,6 +96,14 @@ describe('progress file', () => {
     expect(parsed.ok && Object.keys(parsed.data.traps)).toContain('future-trap');
   });
 
+  it('keeps only the known fields of a card', () => {
+    const text = fileWith((file) => {
+      file.data.puzzles['cfxZa'].card.extra = 'something';
+    });
+    const parsed = parseBackup(text);
+    expect(parsed.ok && Object.keys(parsed.data.puzzles['cfxZa']?.card ?? {})).not.toContain('extra');
+  });
+
   it('reads a file written before the "known" mark existed', () => {
     const text = fileWith((file) => {
       delete file.data.traps['fools-mate'].knownAt;
@@ -225,6 +233,12 @@ describe('progress file', () => {
       (file) => (file.data.days['2026-11-14'].session[1].id = '<script>'),
       (file) => (file.data.days['2026-11-14'].session[2].clean = 'yes'),
       (file) => (file.data.days['2026-11-14'].session = 'none'),
+      (file) => (file.data.puzzles['cfxZa'].card.state = 9),
+      (file) => (file.data.puzzles['cfxZa'].card.stability = 0),
+      (file) => (file.data.puzzles['cfxZa'].card.reps = 1.5),
+      (file) => (file.data.puzzles['cfxZa'].card.scheduleStatus = 'Bad Status!'),
+      (file) => (file.data.puzzles['cfxZa'].dueAt = 1e300),
+      (file) => (file.data.traps['fools-mate'].updatedAt = 9e15),
       (file) => (file.data.settings.dailyNorm = 2),
       (file) => (file.data.settings.reminderTime = '25:00'),
       (file) => (file.data.settings.lastBackupAt = 'never'),
