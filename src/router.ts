@@ -11,6 +11,8 @@ export type Route =
   | { name: 'learn'; id: string }
   | { name: 'chain'; id: string }
   | { name: 'review'; id: string }
+  | { name: 'play' }
+  | { name: 'playTrap'; id: string }
   | { name: 'puzzles' }
   | { name: 'puzzleTest' }
   | { name: 'puzzleTheme'; theme: PuzzleTheme }
@@ -22,6 +24,7 @@ export type Route =
 const TRAP = /^trap\/([a-z0-9-]+)$/;
 const MODE = /^trap\/([a-z0-9-]+)\/(learn|chain|review)$/;
 const THEME = /^puzzles\/theme\/([A-Za-z0-9]+)$/;
+const PLAY_TRAP = /^play\/trap\/([a-z0-9-]+)$/;
 
 /** Turns `location.hash` (for example "#/trap/legal-mate") into a route. */
 export function parseRoute(hash: string): Route {
@@ -31,6 +34,9 @@ export function parseRoute(hash: string): Route {
   if (path === 'session') return { name: 'session' };
   if (path === 'more') return { name: 'more' };
   if (path === 'settings') return { name: 'settings' };
+  if (path === 'play') return { name: 'play' };
+  const playTrap = PLAY_TRAP.exec(path)?.[1];
+  if (playTrap) return { name: 'playTrap', id: playTrap };
   if (path === 'puzzles') return { name: 'puzzles' };
   if (path === 'puzzles/test') return { name: 'puzzleTest' };
   const theme = THEME.exec(path)?.[1];
@@ -57,8 +63,11 @@ export function routeHref(route: Exclude<Route, { name: 'notFound' }>): string {
       return `#/trap/${route.id}/${route.name}`;
     case 'puzzleTest':
       return '#/puzzles/test';
+    case 'playTrap':
+      return `#/play/trap/${route.id}`;
     case 'puzzleTheme':
       return `#/puzzles/theme/${route.theme}`;
+    case 'play':
     case 'traps':
     case 'session':
     case 'more':

@@ -9,8 +9,8 @@ import {
 import { addDays, dayKey, daysBetweenKeys, isDayKey, type DayKey } from './days';
 import { duePuzzleIds, themesUpTo, type PuzzleStat } from './tactics';
 
-/** What counts as one finished exercise. */
-export type ActivityKind = 'puzzle' | 'trapStep' | 'review';
+/** What counts as one finished exercise. A finished game against the bot counts as one too. */
+export type ActivityKind = 'puzzle' | 'trapStep' | 'review' | 'game';
 
 export type SessionItem =
   /** `warmup` and `new` are puzzles the player has not seen; `review` is a failed one that is due. */

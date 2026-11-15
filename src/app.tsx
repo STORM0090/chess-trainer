@@ -9,6 +9,7 @@ import { DataScreen } from './ui/screens/DataScreen';
 import { DiagScreen } from './ui/screens/DiagScreen';
 import { LearnScreen } from './ui/screens/LearnScreen';
 import { MoreScreen } from './ui/screens/MoreScreen';
+import { PlayScreen, PlayTrapScreen } from './ui/screens/PlayScreen';
 import { SessionScreen } from './ui/screens/SessionScreen';
 import { SettingsScreen } from './ui/screens/SettingsScreen';
 import { TodayScreen } from './ui/screens/TodayScreen';
@@ -69,6 +70,10 @@ function Screen({ route }: { route: Route }) {
       return <SessionScreen />;
     case 'more':
       return <MoreScreen />;
+    case 'play':
+      return <PlayScreen />;
+    case 'playTrap':
+      return <PlayTrapScreen id={route.id} />;
     case 'settings':
       return <SettingsScreen />;
     case 'traps':
@@ -107,10 +112,10 @@ function Screen({ route }: { route: Route }) {
 
 export function App() {
   const route = useRoute();
-  const inTraps = ['traps', 'trap', 'learn', 'chain', 'review'].includes(route.name);
+  const inTraps = ['traps', 'trap', 'learn', 'chain', 'review', 'playTrap'].includes(route.name);
   const inPuzzles = ['puzzles', 'puzzleTest', 'puzzleTheme'].includes(route.name);
   const inToday = route.name === 'today' || route.name === 'session';
-  const inMore = ['more', 'settings', 'data', 'diag', 'board'].includes(route.name);
+  const inMore = ['more', 'settings', 'data', 'diag', 'board', 'play'].includes(route.name);
   // A new screen starts at the top; without this the page keeps the scroll of the previous one.
   useEffect(() => {
     window.scrollTo(0, 0);

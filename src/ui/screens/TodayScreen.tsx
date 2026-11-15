@@ -113,6 +113,14 @@ export function TodayScreen() {
         )}
       </section>
 
+      <section class="panel">
+        <h2 class="panel-title">{t.play.title}</h2>
+        <p class="hint-text">{fmt(t.play.todayHelp, { n: data.settings.botLevel })}</p>
+        <a class="button" href={routeHref({ name: 'play' })}>
+          {t.play.todayButton}
+        </a>
+      </section>
+
       {showBackupHint && (
         <section class="panel">
           <p>{t.today.backupHint}</p>

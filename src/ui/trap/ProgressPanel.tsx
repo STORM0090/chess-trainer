@@ -107,6 +107,11 @@ export function ProgressPanel({ trap, access }: { trap: CompiledTrap; access: Tr
           {t.progress.learnAll}
         </a>
       )}
+      {unlocked && (
+        <a class="button" href={routeHref({ name: 'playTrap', id })}>
+          {t.play.trapButton}
+        </a>
+      )}
     </section>
   );
 }

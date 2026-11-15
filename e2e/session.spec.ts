@@ -182,7 +182,7 @@ test('data saved by the M4 build is carried over', async ({ page }) => {
   const downloading = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Сохранить файл' }).tap();
   const file = JSON.parse(await readFile(await (await downloading).path(), 'utf8'));
-  expect(file.format).toBe(3);
+  expect(file.format).toBe(4);
   expect(file.data.puzzles.VJHBV.card).not.toBeNull();
   expect(file.data.puzzles.cfxZa.card).toBeNull();
   expect(file.data.settings).toMatchObject({ dailyNorm: 1, reminderTime: '19:00' });

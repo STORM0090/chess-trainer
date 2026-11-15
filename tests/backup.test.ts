@@ -31,7 +31,15 @@ function sample(): AppData {
   return {
     traps: { 'fools-mate': fools, 'legal-mate': emptyProgress('legal-mate') },
     games: [{ id: 'g1', trapId: 'fools-mate', at: NOW, outcome: 'declined' }],
-    settings: { ...defaultSettings(), dailyNorm: 3, reminderTime: '07:30', lastBackupAt: NOW },
+    settings: {
+      ...defaultSettings(),
+      dailyNorm: 3,
+      reminderTime: '07:30',
+      lastBackupAt: NOW,
+      botLevel: 4,
+      botResults: ['loss', 'win', 'draw'],
+      shvuChecklist: true,
+    },
     puzzles: {
       '0000D': applyPuzzleStat(undefined, '0000D', { errors: 0, hints: 0 }, NOW),
       cfxZa: applyPuzzleStat(undefined, 'cfxZa', { errors: 2, hints: 1 }, NOW),
@@ -131,6 +139,23 @@ describe('progress file', () => {
     expect(parsed.data.settings).toEqual(defaultSettings());
   });
 
+  it('reads a file of format 3 (M5): the bot settings start from their defaults', () => {
+    const text = fileWith((file) => {
+      file.format = 3;
+      delete file.data.settings.botLevel;
+      delete file.data.settings.botResults;
+      delete file.data.settings.shvuChecklist;
+    });
+    const parsed = parseBackup(text);
+    expect(parsed.ok && parsed.data.settings).toEqual({
+      ...defaultSettings(),
+      dailyNorm: 3,
+      reminderTime: '07:30',
+      lastBackupAt: NOW,
+    });
+    expect(parsed.ok && Object.keys(parsed.data.days)).toEqual(['2026-11-14']);
+  });
+
   it('writes a file that an import brings back unchanged after an older file was read', () => {
     const old = parseBackup(fixture('backup-format-2.json'));
     if (!old.ok) throw new Error('fixture');
@@ -204,6 +229,11 @@ describe('progress file', () => {
       (file) => (file.data.settings.reminderTime = '25:00'),
       (file) => (file.data.settings.lastBackupAt = 'never'),
       (file) => delete file.data.settings.backupSnoozedUntil,
+      (file) => (file.data.settings.botLevel = 0),
+      (file) => (file.data.settings.botLevel = 99),
+      (file) => (file.data.settings.botResults = ['won']),
+      (file) => (file.data.settings.botResults = Array(11).fill('win')),
+      (file) => (file.data.settings.shvuChecklist = 'on'),
     ];
     for (const change of damaged) {
       expect(parseBackup(fileWith(change)), String(change)).toEqual({ ok: false, problem: 'damaged' });

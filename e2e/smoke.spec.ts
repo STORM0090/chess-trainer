@@ -114,7 +114,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
   expect(download.suggestedFilename()).toMatch(/^chess-trainer-\d{4}-\d{2}-\d{2}\.json$/);
   const path = await download.path();
   const file = JSON.parse(await readFile(path, 'utf8'));
-  expect(file).toMatchObject({ app: 'chess-trainer', format: 3 });
+  expect(file).toMatchObject({ app: 'chess-trainer', format: 4 });
   expect(file.data.traps['fools-mate']).toMatchObject({ chainDepth: 2, reviews: 1 });
   expect(file.data.traps['fools-mate'].masteredAt).not.toBeNull();
 

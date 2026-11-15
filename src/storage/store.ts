@@ -2,6 +2,8 @@
 // the functions below; every change is written to IndexedDB right away.
 
 import { useEffect, useState } from 'preact/hooks';
+import { nextBotLevel } from '../../shared/bot/levels.ts';
+import type { GameResult } from '../core/bot-game';
 import type { ChainStep } from '../core/chain';
 import {
   applyActivity,
@@ -15,6 +17,7 @@ import { DAY_MS, dayKey, type DayKey } from '../core/days';
 import {
   applyChainRun,
   applyReview,
+  BOT_RESULTS_KEPT,
   emptyData,
   emptyProgress,
   isClean,
@@ -212,6 +215,26 @@ export function recordChainRun(
     ...day,
     newTrap: firstRun ? (day.newTrap ?? id) : day.newTrap,
   });
+}
+
+/**
+ * Records a finished game against the bot: today's log, and the level to offer next. A game
+ * at another level than the one offered (chosen by hand) moves the offer to that level first.
+ */
+export function recordBotGame(level: number, result: GameResult): number {
+  const now = appNow();
+  const { settings } = state.data;
+  const sameLevel = level === settings.botLevel;
+  const results = [...(sameLevel ? settings.botResults : []), result].slice(-BOT_RESULTS_KEPT);
+  const next = nextBotLevel(level, results);
+  const after: Settings = { ...settings, botLevel: next, botResults: next === level ? results : [] };
+  const day = dayWith('game', result === 'win', now);
+  setData({ ...state.data, settings: after, days: { ...state.data.days, [day.date]: day } });
+  persist(async () => {
+    await db.saveSettings(after);
+    await db.saveDay(day);
+  });
+  return next;
 }
 
 /** Records a spaced review of a learned trap. Does nothing when the review is not due. */

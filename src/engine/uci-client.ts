@@ -80,6 +80,33 @@ export class UciEngine {
     }
   }
 
+  /**
+   * Searches with `multipv` lines and returns everything the engine printed, for a parser
+   * that needs all the lines (the bot). The hash is cleared first, so the answer depends
+   * only on the position and the limits.
+   */
+  async lines(fen: string, limit: SearchLimit, multipv: number, timeoutMs = 60_000): Promise<string[]> {
+    const lines: string[] = [];
+    const collect: LineHandler = (line) => {
+      lines.push(line);
+    };
+    this.lineHandlers.add(collect);
+    try {
+      this.send(`setoption name MultiPV value ${multipv}`);
+      this.send('ucinewgame');
+      this.send(`position fen ${fen}`);
+      const limits = Object.entries(limit)
+        .filter(([, value]) => value !== undefined)
+        .map(([key, value]) => `${key} ${value}`)
+        .join(' ');
+      this.send(`go ${limits}`);
+      await this.waitFor((candidate) => candidate.startsWith('bestmove'), timeoutMs);
+      return lines;
+    } finally {
+      this.lineHandlers.delete(collect);
+    }
+  }
+
   terminate(): void {
     this.worker.terminate();
     this.lineHandlers.clear();

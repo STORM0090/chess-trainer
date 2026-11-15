@@ -67,10 +67,27 @@ export interface Settings {
   lastBackupAt: number | null;
   /** The backup hint is not shown before this time. */
   backupSnoozedUntil: number | null;
+  /** The bot level offered next, from 1. */
+  botLevel: number;
+  /** Results of the latest games against the bot, newest last, at most BOT_RESULTS_KEPT. */
+  botResults: ('win' | 'draw' | 'loss')[];
+  /** Show the ШВУ checklist before every move in a game against the bot. */
+  shvuChecklist: boolean;
 }
 
+export const BOT_RESULTS_KEPT = 10;
+
 export function defaultSettings(): Settings {
-  return { clockShiftDays: 0, dailyNorm: 1, reminderTime: '19:00', lastBackupAt: null, backupSnoozedUntil: null };
+  return {
+    clockShiftDays: 0,
+    dailyNorm: 1,
+    reminderTime: '19:00',
+    lastBackupAt: null,
+    backupSnoozedUntil: null,
+    botLevel: 1,
+    botResults: [],
+    shvuChecklist: false,
+  };
 }
 
 export interface AppData {

@@ -82,6 +82,19 @@ export function SettingsScreen() {
         <p class="hint-text">{t.settings.reminderChange}</p>
       </section>
 
+      <section class="panel">
+        <h2 class="panel-title">{t.play.title}</h2>
+        <label class="toggle">
+          <input
+            type="checkbox"
+            checked={data.settings.shvuChecklist}
+            onChange={(event) => updateSettings({ shvuChecklist: event.currentTarget.checked })}
+          />
+          <span>{t.play.checklistToggle}</span>
+        </label>
+        <p class="hint-text">{t.play.checklistHelp}</p>
+      </section>
+
       <a class="button button-quiet" href={routeHref({ name: 'more' })}>
         {t.more.back}
       </a>

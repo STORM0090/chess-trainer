@@ -4,7 +4,9 @@
 import { DAILY_NORMS, type DailyNorm, type DayRecord, type SessionItem } from './daily';
 import { isDayKey, type DayKey } from './days';
 import { isReminderTime } from './ics';
+import { BOT_LEVELS } from '../../shared/bot/levels.ts';
 import {
+  BOT_RESULTS_KEPT,
   defaultSettings,
   type AppData,
   type GameEntry,
@@ -27,10 +29,10 @@ import { TOP_LEVEL } from '../../shared/puzzle-types.ts';
 export const BACKUP_APP = 'chess-trainer';
 /**
  * Format 2 (M4) added puzzles and the tactics level. Format 3 (M5) added the daily log, the
- * FSRS cards of failed puzzles and new settings. Older files are still read and brought up
- * to the current shape.
+ * FSRS cards of failed puzzles and new settings. Format 4 (M6) added the bot settings. Older
+ * files are still read and brought up to the current shape.
  */
-export const BACKUP_FORMAT = 3;
+export const BACKUP_FORMAT = 4;
 
 export interface BackupFile {
   app: typeof BACKUP_APP;
@@ -172,13 +174,23 @@ function readSettings(value: unknown, format: number): Settings | undefined {
   if (format < 3) return { ...defaultSettings(), clockShiftDays: shift };
   if (!DAILY_NORMS.includes(value.dailyNorm as DailyNorm) || !isReminderTime(value.reminderTime)) return undefined;
   if (!isTimeOrNull(value.lastBackupAt) || !isTimeOrNull(value.backupSnoozedUntil)) return undefined;
-  return {
+  const base = {
+    ...defaultSettings(),
     clockShiftDays: shift,
     dailyNorm: value.dailyNorm as DailyNorm,
     reminderTime: value.reminderTime,
     lastBackupAt: value.lastBackupAt,
     backupSnoozedUntil: value.backupSnoozedUntil,
   };
+  // Format 3 had no bot yet.
+  if (format < 4) return base;
+  const level = value.botLevel;
+  if (!isCount(level) || level < 1 || level > BOT_LEVELS.length) return undefined;
+  const results = value.botResults;
+  if (!Array.isArray(results) || results.length > BOT_RESULTS_KEPT) return undefined;
+  if (!results.every((result) => result === 'win' || result === 'draw' || result === 'loss')) return undefined;
+  if (typeof value.shvuChecklist !== 'boolean') return undefined;
+  return { ...base, botLevel: level, botResults: results, shvuChecklist: value.shvuChecklist };
 }
 
 const PUZZLE_ID = /^[A-Za-z0-9]{1,12}$/;

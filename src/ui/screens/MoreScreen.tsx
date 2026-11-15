@@ -3,7 +3,8 @@ import { routeHref, type Route } from '../../router';
 
 type Target = Exclude<Route, { name: 'notFound' }>;
 
-const LINKS: { route: Target; key: 'board' | 'settings' | 'data' | 'diag' }[] = [
+const LINKS: { route: Target; key: 'play' | 'board' | 'settings' | 'data' | 'diag' }[] = [
+  { route: { name: 'play' }, key: 'play' },
   { route: { name: 'settings' }, key: 'settings' },
   { route: { name: 'data' }, key: 'data' },
   { route: { name: 'board' }, key: 'board' },
