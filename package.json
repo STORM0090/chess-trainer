@@ -25,7 +25,8 @@
     "check:size": "node scripts/check-size.ts",
     "explain:facts": "node scripts/explain-facts.ts",
     "explain:apply": "node scripts/explain-apply.ts",
-    "build:puzzles": "node scripts/build-puzzles.ts"
+    "build:puzzles": "node scripts/build-puzzles.ts",
+    "bot:calibrate": "node scripts/bot-calibrate.ts"
   },
   "dependencies": {
     "@lichess-org/chessground": "10.5.0",
