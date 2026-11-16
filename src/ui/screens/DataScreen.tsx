@@ -5,7 +5,7 @@ import { TOP_LEVEL } from '../../../shared/puzzle-types.ts';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
 import { replaceData, setClockShift, updateSettings, useStore } from '../../storage/store';
-import { downloadFile } from '../download';
+import { saveTextFile } from '../../platform/native';
 
 const DATE_AND_TIME = new Intl.DateTimeFormat('ru', { dateStyle: 'long', timeStyle: 'short' });
 
@@ -36,13 +36,14 @@ export function DataScreen() {
   const fileInput = useRef<HTMLInputElement>(null);
   const shift = data.settings.clockShiftDays;
 
-  const exportFile = () => {
+  const exportFile = async () => {
     // The real time, not the test clock: the file says when it was actually made.
     const now = Date.now();
     const name = backupFileName(now);
     // The file itself already says that it was saved now.
     const saved = { ...data, settings: { ...data.settings, lastBackupAt: now, backupSnoozedUntil: null } };
-    downloadFile(name, JSON.stringify(makeBackup(saved, now, __APP_VERSION__), null, 2), 'application/json');
+    const done = await saveTextFile(name, JSON.stringify(makeBackup(saved, now, __APP_VERSION__), null, 2), 'application/json');
+    if (!done) return;
     updateSettings({ lastBackupAt: now, backupSnoozedUntil: null });
     setExported(name);
   };
@@ -88,7 +89,7 @@ export function DataScreen() {
       <section class="panel">
         <h2 class="panel-title">{t.data.exportTitle}</h2>
         <p class="hint-text">{t.data.exportHelp}</p>
-        <button type="button" class="button button-primary" onClick={exportFile}>
+        <button type="button" class="button button-primary" onClick={() => void exportFile()}>
           {t.data.exportButton}
         </button>
         {exported && (

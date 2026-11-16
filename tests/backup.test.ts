@@ -39,6 +39,7 @@ function sample(): AppData {
       botLevel: 4,
       botResults: ['loss', 'win', 'draw'],
       shvuChecklist: true,
+      remindersOn: true,
     },
     puzzles: {
       '0000D': applyPuzzleStat(undefined, '0000D', { errors: 0, hints: 0 }, NOW),
@@ -147,6 +148,17 @@ describe('progress file', () => {
     expect(parsed.data.settings).toEqual(defaultSettings());
   });
 
+  it('reads a file of format 4 (M6): notifications start switched off', () => {
+    const parsed = parseBackup(
+      fileWith((file) => {
+        file.format = 4;
+        delete file.data.settings.remindersOn;
+      }),
+    );
+    expect(parsed.ok && parsed.data.settings.remindersOn).toBe(false);
+    expect(parsed.ok && parsed.data.settings.botLevel).toBe(4);
+  });
+
   it('opens a bot level above this ladder at its top level', () => {
     const parsed = parseBackup(fileWith((file) => (file.data.settings.botLevel = 99)));
     expect(parsed.ok && parsed.data.settings.botLevel).toBe(13);
@@ -158,6 +170,7 @@ describe('progress file', () => {
       delete file.data.settings.botLevel;
       delete file.data.settings.botResults;
       delete file.data.settings.shvuChecklist;
+      delete file.data.settings.remindersOn;
     });
     const parsed = parseBackup(text);
     expect(parsed.ok && parsed.data.settings).toEqual({
@@ -252,6 +265,7 @@ describe('progress file', () => {
       (file) => (file.data.settings.botResults = ['won']),
       (file) => (file.data.settings.botResults = Array(11).fill('win')),
       (file) => (file.data.settings.shvuChecklist = 'on'),
+      (file) => delete file.data.settings.remindersOn,
     ];
     for (const change of damaged) {
       expect(parseBackup(fileWith(change)), String(change)).toEqual({ ok: false, problem: 'damaged' });

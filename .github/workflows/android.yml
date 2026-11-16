@@ -1,0 +1,56 @@
+name: Android debug APK
+
+# A debug APK for testing on the phone. It is signed with the debug key that Gradle makes on
+# the runner, so it installs next to nothing else and needs no secret. The release build is
+# in release.yml.
+#
+# Runs on pushes to the stage branches from M7 on, and by hand once this file is on main.
+
+on:
+  push:
+    branches:
+      - 'm[7-9]*'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    name: Build the debug APK
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - run: npm ci
+      - run: npm run check:privacy
+      # The web app is built for the app's own address inside the WebView, at the root.
+      - name: Build the web app
+        env:
+          VITE_BRANCH: ${{ github.ref_name }}
+        run: |
+          export VITE_COMMIT="${GITHUB_SHA::7}"
+          npm run build -- --base=/
+      - name: Copy the web app into the Android project
+        run: npx cap sync android
+      # The Android Gradle Plugin 8.13 needs JDK 17 or later; 21 is the current LTS.
+      # The runner image has the Android SDK; Gradle fetches a missing platform by itself.
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Build
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+      - uses: actions/upload-artifact@v7
+        with:
+          name: chess-trainer-debug-${{ github.ref_name }}
+          path: android/app/build/outputs/apk/debug/*.apk
+          if-no-files-found: error
+          retention-days: 30

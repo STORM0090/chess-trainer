@@ -1,6 +1,8 @@
 import { render } from 'preact';
 import { App } from './app';
 import { initSchedule } from './core/schedule';
+import { isNativeApp } from './platform/native';
+import { startReminders } from './platform/notifications';
 import { initPwa } from './pwa';
 import { loadStore } from './storage/store';
 import './styles.css';
@@ -14,4 +16,5 @@ if (!root) throw new Error('Missing #app element');
 await initSchedule();
 await loadStore();
 render(<App />, root);
-initPwa();
+if (isNativeApp()) startReminders();
+else initPwa();

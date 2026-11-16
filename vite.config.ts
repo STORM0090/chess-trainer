@@ -29,7 +29,7 @@ export default defineConfig({
         ],
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,svg,png,webmanifest}'],
+        globPatterns: ['**/*.{js,css,html,svg,png,webmanifest,txt}'],
         // The engine (1.9 MB) is cached on first use instead of on install.
         globIgnores: ['engine/**'],
         // The root app's scope also covers /preview/<branch>/. Without this, the first visit

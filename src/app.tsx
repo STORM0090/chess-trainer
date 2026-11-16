@@ -8,6 +8,7 @@ import { ChainScreen } from './ui/screens/ChainScreen';
 import { DataScreen } from './ui/screens/DataScreen';
 import { DiagScreen } from './ui/screens/DiagScreen';
 import { LearnScreen } from './ui/screens/LearnScreen';
+import { LicensesScreen } from './ui/screens/LicensesScreen';
 import { MoreScreen } from './ui/screens/MoreScreen';
 import { PlayScreen, PlayTrapScreen } from './ui/screens/PlayScreen';
 import { SessionScreen } from './ui/screens/SessionScreen';
@@ -76,6 +77,8 @@ function Screen({ route }: { route: Route }) {
       return <PlayTrapScreen id={route.id} />;
     case 'settings':
       return <SettingsScreen />;
+    case 'licenses':
+      return <LicensesScreen />;
     case 'traps':
       return <TrapListScreen />;
     case 'trap':
@@ -115,7 +118,7 @@ export function App() {
   const inTraps = ['traps', 'trap', 'learn', 'chain', 'review', 'playTrap'].includes(route.name);
   const inPuzzles = ['puzzles', 'puzzleTest', 'puzzleTheme'].includes(route.name);
   const inToday = route.name === 'today' || route.name === 'session';
-  const inMore = ['more', 'settings', 'data', 'diag', 'board', 'play'].includes(route.name);
+  const inMore = ['more', 'settings', 'data', 'diag', 'board', 'play', 'licenses'].includes(route.name);
   // A new screen starts at the top; without this the page keeps the scroll of the previous one.
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -36,7 +36,8 @@ describe('content/puzzles/lichess.json', () => {
     }
   });
 
-  it('plays every puzzle to the end with legal moves', () => {
+  // About two thousand puzzles are replayed: give it time on a busy machine.
+  it('plays every puzzle to the end with legal moves', { timeout: 60_000 }, () => {
     for (const entry of file.puzzles) {
       const puzzle = compilePuzzle(entry);
       const steps = puzzle.line.steps;

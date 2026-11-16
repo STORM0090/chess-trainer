@@ -1033,3 +1033,18 @@ button.move {
   justify-content: center;
   margin: 0.5rem 0;
 }
+
+/* Licenses */
+
+.licenses {
+  margin: 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--surface);
+  font-size: 0.75rem;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  user-select: text;
+  -webkit-user-select: text;
+}

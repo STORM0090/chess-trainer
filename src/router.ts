@@ -6,6 +6,7 @@ export type Route =
   | { name: 'session' }
   | { name: 'more' }
   | { name: 'settings' }
+  | { name: 'licenses' }
   | { name: 'traps' }
   | { name: 'trap'; id: string }
   | { name: 'learn'; id: string }
@@ -34,6 +35,7 @@ export function parseRoute(hash: string): Route {
   if (path === 'session') return { name: 'session' };
   if (path === 'more') return { name: 'more' };
   if (path === 'settings') return { name: 'settings' };
+  if (path === 'licenses') return { name: 'licenses' };
   if (path === 'play') return { name: 'play' };
   const playTrap = PLAY_TRAP.exec(path)?.[1];
   if (playTrap) return { name: 'playTrap', id: playTrap };
@@ -72,6 +74,7 @@ export function routeHref(route: Exclude<Route, { name: 'notFound' }>): string {
     case 'session':
     case 'more':
     case 'settings':
+    case 'licenses':
     case 'puzzles':
     case 'board':
     case 'data':

@@ -5,7 +5,8 @@ import { isReminderTime, reminderCalendar } from '../../core/ics';
 import { fmt, plural, t } from '../../i18n';
 import { routeHref } from '../../router';
 import { updateSettings, useStore } from '../../storage/store';
-import { downloadFile } from '../download';
+import { isNativeApp, saveTextFile } from '../../platform/native';
+import { RemindersPanel } from '../settings/RemindersPanel';
 
 const REMINDER_FILE = 'chess-trainer-reminder.ics';
 
@@ -15,7 +16,7 @@ export function SettingsScreen() {
   const { dailyNorm, reminderTime } = data.settings;
   const [saved, setSaved] = useState(false);
 
-  const saveReminder = () => {
+  const saveReminder = async () => {
     // The real clock, not the test clock: the calendar entry must start today.
     const now = Date.now();
     const text = reminderCalendar({
@@ -26,8 +27,7 @@ export function SettingsScreen() {
       url: `${location.origin}${location.pathname}`,
       createdAt: now,
     });
-    downloadFile(REMINDER_FILE, text, 'text/calendar');
-    setSaved(true);
+    setSaved(await saveTextFile(REMINDER_FILE, text, 'text/calendar'));
   };
 
   return (
@@ -54,9 +54,11 @@ export function SettingsScreen() {
         <p class="hint-text">{t.settings.normNote}</p>
       </section>
 
+      {isNativeApp() && <RemindersPanel />}
+
       <section class="panel">
-        <h2 class="panel-title">{t.settings.reminderTitle}</h2>
-        <p class="hint-text">{t.settings.reminderHelp}</p>
+        <h2 class="panel-title">{isNativeApp() ? t.settings.calendarTitle : t.settings.reminderTitle}</h2>
+        <p class="hint-text">{isNativeApp() ? t.settings.calendarHelp : t.settings.reminderHelp}</p>
         <label class="field">
           <span>{t.settings.reminderTime}</span>
           <input
@@ -71,7 +73,7 @@ export function SettingsScreen() {
             }}
           />
         </label>
-        <button type="button" class="button button-primary" onClick={saveReminder}>
+        <button type="button" class="button button-primary" onClick={() => void saveReminder()}>
           {t.settings.reminderButton}
         </button>
         {saved && (

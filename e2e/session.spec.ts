@@ -93,7 +93,7 @@ test('the daily session, the streak, the settings and the calendar file', async 
 
   // Settings: the norm and the calendar file.
   await page.getByRole('link', { name: 'Ещё' }).tap();
-  await expect(page.locator('.trap-card')).toHaveCount(5);
+  await expect(page.locator('.trap-card')).toHaveCount(6);
   await page.getByRole('link', { name: /Настройки/ }).tap();
   await page.getByRole('radio', { name: '3 упражнения' }).tap();
   await expect(page.getByRole('radio', { name: '3 упражнения' })).toHaveAttribute('aria-checked', 'true');
@@ -183,7 +183,7 @@ test('data saved by the M4 build is carried over', async ({ page }) => {
   const downloading = page.waitForEvent('download');
   await page.getByRole('button', { name: 'Сохранить файл' }).tap();
   const file = JSON.parse(await readFile(await (await downloading).path(), 'utf8'));
-  expect(file.format).toBe(4);
+  expect(file.format).toBe(5);
   expect(file.data.puzzles.VJHBV.card).not.toBeNull();
   expect(file.data.puzzles.cfxZa.card).toBeNull();
   expect(file.data.settings).toMatchObject({ dailyNorm: 1, reminderTime: '19:00' });

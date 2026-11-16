@@ -30,9 +30,10 @@ export const BACKUP_APP = 'chess-trainer';
 /**
  * Format 2 (M4) added puzzles and the tactics level. Format 3 (M5) added the daily log, the
  * FSRS cards of failed puzzles and new settings. Format 4 (M6) added the bot settings. Older
- * files are still read and brought up to the current shape.
+ * files are still read and brought up to the current shape. Format 5 (M7) added the switch
+ * for notifications.
  */
-export const BACKUP_FORMAT = 4;
+export const BACKUP_FORMAT = 5;
 
 export interface BackupFile {
   app: typeof BACKUP_APP;
@@ -218,7 +219,11 @@ function readSettings(value: unknown, format: number): Settings | undefined {
   if (!Array.isArray(results) || results.length > BOT_RESULTS_KEPT) return undefined;
   if (!results.every((result) => result === 'win' || result === 'draw' || result === 'loss')) return undefined;
   if (typeof value.shvuChecklist !== 'boolean') return undefined;
-  return { ...base, botLevel: level, botResults: results, shvuChecklist: value.shvuChecklist };
+  const bot = { ...base, botLevel: level, botResults: results, shvuChecklist: value.shvuChecklist };
+  // Format 4 had no notifications.
+  if (format < 5) return bot;
+  if (typeof value.remindersOn !== 'boolean') return undefined;
+  return { ...bot, remindersOn: value.remindersOn };
 }
 
 const PUZZLE_ID = /^[A-Za-z0-9]{1,12}$/;

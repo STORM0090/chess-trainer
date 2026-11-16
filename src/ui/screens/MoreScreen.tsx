@@ -3,12 +3,13 @@ import { routeHref, type Route } from '../../router';
 
 type Target = Exclude<Route, { name: 'notFound' }>;
 
-const LINKS: { route: Target; key: 'play' | 'board' | 'settings' | 'data' | 'diag' }[] = [
+const LINKS: { route: Target; key: 'play' | 'board' | 'settings' | 'data' | 'diag' | 'licenses' }[] = [
   { route: { name: 'play' }, key: 'play' },
   { route: { name: 'settings' }, key: 'settings' },
   { route: { name: 'data' }, key: 'data' },
   { route: { name: 'board' }, key: 'board' },
   { route: { name: 'diag' }, key: 'diag' },
+  { route: { name: 'licenses' }, key: 'licenses' },
 ];
 
 /** Everything that is not daily practice: settings, the progress file, the free board. */

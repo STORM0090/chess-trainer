@@ -73,6 +73,8 @@ export interface Settings {
   botResults: ('win' | 'draw' | 'loss')[];
   /** Show the ШВУ checklist before every move in a game against the bot. */
   shvuChecklist: boolean;
+  /** Daily notifications at `reminderTime`; the installed app only. */
+  remindersOn: boolean;
 }
 
 export const BOT_RESULTS_KEPT = 10;
@@ -87,6 +89,7 @@ export function defaultSettings(): Settings {
     botLevel: 1,
     botResults: [],
     shvuChecklist: false,
+    remindersOn: false,
   };
 }
 

@@ -1,0 +1,91 @@
+name: Android release
+
+# The signed release APK. Prepared in M7; it does nothing until the owner has created the
+# signing key and put it into the repository secrets (docs/APK-SIGNING.md). It runs only for
+# a tag such as v1.0.0, and only when all four secrets exist. No secret is ever printed:
+# the key is written to a file in the runner's temp folder and removed at the end.
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build and publish the signed APK
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEY: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' && secrets.ANDROID_KEYSTORE_PASSWORD != '' && secrets.ANDROID_KEY_ALIAS != '' && secrets.ANDROID_KEY_PASSWORD != '' }}
+    steps:
+      - name: Stop when the signing secrets are not set
+        if: env.HAS_KEY != 'true'
+        run: |
+          echo "The signing secrets are not set; see docs/APK-SIGNING.md. Nothing is built."
+      - uses: actions/checkout@v7
+        if: env.HAS_KEY == 'true'
+      - uses: actions/setup-node@v7
+        if: env.HAS_KEY == 'true'
+        with:
+          node-version-file: .nvmrc
+          cache: npm
+      - if: env.HAS_KEY == 'true'
+        run: npm ci
+      - if: env.HAS_KEY == 'true'
+        run: npm run check:privacy
+      - if: env.HAS_KEY == 'true'
+        run: npm test
+      - name: Build the web app
+        if: env.HAS_KEY == 'true'
+        env:
+          VITE_BRANCH: ${{ github.ref_name }}
+        run: |
+          export VITE_COMMIT="${GITHUB_SHA::7}"
+          npm run build -- --base=/
+      - if: env.HAS_KEY == 'true'
+        run: npx cap sync android
+      - uses: actions/setup-java@v5
+        if: env.HAS_KEY == 'true'
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+      - name: Write the signing key to a temporary file
+        if: env.HAS_KEY == 'true'
+        env:
+          KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+        run: |
+          printf '%s' "$KEYSTORE_BASE64" | base64 --decode > "$RUNNER_TEMP/release.keystore"
+      - name: Build the signed APK
+        if: env.HAS_KEY == 'true'
+        working-directory: android
+        env:
+          CHESS_TRAINER_KEYSTORE: ${{ runner.temp }}/release.keystore
+          CHESS_TRAINER_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          CHESS_TRAINER_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          CHESS_TRAINER_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleRelease
+      - name: The certificate fingerprint, for the release notes
+        if: env.HAS_KEY == 'true'
+        id: fingerprint
+        run: |
+          apksigner=$(ls "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -1)
+          sha=$("$apksigner" verify --print-certs android/app/build/outputs/apk/release/app-release.apk | sed -n 's/.*SHA-256 digest: //p' | head -1)
+          echo "sha256=$sha" >> "$GITHUB_OUTPUT"
+      - name: Remove the key file
+        if: always() && env.HAS_KEY == 'true'
+        run: rm -f "$RUNNER_TEMP/release.keystore"
+      - name: Publish the release
+        if: env.HAS_KEY == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          FINGERPRINT: ${{ steps.fingerprint.outputs.sha256 }}
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk "chess-trainer-$TAG.apk"
+          gh release create "$TAG" "chess-trainer-$TAG.apk" --title "Chess Trainer $TAG" \
+            --notes "Signing certificate SHA-256: $FINGERPRINT"

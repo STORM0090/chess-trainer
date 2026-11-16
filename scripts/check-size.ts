@@ -21,7 +21,7 @@ const BUDGET = {
   startupGzipKB: 130,
 };
 
-const PRECACHED = /\.(js|css|html|svg|png|webmanifest)$/;
+const PRECACHED = /\.(js|css|html|svg|png|webmanifest|txt)$/;
 
 function walk(dir: string): string[] {
   return readdirSync(dir, { withFileTypes: true }).flatMap((entry) =>

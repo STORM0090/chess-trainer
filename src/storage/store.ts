@@ -107,6 +107,12 @@ export function getStore(): StoreState {
   return state;
 }
 
+/** Calls `listener` after every change. Returns the function that stops it. */
+export function subscribeStore(listener: (next: StoreState) => void): () => void {
+  listeners.add(listener);
+  return () => void listeners.delete(listener);
+}
+
 export function useStore(): StoreState {
   const [current, setCurrent] = useState(state);
   useEffect(() => {

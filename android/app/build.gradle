@@ -1,5 +1,10 @@
 apply plugin: 'com.android.application'
 
+// The version comes from package.json, so the web app and the APK always say the same.
+// versionCode: major * 10000 + minor * 100 + patch (0.8.0 gives 800); it must grow with every release.
+def appVersion = new groovy.json.JsonSlurper().parse(file('../../package.json')).version
+def versionParts = appVersion.tokenize('.').collect { it.toInteger() }
+
 android {
     namespace = "io.github.storm0090.chesstrainer"
     compileSdk = rootProject.ext.compileSdkVersion
@@ -7,8 +12,8 @@ android {
         applicationId "io.github.storm0090.chesstrainer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
+        versionCode versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
+        versionName appVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {
              // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
@@ -16,8 +21,22 @@ android {
             ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
         }
     }
+    // The release key comes from the environment of the release workflow (docs/APK-SIGNING.md).
+    // Without it a release build is left unsigned and cannot be installed.
+    signingConfigs {
+        release {
+            def keystore = System.getenv('CHESS_TRAINER_KEYSTORE')
+            if (keystore) {
+                storeFile file(keystore)
+                storePassword System.getenv('CHESS_TRAINER_KEYSTORE_PASSWORD')
+                keyAlias System.getenv('CHESS_TRAINER_KEY_ALIAS')
+                keyPassword System.getenv('CHESS_TRAINER_KEY_PASSWORD')
+            }
+        }
+    }
     buildTypes {
         release {
+            if (System.getenv('CHESS_TRAINER_KEYSTORE')) signingConfig signingConfigs.release
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
