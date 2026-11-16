@@ -1,0 +1,10 @@
+{
+  "appId": "io.github.storm0090.chesstrainer",
+  "appName": "Chess Trainer",
+  "webDir": "dist",
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": false,
+    "webContentsDebuggingEnabled": false
+  }
+}
