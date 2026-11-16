@@ -79,6 +79,8 @@ export async function findMistakes(
   nodes: number,
   count = 3,
   onProgress?: (done: number, total: number) => void,
+  /** Checked before every search; the review stops with an error when it returns false. */
+  isAlive: () => boolean = () => true,
 ): Promise<Mistake[]> {
   const chess = new Chess();
   const own = player === 'white' ? 0 : 1;
@@ -92,11 +94,13 @@ export async function findMistakes(
       continue;
     }
     const fen = chess.fen();
+    if (!isAlive()) throw new Error('The review was stopped');
     const [best] = await analyse(fen, { nodes, multipv: 1 });
     const played = chess.move(san);
     let after = 0;
     if (chess.isCheckmate()) after = LOSS_CAP;
     else if (!chess.isDraw()) {
+      if (!isAlive()) throw new Error('The review was stopped');
       const [reply] = await analyse(chess.fen(), { nodes, multipv: 1 });
       after = -(reply?.cp ?? 0);
     }

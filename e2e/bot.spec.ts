@@ -20,13 +20,14 @@ test('trap practice against the bot: the bot opens along the trap and the player
   await playMove(page, 'd8h4', 'black');
   await expect(status).toHaveText('Мат. Вы выиграли');
   await expect(page.getByText('Победа!')).toBeVisible();
-  await expect(page.getByText('Следующая партия: уровень 2.')).toBeVisible();
+  // A trap game does not move the level: in the book the bot blunders on purpose.
+  await expect(page.getByText(/Партия по ловушке не меняет уровень бота/)).toBeVisible();
   await expectNoSidewaysScroll(page);
 
   // The win counts for today.
   await page.goto('./');
   await expect(page.getByText(/Норма дня выполнена/)).toBeVisible();
-  await expect(page.getByText('Короткая партия против бота. Ваш уровень бота: 2.')).toBeVisible();
+  await expect(page.getByText('Короткая партия против бота. Ваш уровень бота: 1.')).toBeVisible();
   expect(problems, 'errors in the browser console').toEqual([]);
 });
 

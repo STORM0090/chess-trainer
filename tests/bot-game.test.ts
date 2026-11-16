@@ -109,6 +109,20 @@ describe('findMistakes', () => {
     expect(found.map((mistake) => mistake.loss)).toEqual([400, 300, 500]);
   });
 
+  it('stops when it is no longer wanted', async () => {
+    let searches = 0;
+    const counting: Analyse = async () => {
+      searches++;
+      return [{ uci: '', cp: 0 }];
+    };
+    let alive = true;
+    const review = findMistakes(['e4', 'e5', 'Nf3', 'Nc6', 'Bc4', 'Bc5'], 'white', counting, 1000, 3, (done) => {
+      if (done === 1) alive = false;
+    }, () => alive);
+    await expect(review).rejects.toThrow(/stopped/);
+    expect(searches).toBe(2);
+  });
+
   it('does not count a move that was the best move', async () => {
     const moves = ['e4', 'e5'];
     const table = { [position([])]: { uci: 'e2e4', cp: 0 }, [position(['e4'])]: { uci: 'e7e5', cp: 900 } };

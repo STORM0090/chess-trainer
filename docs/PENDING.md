@@ -40,4 +40,6 @@ Things that only the owner decides or checks. Nothing here was done on the owner
   cards.
 - **The bot shows levels 1 to 13 and no human rating**: nothing was measured against people.
 - **The bot's level moves by itself**: up after every win, down after two losses in a row.
-- **Games against the bot are not saved**; leaving a game drops it.
+- **Games against the bot are not saved**; leaving a game drops it without a result, so a
+  losing game can be dodged. The alternative is to count leaving after a few moves as a loss.
+- **Trap practice does not move the bot level.**

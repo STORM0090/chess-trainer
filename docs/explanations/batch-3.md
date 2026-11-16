@@ -34,7 +34,7 @@ The same rules as in [batch 1](batch-1.md) and [batch 2](batch-2.md):
 | 6 | 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nf6 5.h3 | Чёрные выводят коня на f6, и он защищает слона g4: ловушки нет, позиция примерно равна. | по доске; по оценке движка | At the end the bishop g4 is attacked by the pawn h3 and defended by the knight f6. Engine: +0.41. |
 | 7 | 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nc6 5.h3 | Конь c6 добавил пешке e5 вторую защиту; вы спокойно гоните слона пешкой h3, по оценке у вас лучше. | по доске; по оценке движка | At the end the pawn e5 is defended by the knight c6 and the pawn d6; the bishop g4 is attacked by the pawn h3. Engine: +0.57. |
 | 8 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bxf3 6.Qxf3 | Чёрные меняют слона на коня: ваш ферзь встаёт на f3 и вместе со слоном нападает на f7. Позиция примерно равна. | по доске; по оценке движка | At the end the pawn f7 is attacked by the bishop c4 and the queen f3 and defended by the king. Engine: +0.45. |
-| 9 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.Nxe5?? Nxe5 | Так нельзя: здесь пешку e5 защищает ещё и конь c6. Он берёт вашего коня, и вы просто теряете фигуру: у соперника большой перевес. | по доске; по оценке движка | Before 5.Nxe5 the pawn e5 is defended by the knight c6 and the pawn d6. 5...Nxe5 captures the knight. Material at the end: -2. Engine: -4.86. |
+| 9 | 1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.Nxe5?? Nxe5 | Так нельзя: слон g4 ещё не прогнан на h5. Конь c6 берёт вашего коня и с e5 защищает слона g4, так что ферзю брать нечего: вы просто теряете фигуру, у соперника большой перевес. | по доске; по оценке движка | 5...Nxe5 captures the knight. At the end the bishop g4 is attacked by the queen d1 and defended by the knight e5 (in line 5, after 5.h3 Bh5, the same knight cannot defend the bishop on h5 and the queen takes it). Material at the end: -2. Engine: -4.86. |
 
 ## 2. Ловушка Мортимера (`mortimer-trap`), вы играете чёрными
 
@@ -49,17 +49,29 @@ The same rules as in [batch 1](batch-1.md) and [batch 2](batch-2.md):
 
 | # | Line | Text | Source | Checked |
 | --- | --- | --- | --- | --- |
-| 14 | Main: 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1# | Шах с b4 нападает и на слона f4, и на пешку b2. После Bd2 ферзь берёт b2; если слон идёт на c3, слон b4 нападает на него, и после размена на c3 ферзь ставит мат на c1. | по доске | 4...Qb4+ is check and attacks the bishop f4 and the pawn b2. 5...Qxb2 captures b2. 6...Bb4 attacks the bishop c3. 8...Qc1 is checkmate: d1 and d2 covered by the queen c1; e2, f1, f2 blocked by own pieces and pawns; the queen on c1 is attacked by nobody. |
+| 14 | Main: 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1# | Шах с b4 нападает и на слона f4, и на пешку b2. После Bd2 ферзь берёт b2; если слон идёт на c3, слон b4 нападает на него, и после Qd2 Bxc3 Qxc3 ферзь ставит мат на c1. | по доске | 4...Qb4+ is check and attacks the bishop f4 and the pawn b2. 5...Qxb2 captures b2. 6...Bb4 attacks the bishop c3. 8...Qc1 is checkmate: d1 and d2 covered by the queen c1; e2, f1, f2 blocked by own pieces and pawns; the queen on c1 is attacked by nobody. |
 | 15 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Bxb4 Nxb4 | Белые меняют слонов: конь отыгрывает слона, а ваш ферзь на b2 нападает на ладью a1. По оценке у вас большой перевес. | по доске; по оценке движка | 7...Nxb4 captures the bishop. At the end the rook a1 is attacked by the queen b2 and defended by nobody. Engine: +6.88. |
-| 16 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.c3?? Qxf4 | Белые закрылись пешкой c3, и слон f4 остался без защиты: ферзь его забирает. | по доске | 5...Qxf4 captures the bishop, defended by nobody. Material at the end: +2. |
-| 17 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nbd2?? Qxf4 | Конь закрыл шах, а слон f4 остался без защиты: ферзь его забирает. | по доске | 5...Qxf4 captures the bishop, defended by nobody. Material at the end: +2. |
+| 16 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.c3?? Qxf4 | Белые закрылись пешкой c3, а слон f4 не защищён: ферзь его забирает. | по доске | 5...Qxf4 captures the bishop, defended by nobody. Material at the end: +2. |
+| 17 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nbd2?? Qxf4 | Конь закрыл шах, а слон f4 не защищён: ферзь его забирает. | по доске | 5...Qxf4 captures the bishop, defended by nobody. Material at the end: +2. |
 | 18 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Qd2?? Qxb2 6.Qc3 Bb4 | Белые закрылись ферзём: ваш ферзь берёт b2 и нападает на ладью a1, а на Qc3 слон b4 нападает на белого ферзя. По оценке у вас большой перевес. | по доске; по оценке движка | 5...Qxb2 attacks the rook a1. 6...Bb4 attacks the queen c3. Engine: +9.80. |
 | 19 | 1.d4 e5 2.Bf4?? exf4 | Слон пошёл на f4 под удар пешки e5: пешка его забирает. | по доске | 2...exf4 captures the bishop. Material at the end: +3. |
-| 20 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nc3 Qxf4 6.Nd5 Qe4 | Белые закрылись конём: ферзь забирает слона f4, но конь d5 нападает на ферзя и на пешку c7. После Qe4 позиция примерно равна. | по доске; по оценке движка | 5...Qxf4 captures the bishop. 6.Nd5 attacks the queen f4 and the pawn c7. At the end c7 is defended by nobody. Engine: -0.18. |
-| 21 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5 | Белые выводят коня c3 под защиту слона d2, ладьёй b1 прогоняют ферзя, и конь d5 нападает на c7 и слона b4: по оценке у соперника большой перевес. | по доске; по оценке движка | 6.Nc3 is defended by the bishop d2. 7.Rb1 attacks the queen b2. 8.Nd5 attacks the pawn c7 and the bishop b4. Engine: -2.84. |
+| 20 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nc3 Qxf4 6.Nd5 Qe4 | Белые закрылись конём: ферзь забирает слона f4, но конь d5 нападает на ферзя и грозит взять c7 с шахом, нападая на ладью a8. После Qe4 позиция примерно равна. | по доске; по оценке движка | 5...Qxf4 captures the bishop. 6.Nd5 attacks the queen f4 and the pawn c7. At the end c7 is defended by nobody. Checked with chess.js after 6...Qe4: 7.Nxc7+ is legal and check, the knight on c7 attacks the rook a8, Black has 2 legal moves (Ke7, Kd8). Engine: -0.18. |
+| 21 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5 | Белые выводят коня на c3, его защищает слон d2; ладьёй b1 они прогоняют ферзя, и конь d5 нападает на c7 и слона b4: по оценке у соперника большой перевес. | по доске; по оценке движка | 6.Nc3 is defended by the bishop d2. 7.Rb1 attacks the queen b2. 8.Nd5 attacks the pawn c7 and the bishop b4. Engine: -2.84. |
 | 22 | 1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Qd5 | Ферзь встаёт на d5 и защищает пешку e5: ловушки нет, по оценке у вас хуже. | по доске; по оценке движка | At the end the pawn e5 is defended by the queen d5 and the knight f3. Engine: -0.71. |
 | 23 | 1.d4 e5 2.d5 Bc5 | Белые не берут пешку e5, а идут вперёд ходом d5: ловушки нет, позиция примерно равна. | по оценке движка | Engine: +0.08. |
 | 24 | 1.d4 e5 2.Nf3 e4 | На 2.Nf3 пешка e4 прогоняет коня: позиция примерно равна. | по доске; по оценке движка | At the end the knight f3 is attacked by the pawn e4. Engine: +0.26. |
+
+## Independent review (2026-11-16)
+
+A fresh context checked every text against the facts and the positions. Corrected:
+
+- Text 9 gave the wrong reason. Line 5 shows that e5 being defended twice is not what stops
+  the trap; what stops it is that the knight that takes on e5 then defends the bishop g4.
+- Text 14 now names the moves of the exchange: the mate needs 8.Qxc3.
+- Text 20 now names the threat that gives the material back (Nxc7+ with an attack on a8);
+  this one is checked with chess.js directly, not by the facts script.
+- Texts 16, 17: "не защищён" instead of "остался без защиты" (it was never defended).
+- Text 21 reads better.
 
 ## Notes for the read-through
 

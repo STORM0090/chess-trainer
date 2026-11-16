@@ -147,6 +147,11 @@ describe('progress file', () => {
     expect(parsed.data.settings).toEqual(defaultSettings());
   });
 
+  it('opens a bot level above this ladder at its top level', () => {
+    const parsed = parseBackup(fileWith((file) => (file.data.settings.botLevel = 99)));
+    expect(parsed.ok && parsed.data.settings.botLevel).toBe(13);
+  });
+
   it('reads a file of format 3 (M5): the bot settings start from their defaults', () => {
     const text = fileWith((file) => {
       file.format = 3;
@@ -244,7 +249,6 @@ describe('progress file', () => {
       (file) => (file.data.settings.lastBackupAt = 'never'),
       (file) => delete file.data.settings.backupSnoozedUntil,
       (file) => (file.data.settings.botLevel = 0),
-      (file) => (file.data.settings.botLevel = 99),
       (file) => (file.data.settings.botResults = ['won']),
       (file) => (file.data.settings.botResults = Array(11).fill('win')),
       (file) => (file.data.settings.shvuChecklist = 'on'),

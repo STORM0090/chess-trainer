@@ -63,6 +63,7 @@ export function PlayScreen() {
   const [level, setLevel] = useState(() => data.settings.botLevel);
   const [side, setSide] = useState<Side | 'random'>('white');
   const [game, setGame] = useState<{ side: Side; level: number; key: number }>();
+  const draw = (): Side => (side === 'random' ? (Math.random() < 0.5 ? 'white' : 'black') : side);
 
   if (game) {
     return (
@@ -71,7 +72,8 @@ export function PlayScreen() {
         side={game.side}
         level={game.level}
         trap={undefined}
-        onAgain={(next) => setGame({ ...game, level: next, key: game.key + 1 })}
+        // "Случайно" draws the colour again for every game.
+        onAgain={(next) => setGame({ side: draw(), level: next, key: game.key + 1 })}
       />
     );
   }
@@ -126,9 +128,7 @@ export function PlayScreen() {
         type="button"
         class="button button-primary"
         disabled={engine !== 'ready'}
-        onClick={() =>
-          setGame({ side: side === 'random' ? (Math.random() < 0.5 ? 'white' : 'black') : side, level, key: 1 })
-        }
+        onClick={() => setGame({ side: draw(), level, key: 1 })}
       >
         {t.play.start}
       </button>
@@ -254,7 +254,9 @@ function Game({ side, level, trap, onAgain }: GameProps) {
   useEffect(() => {
     if (!end || recorded) return;
     const result = resultFor(end, side);
-    setRecorded({ result, next: recordBotGame(level, result) });
+    // A trap game does not move the level: in the book the bot plays the trap's mistakes
+    // whatever its level, so a win there says little about the bot's own play.
+    setRecorded({ result, next: recordBotGame(level, result, trap === undefined) });
   }, [end === undefined]);
 
   const play = (from: Square, to: Square, promotion?: PromotionPiece) => {
@@ -294,7 +296,7 @@ function Game({ side, level, trap, onAgain }: GameProps) {
           {t.learn.playAs[side]}. {fmt(t.play.level, { n: level, total: BOT_LEVELS.length })}
         </p>
         {trap && (
-          <p class="trap-meta">{leftBookAt === undefined ? t.play.inBook : fmt(t.play.leftBook, { n: Math.floor(leftBookAt / 2) + 1 })}</p>
+          <p class="trap-meta">{leftBookAt === undefined ? t.play.inBook : fmt(t.play.leftBook, { n: Math.floor((leftBookAt - 1) / 2) + 1 })}</p>
         )}
       </div>
       <p class={`status${end ? ' status-done' : ''}`} role="status">
@@ -406,12 +408,27 @@ function AfterGame({
     mistakes: [],
   });
   const [shown, setShown] = useState(0);
+  // The review stops when the panel goes away (another game, another screen): it must not
+  // keep the engine busy for the next game.
+  const alive = useRef(true);
+  useEffect(
+    () => () => {
+      alive.current = false;
+    },
+    [],
+  );
   const playerMoves = Math.ceil((history.length - (side === 'white' ? 0 : 1)) / 2);
 
   const startReview = () => {
     setReview({ state: 'running', done: 0, total: playerMoves, mistakes: [] });
-    findMistakes(history, side, browserAnalyse, REVIEW_NODES, 3, (done, total) =>
-      setReview((current) => ({ ...current, done, total })),
+    findMistakes(
+      history,
+      side,
+      browserAnalyse,
+      REVIEW_NODES,
+      3,
+      (done, total) => setReview((current) => ({ ...current, done, total })),
+      () => alive.current,
     ).then(
       (mistakes) => setReview((current) => ({ ...current, state: 'done', mistakes })),
       () => setReview((current) => ({ ...current, state: 'failed' })),
@@ -434,11 +451,13 @@ function AfterGame({
     <section class="panel" aria-live="polite">
       <p class={recorded.result === 'win' ? 'verdict verdict-ok' : 'verdict'}>{t.play.result[recorded.result]}</p>
       <p>
-        {recorded.next > level
-          ? fmt(t.play.nextUp, { n: recorded.next })
-          : recorded.next < level
-            ? fmt(t.play.nextDown, { n: recorded.next })
-            : fmt(t.play.nextSame, { n: recorded.next })}
+        {trap
+          ? t.play.trapNoLevel
+          : recorded.next > level
+            ? fmt(t.play.nextUp, { n: recorded.next })
+            : recorded.next < level
+              ? fmt(t.play.nextDown, { n: recorded.next })
+              : fmt(t.play.nextSame, { n: recorded.next })}
       </p>
       <div class="panel-actions">
         <button type="button" class="button button-primary" onClick={() => onAgain(recorded.next)}>

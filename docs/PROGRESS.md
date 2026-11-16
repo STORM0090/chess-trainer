@@ -13,8 +13,8 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
 | --- | --- | --- |
 | M4 puzzles, entry test, batch 1 texts | `m4` | done: CI green, preview published; phone checklist waits for the owner |
 | M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | done: reviewed, findings fixed, CI green |
-| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | built, batch 3 written, docs done; independent review running |
-| M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | not started |
+| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | done: reviewed, findings fixed |
+| M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | in work: packages and android/ added, reminder planning done |
 | M8 parts: own games (PGN), basic mates, endgames, opening principles, batches 5-7 | `m8a`... | not started |
 | `docs/RETURN.md` | last branch | not started |
 

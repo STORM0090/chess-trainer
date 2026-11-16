@@ -95,7 +95,7 @@ function exposure(chess: Chess, square: Square, owner: Color, value: number): nu
   const attacker = cheapestAttacker(chess, square, other(owner));
   if (attacker === undefined) return 0;
   const defended = chess.attackers(square, owner).length > 0;
-  if (!defended) return attacker >= 10_000 ? value : value;
+  if (!defended) return value;
   return attacker < value ? value - attacker : 0;
 }
 
