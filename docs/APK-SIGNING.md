@@ -30,13 +30,19 @@ that is not synced anywhere public. In PowerShell:
 ```powershell
 New-Item -ItemType Directory -Force D:\keys
 Set-Location D:\keys
-& "C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe" -genkeypair -v -keystore chess-trainer-release.jks -alias chess-trainer -keyalg RSA -keysize 4096 -validity 10000
+& "C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe" -genkeypair -v -keystore chess-trainer-release.jks -alias chess-trainer -keyalg RSA -keysize 4096 -validity 10000 -dname "CN=Chess Trainer"
 ```
 
-`keytool` asks for a keystore password (twice), then for a name and other fields (any values,
-they are visible in the certificate; a first name is enough), and at the end for the key
-password: press Enter to use the same password, or type a second one. Store both passwords in
-the password manager right away, with the alias `chess-trainer`.
+(If there is no drive `D:`, use any folder outside the project, for example
+`$HOME\keys`, in every command below.)
+
+The `-dname "CN=Chess Trainer"` part is the name inside the certificate. **The certificate
+is part of every published APK and anyone can read it**, so it holds the app's name, not
+yours; without `-dname` keytool would ask for your name, city and country.
+
+`keytool` asks for one password, twice. With a current JDK the key inside the file has the
+same password as the file, so there is only one to remember. Store it in the password manager
+right away, with the alias `chess-trainer`.
 
 Then copy `chess-trainer-release.jks` to the offline medium.
 
@@ -53,18 +59,25 @@ gh secret set ANDROID_KEY_PASSWORD --repo STORM0090/chess-trainer
 gh secret set ANDROID_KEY_ALIAS --repo STORM0090/chess-trainer --body chess-trainer
 ```
 
-The second and third commands ask for the value interactively (type or paste the password,
-then Enter). `gh secret list --repo STORM0090/chess-trainer` shows the four names and dates,
+The second and third commands ask for the value with hidden input: type or paste the same
+password both times, then Enter. `gh secret list --repo STORM0090/chess-trainer` shows the four names and dates,
 never the values.
 
 ## 3. Make a release
 
-After `m7` is merged into `main`, a tag starts the release workflow:
+After `m7` is merged into `main`, a tag starts the release workflow. In the project folder
+(not in the keys folder), with `main` up to date:
 
 ```powershell
+Set-Location "C:\Git Hub Projects\Chess Trainer"
+git switch main
+git pull
 git tag v0.8.0
 git push origin v0.8.0
 ```
+
+The tag must be the version in `package.json` with a `v` in front; the workflow stops when
+they differ.
 
 The workflow `Android release` builds the signed APK, publishes it on the Releases page of
 the repository and writes the SHA-256 fingerprint of the certificate into the release notes.
@@ -85,8 +98,11 @@ Without the four secrets it only says that they are missing and builds nothing.
 
 Every push of a stage branch from `m7` on builds a debug APK (workflow `Android debug APK`,
 artifact `chess-trainer-debug-<branch>`, kept 30 days). It is signed with a throwaway debug
-key made on the runner, so it cannot update a release build or the other way round:
-uninstall one before installing the other (and save a progress file first).
+key that is made anew in every run. So a debug APK cannot be installed over a release build,
+over a debug build of another run, or the other way round: Android says "App not installed".
+**Uninstall first, and before that save a progress file** ("Ещё", "Данные"): uninstalling
+removes the progress, and Android's cloud backup is off for this app. The release build does
+not have this problem: it is always signed with your key.
 
 ## If something goes wrong
 

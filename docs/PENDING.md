@@ -37,6 +37,9 @@ Things that only the owner decides or checks. Nothing here was done on the owner
   `docs/APK-SIGNING.md`. Until then the release workflow builds nothing.
 - **appId `io.github.storm0090.chesstrainer`**: please confirm before the first release; it
   cannot change afterwards without a reinstall.
+- **A debug APK cannot be installed over the debug APK of another run** (a new debug key
+  every run): uninstall first and move the progress by file. A stable debug key would need a
+  secret; say so if you want one.
 - **The debug APK was built in CI but never installed.** Everything in `docs/QA/M7.md`
   section A is unchecked: install, notifications, Doze, reboot, Samsung, the share sheet,
   the file picker, the back gesture.

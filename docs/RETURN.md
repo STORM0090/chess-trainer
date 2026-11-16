@@ -50,7 +50,7 @@ About 40 minutes. Write a word next to every step that does not match.
 | 9 | Airplane mode on; reload; do a puzzle and a trap step. | Everything works offline; the bot works offline once it was used online. |
 | 10 | "Ещё", "Настройки": "3 упражнения", time two minutes ahead, "Добавить в календарь". | A file `chess-trainer-reminder.ics`; opening it should offer the calendar. Please note what Samsung does. |
 | 11 | "Ещё", "Данные", "Сохранить файл"; then "Вернуть как на устройстве". | A progress file in Downloads (you need it for the APK). |
-| 12 | Install the debug APK (`docs/QA/M7.md`, A2), open it, load the progress file. | Same data as in the browser. |
+| 12 | Install the debug APK (`docs/QA/M7.md`, A2), open it, load the progress file. | Same data as in the browser. (A debug APK of a later run cannot be installed over it: uninstall first, after saving a progress file.) |
 | 13 | In the APK: "Настройки", switch on "Напоминать каждый день" with a time two minutes ahead; allow notifications; leave the app. | One notification "Chess Trainer" at the time. If a line said it may come up to an hour late, try "Разрешить точное время" first. |
 | 14 | In the APK: "Сохранить файл" in "Данные". | The share sheet with the JSON file. |
 | 15 | Play three bot games in a row at level 8 or more. | Note how warm the phone gets and how much battery went. |
@@ -139,4 +139,6 @@ Everything is also in `docs/PENDING.md`; the reasons are in `docs/DECISIONS.md`.
   service worker.
 
 **What the independent reviews found and what was fixed**: `docs/DECISIONS.md`, sections
-"Independent review of M4 and M5", "Independent review of M6" and (M7) below them.
+"Independent review of M4 and M5", "Independent review of M6", "Independent review of M7".
+The M7 review found one thing that only the phone can confirm: after a force stop the app
+must schedule its reminders again on the next start (step A5b of `docs/QA/M7.md`).

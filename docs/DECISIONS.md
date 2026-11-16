@@ -638,14 +638,19 @@ scheduling alarms, Doze and App Standby), plus the plugin's own Android manifest
   so it is listed in `docs/PENDING.md`.
 - **`android/` is committed** as `cap add android` made it, with three edits: release signing
   from environment variables (nothing about the key in the repository), the version from
-  package.json (versionCode = major·10000 + minor·100 + patch), and Android backup switched
-  off, because the plan says progress never leaves the device unless the owner sends it.
+  package.json (versionCode = major·1,000,000 + minor·1,000 + patch), and Android's cloud
+  backup switched off, because the plan says progress never leaves the device unless the
+  owner sends it. (A direct phone-to-phone transfer by Android's own tool is not blocked;
+  blocking it needs data extraction rules and would only hurt the owner's move to a new
+  phone.)
 - **In the APK the service worker is off**: every file is inside the app, and the update flow
   of a PWA makes no sense there.
 - **Reminders are local notifications**, scheduled 14 days ahead (the plan) on every start,
   when the app comes back to the screen and after every change that matters (the switch, the
-  time, the norm met today). The app compares the plan with what is scheduled and changes
-  only the difference. Ids are the dates (20261116). Nine varied, quiet texts; two days in a
+  time, the norm met today, the permission, the exact-alarm setting). The whole plan is
+  scheduled again each time and only ids that are no longer wanted are cancelled: the
+  plugin's list of pending notifications is its own record, not what Android holds, and
+  Android drops alarms after a force stop. Ids are the dates (20261116). Nine varied, quiet texts; two days in a
   row never get the same one. None on a day whose norm is already met.
 - **The permission is asked only when the player switches reminders on** (Android 13+), never
   at start. Refused: one line says so and points to the calendar file; nothing else changes.
@@ -671,6 +676,40 @@ scheduling alarms, Doze and App Standby), plus the plugin's own Android manifest
 - **Progress file format 5** adds the notification switch.
 - **Not done in M7:** iOS; Play Store listing; a custom notification icon (the app icon is
   used); deep links from a notification to a screen.
+
+## Independent review of M7 (2026-11-16)
+
+Fixed on `m7`:
+
+- **Reminders could silently stop.** The app compared its plan with the plugin's list of
+  pending notifications and scheduled only what was missing. That list is the plugin's own
+  record; after a force stop or Samsung's battery management Android has dropped the alarms
+  while the record still says "pending", so nothing was scheduled again for up to two
+  weeks. The whole plan is now scheduled on every sync.
+- **Granting the permission did not schedule anything** when the switch was already on (an
+  imported file, a permission taken away and given back), and **allowing exact alarms did
+  not change the reminders already scheduled.** The permission and the exact-alarm setting
+  are now part of what triggers a sync, and the settings screen forces one.
+- **Times no longer read back from the plugin** (Android returns them as text that does not
+  parse for some time zone names).
+- Reminders use the device's clock, not the app's test clock.
+- **Workflows:** the checkout no longer keeps the write token for the build's third-party
+  code; the release stops when the tag is not the version in package.json; line breaks in
+  the Base64 secret are tolerated; an unsigned APK fails the fingerprint step.
+- **versionCode** could collide once a minor or patch number reached 100.
+- **The file picker in the APK** accepted only "application/json"; a file that came through a
+  messenger would have been greyed out. No type filter there now.
+- **Export in the APK** said "saved" when the file was only handed to another app, and a
+  failed write showed nothing.
+- **`docs/APK-SIGNING.md`:** the key's certificate would have carried the owner's name, in
+  every published APK; the command now sets "CN=Chess Trainer". The password prompt was
+  described for an old JDK; the tag commands ran in the wrong folder.
+- **Debug builds** are signed with a new key in every run, so one cannot be installed over
+  another: now said in the instructions and the checklist.
+- **Texts of batch 4:** every line and mate checked out; four texts reworded.
+
+Not covered by this review: `scripts/licenses.ts` and a privacy sweep of the Android
+resources.
 
 ## Known open points
 
