@@ -119,7 +119,8 @@ test('only one new trap a day', async ({ page }) => {
   // Start the first trap (one chain step), then mark it as known: the second trap opens.
   await page.goto('./#/trap/fools-mate/chain');
   await playMove(page, 'd8h4', 'black');
-  await expect(page.locator('.learn-screen .status')).toHaveText('Шаг завершён');
+  // This line is shown once the run is recorded; the status line comes a moment earlier.
+  await expect(page.getByText('Шаг пройден без ошибок и подсказок.')).toBeVisible();
   await page.goto('./#/trap/fools-mate');
   await page.getByRole('button', { name: 'Я это знаю' }).tap();
   await page.getByRole('button', { name: 'Да, знаю' }).tap();
