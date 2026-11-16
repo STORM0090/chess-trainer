@@ -28,6 +28,19 @@ Things that only the owner decides or checks. Nothing here was done on the owner
 - Batch 3 (stage 2, 24 lines): written in autonomous mode, in the trap files as one commit
   ("content: explanation texts of batch 3..."). Revert that commit to take the texts out.
 
+- Batch 4 (stages 3 and 4, 25 lines): in the trap files as one commit ("content:
+  explanation texts of batch 4...").
+
+## The APK
+
+- **The signing key and the four GitHub secrets**: only the owner, step by step in
+  `docs/APK-SIGNING.md`. Until then the release workflow builds nothing.
+- **appId `io.github.storm0090.chesstrainer`**: please confirm before the first release; it
+  cannot change afterwards without a reinstall.
+- **The debug APK was built in CI but never installed.** Everything in `docs/QA/M7.md`
+  section A is unchecked: install, notifications, Doze, reboot, Samsung, the share sheet,
+  the file picker, the back gesture.
+
 ## Decisions to confirm
 
 - **Navigation at the top** with "Сегодня / Ловушки / Задачи / Ещё". A bottom bar is the

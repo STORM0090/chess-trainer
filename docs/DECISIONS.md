@@ -599,6 +599,79 @@ note on the calibration: neighbouring levels measured 51 to 208 points apart in 
 run, with about 60 points of noise per pair, so "about 100 apart" is consistent with the
 data but only loosely supported; the bottom of the ladder is compressed.
 
+## The Android app (M7, 2026-11-16, autonomous mode)
+
+### What the documentation says (read on 2026-11-16)
+
+Sources: capacitorjs.com (docs for Capacitor 8: Android, local notifications, filesystem,
+share, environment setup, target SDK) and developer.android.com (notification permission,
+scheduling alarms, Doze and App Standby), plus the plugin's own Android manifest.
+
+- **Capacitor 8** needs Node 22 or later (we have 24), Android 7 (API 24) at least, targets
+  API 36 (fixed by the Capacitor version), Android Studio 2025.2.1 for local builds. The
+  generated project uses the Android Gradle Plugin 8.13 and Gradle 8.14, so the CI uses JDK 21.
+- **Android 13 notification permission** (POST_NOTIFICATIONS): an app targeting 13+ decides
+  when to ask; new installs have notifications off until granted; after "Don't allow" the
+  app cannot notify. The docs do not promise a second dialog after a refusal.
+- **Exact alarms.** On Android 12+ an app needs SCHEDULE_EXACT_ALARM, granted by the user, not
+  pre-granted to fresh installs targeting 13+, revocable. USE_EXACT_ALARM is for alarm
+  clocks and calendars under Google Play policy: not for us. Inexact alarms
+  (setAndAllowWhileIdle) fire "within one hour" of the time on Android 12+.
+- **Doze.** Alarms that may fire in Doze (allowWhileIdle) fire at most once per nine minutes
+  per app. A daily reminder is far below that.
+- **The plugin** (@capacitor/local-notifications 8.3.1) declares POST_NOTIFICATIONS,
+  SCHEDULE_EXACT_ALARM, RECEIVE_BOOT_COMPLETED and WAKE_LOCK itself and has a boot receiver
+  that restores scheduled notifications (read in its AndroidManifest.xml; the web docs do
+  not say so). By default schedule() opens the "Alarms & reminders" screen when exact alarms
+  are not allowed; ids must be 32-bit integers.
+- **Files.** Directory.Cache needs no permission, and Capacitor's default FileProvider
+  shares only files from the cache folder. Share takes file:// URLs.
+
+### Decisions
+
+- **Packages** (approved in advance by the owner): @capacitor/core, android, local-notifications,
+  filesystem, share and the CLI (dev), at exact versions 8.6.2 / 8.6.2 / 8.3.1 / 8.1.5 /
+  8.0.3 / 8.6.2, all MIT. They bring tslib (0BSD) and @capacitor/synapse (ISC; its license
+  file holds the MIT text). npm audit is unchanged (the six known build-time advisories).
+- **appId `io.github.storm0090.chesstrainer`**: the GitHub login is already public in the
+  repository address. It cannot change after the first release without users reinstalling,
+  so it is listed in `docs/PENDING.md`.
+- **`android/` is committed** as `cap add android` made it, with three edits: release signing
+  from environment variables (nothing about the key in the repository), the version from
+  package.json (versionCode = major·10000 + minor·100 + patch), and Android backup switched
+  off, because the plan says progress never leaves the device unless the owner sends it.
+- **In the APK the service worker is off**: every file is inside the app, and the update flow
+  of a PWA makes no sense there.
+- **Reminders are local notifications**, scheduled 14 days ahead (the plan) on every start,
+  when the app comes back to the screen and after every change that matters (the switch, the
+  time, the norm met today). The app compares the plan with what is scheduled and changes
+  only the difference. Ids are the dates (20261116). Nine varied, quiet texts; two days in a
+  row never get the same one. None on a day whose norm is already met.
+- **The permission is asked only when the player switches reminders on** (Android 13+), never
+  at start. Refused: one line says so and points to the calendar file; nothing else changes.
+- **Exact time only if allowed.** The app never sends the player to the "Alarms & reminders"
+  screen by itself (the plugin's default); it schedules inexact reminders and offers a button
+  that opens that screen, with one line explaining the possible hour of delay (the plan).
+- **Files in the APK** go through the share sheet: export and the calendar file are written
+  to the cache and offered to Files, Drive or the calendar app. Import uses the same file
+  input as the web; Capacitor's WebView opens the system picker for it.
+- **License texts** (the owner's request for M7): `scripts/licenses.ts` builds
+  `public/licenses.txt` before every build from the license files of everything shipped (the
+  runtime packages and what they pull in, the engine, the service worker runtime) plus the
+  Apache 2.0 text for AndroidX, and "Ещё", "Лицензии" shows it. Same texts are printed once.
+  It is cached for offline use; the precache grew to 777 KiB of the 1,200 budget.
+- **Debug APK in CI** on every push of a stage branch from m7 on (the plan: "on request";
+  a workflow_dispatch trigger exists too, but GitHub offers it only once the file is on
+  main). Signed with the runner's throwaway debug key. Built and checked in CI on 2026-11-16:
+  2 minutes, a 5.5 MB artifact. Not installed on any device.
+- **Release workflow** only on a tag `v*`, and only when all four secrets exist; otherwise it
+  says so and builds nothing. The key is decoded into the runner's temp folder and removed;
+  no secret is echoed. The certificate's SHA-256 goes into the release notes (the plan).
+  Never run: there is no key yet.
+- **Progress file format 5** adds the notification switch.
+- **Not done in M7:** iOS; Play Store listing; a custom notification icon (the app icon is
+  used); deep links from a notification to a screen.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency

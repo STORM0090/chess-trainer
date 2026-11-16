@@ -15,7 +15,7 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M4 (built; the phone checklist waits for the owner) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
 | M5 (built in autonomous mode; the phone checklist waits for the owner) | Daily session, trap of the day, soft streak, settings, `.ics` reminder, FSRS for failed puzzles; explanations, batch 2 | `docs/QA/M5.md`: a week of sessions; add the calendar reminder | medium |
 | M6 (built in autonomous mode; the phone checklist waits for the owner) | Bot ladder of 13 levels (Stockfish lite plus a layer of beginner-like mistakes, calibrated by self-play), trap practice against the bot, ШВУ checklist, game review; explanations, batch 3 | `docs/QA/M6.md`: games at several levels; watch heat and battery | large |
-| M7 | Signed APK from GitHub Actions, local notifications | Install, move the progress over, get a notification the next morning | medium |
+| M7 (built in autonomous mode; nothing installed on a device yet) | Capacitor project, debug APK in GitHub Actions, prepared signed release, local notifications, files through the share sheet, full license texts; explanations, batch 4 | `docs/QA/M7.md`: install, move the progress over, get a notification the next morning | medium |
 | M8 | More content: basic mates, simple endgames, opening principles, PGN import, new trap batches | Per batch | open-ended |
 
 Dependencies that need the owner's approval when their stage starts: `@playwright/test` (M2,
