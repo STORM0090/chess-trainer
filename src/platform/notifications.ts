@@ -6,10 +6,10 @@
 // app works the same; the calendar file on the settings screen is the other way to remind.
 
 import type { PlannedReminder } from '../core/reminders';
-import { planReminders, reminderChanges } from '../core/reminders';
+import { planReminders, staleReminders } from '../core/reminders';
 import { dayKey } from '../core/days';
 import { t } from '../i18n';
-import { appNow, getStore, subscribeStore } from '../storage/store';
+import { getStore, subscribeStore } from '../storage/store';
 import { isNativeApp } from './native';
 
 export type ReminderPermission = 'granted' | 'denied' | 'prompt' | 'unavailable';
@@ -63,33 +63,44 @@ let syncing: Promise<void> = Promise.resolve();
 let lastSignature = '';
 
 /**
- * Makes the scheduled notifications match the plan: cancels what is not wanted, schedules
- * what is missing. Runs one at a time; a failure is swallowed (and tried again on the next
- * change), because a reminder must never break the app.
+ * Makes the scheduled notifications match the plan. Runs one at a time; a failure is
+ * swallowed (and tried again on the next change), because a reminder must never break the
+ * app.
+ *
+ * The whole plan is scheduled again every time, not only what seems to be missing. The
+ * plugin's list of pending notifications is its own record, not what Android really holds:
+ * after a force stop, after Samsung's battery management, or when "Alarms & reminders" is
+ * switched off, Android drops the alarms while the record stays. Scheduling an id again
+ * replaces its alarm, so this is safe, and it also applies a changed time or exactness.
+ * Only cancelling uses the list: ids that are not wanted any more.
+ *
+ * Times come from the real clock, not the app's test clock: a notification fires by the
+ * device's time.
  */
 export function syncReminders(force = false): Promise<void> {
   if (!isNativeApp()) return Promise.resolve();
   syncing = syncing.then(async () => {
-    const now = appNow();
-    const { data } = getStore();
-    const { remindersOn, reminderTime } = data.settings;
-    const metToday = data.days[dayKey(now)]?.metAt != null;
-    const signature = `${remindersOn}|${reminderTime}|${metToday}|${dayKey(now)}`;
-    if (!force && signature === lastSignature) return;
     try {
-      const notifications = await plugin();
-      const pending = (await notifications.getPending()).notifications;
-      const scheduled = pending.map((item) => ({ id: item.id, at: item.schedule?.at ? new Date(item.schedule.at).getTime() : 0 }));
+      const now = Date.now();
+      const { data } = getStore();
+      const { remindersOn, reminderTime } = data.settings;
+      const metToday = data.days[dayKey(now)]?.metAt != null;
       const status = remindersOn ? await reminderStatus() : undefined;
+      // The permission and the exact-alarm setting are part of the signature: granting
+      // either changes what must be scheduled although no setting of the app changed.
+      const signature = [remindersOn, reminderTime, metToday, dayKey(now), status?.permission, status?.exact].join('|');
+      if (!force && signature === lastSignature) return;
+      const notifications = await plugin();
       const plan =
         remindersOn && status?.permission === 'granted'
           ? planReminders(reminderTime, metToday, now, t.reminders.texts.length)
           : [];
-      const { cancel, schedule } = reminderChanges(plan, scheduled);
+      const pending = (await notifications.getPending()).notifications.map((item) => item.id);
+      const cancel = staleReminders(plan, pending);
       if (cancel.length > 0) await notifications.cancel({ notifications: cancel.map((id) => ({ id })) });
-      if (schedule.length > 0) {
+      if (plan.length > 0) {
         await notifications.schedule({
-          notifications: schedule.map((item) => ({
+          notifications: plan.map((item) => ({
             id: item.id,
             ...textOf(item),
             schedule: { at: new Date(item.at), allowWhileIdle: true },

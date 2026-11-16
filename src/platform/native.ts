@@ -20,14 +20,16 @@ export async function saveTextFile(name: string, text: string, type: string): Pr
     downloadFile(name, text, type);
     return true;
   }
-  const { Filesystem, Directory, Encoding } = await import('@capacitor/filesystem');
-  const { Share } = await import('@capacitor/share');
-  const written = await Filesystem.writeFile({ path: name, data: text, directory: Directory.Cache, encoding: Encoding.UTF8 });
   try {
+    const { Filesystem, Directory, Encoding } = await import('@capacitor/filesystem');
+    const { Share } = await import('@capacitor/share');
+    const written = await Filesystem.writeFile({ path: name, data: text, directory: Directory.Cache, encoding: Encoding.UTF8 });
+    // Resolves once another app took the file. Whether that app then saved it, the share
+    // sheet does not tell: the screens say "handed over", not "saved".
     await Share.share({ title: name, files: [written.uri] });
     return true;
   } catch {
-    // Closing the share sheet rejects the promise; nothing was lost.
+    // Closing the share sheet rejects the promise, and so does a full disk; nothing is lost.
     return false;
   }
 }

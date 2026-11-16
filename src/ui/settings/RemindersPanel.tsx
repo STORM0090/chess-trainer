@@ -27,6 +27,9 @@ export function RemindersPanel() {
       if (permission !== 'granted') return;
     }
     updateSettings({ remindersOn: wanted });
+    // The switch may already have been on (an imported file, a permission taken away and
+    // given back): then no setting changes, and the reminders must be scheduled all the same.
+    void syncReminders(true);
   };
 
   return (

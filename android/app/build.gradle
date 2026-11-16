@@ -1,9 +1,10 @@
 apply plugin: 'com.android.application'
 
 // The version comes from package.json, so the web app and the APK always say the same.
-// versionCode: major * 10000 + minor * 100 + patch (0.8.0 gives 800); it must grow with every release.
+// versionCode: major * 1000000 + minor * 1000 + patch (0.8.0 gives 8000); it must grow with
+// every release. A suffix such as "-beta.1" is ignored for the code.
 def appVersion = new groovy.json.JsonSlurper().parse(file('../../package.json')).version
-def versionParts = appVersion.tokenize('.').collect { it.toInteger() }
+def versionParts = appVersion.tokenize('-')[0].tokenize('.').collect { it.toInteger() }
 
 android {
     namespace = "io.github.storm0090.chesstrainer"
@@ -12,7 +13,7 @@ android {
         applicationId "io.github.storm0090.chesstrainer"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode versionParts[0] * 10000 + versionParts[1] * 100 + versionParts[2]
+        versionCode versionParts[0] * 1000000 + versionParts[1] * 1000 + versionParts[2]
         versionName appVersion
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         aaptOptions {

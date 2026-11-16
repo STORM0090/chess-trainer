@@ -1,8 +1,9 @@
 name: Android debug APK
 
-# A debug APK for testing on the phone. It is signed with the debug key that Gradle makes on
-# the runner, so it installs next to nothing else and needs no secret. The release build is
-# in release.yml.
+# A debug APK for testing on the phone. It is signed with a debug key that Gradle makes on
+# the runner, so it needs no secret. Every run makes a new key: a debug APK cannot be
+# installed over one from another run (uninstall first, and save a progress file before
+# that). The release build is in release.yml.
 #
 # Runs on pushes to the stage branches from M7 on, and by hand once this file is on main.
 
@@ -10,6 +11,7 @@ on:
   push:
     branches:
       - 'm[7-9]*'
+      - 'm[1-9][0-9]*'
   workflow_dispatch:
 
 permissions:
@@ -21,6 +23,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Nothing in this job pushes; the token does not stay in .git/config.
+          persist-credentials: false
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc

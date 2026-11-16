@@ -5,7 +5,7 @@ import { TOP_LEVEL } from '../../../shared/puzzle-types.ts';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
 import { replaceData, setClockShift, updateSettings, useStore } from '../../storage/store';
-import { saveTextFile } from '../../platform/native';
+import { isNativeApp, saveTextFile } from '../../platform/native';
 
 const DATE_AND_TIME = new Intl.DateTimeFormat('ru', { dateStyle: 'long', timeStyle: 'short' });
 
@@ -94,7 +94,7 @@ export function DataScreen() {
         </button>
         {exported && (
           <p class="verdict verdict-ok" role="status">
-            {fmt(t.data.exported, { name: exported })}
+            {fmt(isNativeApp() ? t.data.shared : t.data.exported, { name: exported })}
           </p>
         )}
       </section>
@@ -106,7 +106,10 @@ export function DataScreen() {
           ref={fileInput}
           class="visually-hidden"
           type="file"
-          accept="application/json,.json"
+          // In the installed app the system picker greys out files whose type is not listed,
+          // and a file that came through a messenger is often typed as plain text or as
+          // "unknown". The content is checked after reading anyway.
+          accept={isNativeApp() ? undefined : 'application/json,.json'}
           aria-label={t.data.importButton}
           onChange={(event) => void readFile(event.currentTarget.files?.[0])}
         />

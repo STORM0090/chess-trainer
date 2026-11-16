@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { dayKey, daysBetweenKeys } from '../src/core/days';
-import { REMINDER_DAYS, planReminders, reminderChanges, reminderId, reminderMoment } from '../src/core/reminders';
+import { REMINDER_DAYS, planReminders, reminderId, reminderMoment, staleReminders } from '../src/core/reminders';
 
 const MORNING = new Date(2026, 10, 16, 9, 0).getTime();
 const NIGHT = new Date(2026, 10, 16, 22, 0).getTime();
@@ -40,23 +40,19 @@ describe('planReminders', () => {
   });
 });
 
-describe('reminderChanges', () => {
+describe('staleReminders', () => {
   const plan = planReminders('19:00', false, MORNING, 9);
+  const ids = plan.map((item) => item.id);
 
-  it('schedules everything when nothing is scheduled, and nothing when all is in place', () => {
-    expect(reminderChanges(plan, [])).toEqual({ cancel: [], schedule: plan });
-    const scheduled = plan.map((item) => ({ id: item.id, at: item.at }));
-    expect(reminderChanges(plan, scheduled)).toEqual({ cancel: [], schedule: [] });
+  it('cancels nothing when the scheduled ids are the plan', () => {
+    expect(staleReminders(plan, ids)).toEqual([]);
+    expect(staleReminders(plan, [])).toEqual([]);
   });
 
-  it('moves reminders whose time changed and cancels the ones not wanted any more', () => {
-    const earlier = planReminders('08:00', false, MORNING, 9).map((item) => ({ id: item.id, at: item.at }));
-    const changes = reminderChanges(plan, [...earlier, { id: 20261101, at: 1 }]);
-    expect(changes.cancel).toHaveLength(earlier.length + 1);
-    expect(changes.schedule).toEqual(plan);
-    // The norm met today: only today's reminder goes.
-    const today = reminderChanges(planReminders('19:00', true, MORNING, 9), plan);
-    expect(today).toEqual({ cancel: [reminderId('2026-11-16')], schedule: [] });
+  it('cancels today when the norm is met, old days, and everything when reminders are off', () => {
+    expect(staleReminders(planReminders('19:00', true, MORNING, 9), ids)).toEqual([reminderId('2026-11-16')]);
+    expect(staleReminders(plan, [20261101, ...ids, 20261101])).toEqual([20261101]);
+    expect(staleReminders([], ids)).toEqual(ids);
   });
 });
 

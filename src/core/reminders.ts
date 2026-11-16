@@ -1,6 +1,5 @@
 // Local notifications of the installed app (APK): which reminders should be scheduled now.
-// Pure functions; the platform layer compares this plan with what is scheduled and changes
-// only the difference.
+// Pure functions; the platform layer schedules the plan and cancels what is not in it.
 
 import { addDays, dayKey, daysBetweenKeys, type DayKey } from './days';
 
@@ -48,20 +47,12 @@ export function planReminders(time: string, normMetToday: boolean, now: number, 
   return plan;
 }
 
-export interface ScheduledReminder {
-  id: number;
-  at: number;
-}
-
-/** What to cancel and what to schedule so that the scheduled reminders match the plan. */
-export function reminderChanges(
-  plan: PlannedReminder[],
-  scheduled: ScheduledReminder[],
-): { cancel: number[]; schedule: PlannedReminder[] } {
-  const wanted = new Map(plan.map((item) => [item.id, item]));
-  const cancel = scheduled
-    .filter((item) => wanted.get(item.id)?.at !== item.at)
-    .map((item) => item.id);
-  const kept = new Set(scheduled.filter((item) => wanted.get(item.id)?.at === item.at).map((item) => item.id));
-  return { cancel, schedule: plan.filter((item) => !kept.has(item.id)) };
+/**
+ * Ids of scheduled reminders that the plan no longer has: today's when the norm is met,
+ * all of them when reminders are switched off, days that have passed. The plan itself is
+ * always scheduled again as a whole (see platform/notifications.ts for why).
+ */
+export function staleReminders(plan: PlannedReminder[], scheduled: number[]): number[] {
+  const wanted = new Set(plan.map((item) => item.id));
+  return [...new Set(scheduled)].filter((id) => !wanted.has(id));
 }

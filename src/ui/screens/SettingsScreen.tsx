@@ -78,7 +78,7 @@ export function SettingsScreen() {
         </button>
         {saved && (
           <p class="verdict verdict-ok" role="status">
-            {fmt(t.settings.reminderSaved, { name: REMINDER_FILE })}
+            {isNativeApp() ? t.settings.reminderShared : fmt(t.settings.reminderSaved, { name: REMINDER_FILE })}
           </p>
         )}
         <p class="hint-text">{t.settings.reminderChange}</p>
