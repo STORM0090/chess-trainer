@@ -10,6 +10,7 @@ Stages M4 and M5 are in review: puzzles from the Lichess database (CC0) in nine 
 entry test that sets the level; a daily session, a soft streak and a calendar reminder; a bot
 with 13 calibrated levels and trap practice against it. From M7 the same code is also an
 Android app (Capacitor): a debug APK is built in GitHub Actions on every stage branch.
+Branch `m8a` adds exercises made from the player's own games (PGN, on the device only).
 The plan is in [docs/PLAN.md](docs/PLAN.md).
 
 ## Stack

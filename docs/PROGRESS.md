@@ -15,7 +15,8 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
 | M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | done: reviewed, findings fixed, CI green |
 | M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | done: reviewed, findings fixed |
 | M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | done: reviewed, findings fixed; debug APK builds in CI; `docs/RETURN.md` written |
-| M8 parts: own games (PGN), basic mates, endgames, opening principles, batches 5-7 | `m8a`... | `m8a` (own games) in work: core module and tests written, data layer half done (a stash named "m8a work in progress" if the branch looks empty) |
+| M8a exercises from own games (PGN) | `m8a` | built and tested; independent review running; then push |
+| M8b... basic mates, endgames, opening principles; batches 5-7 | not created | not started |
 | `docs/RETURN.md` | last branch | written on `m7`; update when an M8 part is finished |
 
 ## Log
@@ -33,6 +34,9 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
   trap practice, ШВУ checklist, game review, format 4.
 
 - 2026-11-15: usage limit reached. Next: the rest of M6 (see the table), then M7.
+
+- 2026-11-16/17: independent review of M7, findings fixed on `m7`. `docs/RETURN.md` written.
+  M8a built on `m8a`.
 
 ## Working notes
 

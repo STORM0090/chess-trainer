@@ -31,6 +31,10 @@ Things that only the owner decides or checks. Nothing here was done on the owner
 - Batch 4 (stages 3 and 4, 25 lines): in the trap files as one commit ("content:
   explanation texts of batch 4...").
 
+- **M8a** (`docs/QA/M8a.md`): never tried on a real chess.com export. The first import of
+  your own games is the real test of the PGN reader and of the rules for what becomes an
+  exercise.
+
 ## The APK
 
 - **The signing key and the four GitHub secrets**: only the owner, step by step in

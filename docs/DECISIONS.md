@@ -711,6 +711,39 @@ Fixed on `m7`:
 Not covered by this review: `scripts/licenses.ts` and a privacy sweep of the Android
 resources.
 
+## Exercises from the owner's games (M8a, 2026-11-16/17, autonomous mode)
+
+- **No network, no chess.com API.** The owner downloads PGN from chess.com by hand and opens
+  the file or pastes the text. The API and its terms were never checked (an open point since
+  the roadmap), and a file needs neither.
+- **Nothing personal is kept.** The names in the PGN are used on the import screen only, to
+  ask which side the player had (the name that plays in every game is offered), and are gone
+  when the run ends. An exercise is a position, two moves, the move that was played, the
+  size of the loss and the time it was added: no names, dates, sites or links. An e2e test
+  searches the progress file, IndexedDB and localStorage for the names of its made-up game.
+  The tests use invented games only; no real game is in the repository.
+- **What becomes an exercise.** The engine (the bundled lite build, 30,000 nodes, two lines)
+  looks at every move of the player after the first. A position is taken when the played
+  move gave up at least 1.5 pawns, the best move is at least 1.2 pawns better than the
+  second best (so there is one answer), the player was not already lost by more than 3
+  pawns, and the second-best move did not win by more than 5 anyway. Developer's numbers;
+  the checklist asks the owner whether the exercises feel right.
+- **An exercise is a puzzle of one move** that starts with the opponent's move from the game,
+  so it runs through the same drill, hints and review cards as the Lichess puzzles. It is
+  due at once (the move was missed in a real game) and then follows FSRS. Up to two come up
+  in the daily session as "Позиция из вашей партии."; "Мои партии" has its own practice.
+- **The same position is one exercise**: the id is a hash of the position and the best move,
+  so importing a game twice adds nothing.
+- **The solution comes from a short search** and can be wrong now and then. The screen says
+  so, and every exercise can be removed. A deeper check of each kept position is possible
+  later (it costs seconds per exercise).
+- **Twenty games per run**, so the phone is not busy for minutes; the run can be repeated.
+- **Storage.** IndexedDB version 4 adds the store `own`; progress file format 6 carries the
+  exercises, each checked on import by playing it through. The export screen now says that
+  the file holds positions from the owner's games.
+- **Not done:** fetching games from chess.com, the opening or date of a position, longer
+  solutions (several moves), a statistic of which kinds of mistakes repeat.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
