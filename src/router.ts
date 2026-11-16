@@ -12,6 +12,8 @@ export type Route =
   | { name: 'learn'; id: string }
   | { name: 'chain'; id: string }
   | { name: 'review'; id: string }
+  | { name: 'games' }
+  | { name: 'gamesPractice' }
   | { name: 'play' }
   | { name: 'playTrap'; id: string }
   | { name: 'puzzles' }
@@ -36,6 +38,8 @@ export function parseRoute(hash: string): Route {
   if (path === 'more') return { name: 'more' };
   if (path === 'settings') return { name: 'settings' };
   if (path === 'licenses') return { name: 'licenses' };
+  if (path === 'games') return { name: 'games' };
+  if (path === 'games/practice') return { name: 'gamesPractice' };
   if (path === 'play') return { name: 'play' };
   const playTrap = PLAY_TRAP.exec(path)?.[1];
   if (playTrap) return { name: 'playTrap', id: playTrap };
@@ -65,10 +69,13 @@ export function routeHref(route: Exclude<Route, { name: 'notFound' }>): string {
       return `#/trap/${route.id}/${route.name}`;
     case 'puzzleTest':
       return '#/puzzles/test';
+    case 'gamesPractice':
+      return '#/games/practice';
     case 'playTrap':
       return `#/play/trap/${route.id}`;
     case 'puzzleTheme':
       return `#/puzzles/theme/${route.theme}`;
+    case 'games':
     case 'play':
     case 'traps':
     case 'session':

@@ -1048,3 +1048,18 @@ button.move {
   user-select: text;
   -webkit-user-select: text;
 }
+
+/* Own games */
+
+.pgn-input {
+  width: 100%;
+  margin: 0.5rem 0;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.875rem;
+  resize: vertical;
+}

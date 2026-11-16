@@ -59,6 +59,11 @@ describe('parseRoute', () => {
       { name: 'data' },
       { name: 'puzzles' },
       { name: 'puzzleTest' },
+      { name: 'games' },
+      { name: 'gamesPractice' },
+      { name: 'play' },
+      { name: 'playTrap', id: 'legal-mate' },
+      { name: 'licenses' },
       { name: 'puzzleTheme', theme: 'backRankMate' },
     ];
     for (const route of routes) expect(parseRoute(routeHref(route))).toEqual(route);

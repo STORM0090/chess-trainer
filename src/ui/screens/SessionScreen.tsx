@@ -5,6 +5,7 @@ import { getTrap } from '../../content/traps';
 import { chainLength, nextChainStep, reviewLine } from '../../core/chain';
 import { sessionProgress, streakState, type SessionItem } from '../../core/daily';
 import { dayKey, type DayKey } from '../../core/days';
+import { isOwnId, ownEntry } from '../../core/own-games';
 import { emptyProgress, gradeOf, isClean } from '../../core/progress';
 import { compilePuzzle } from '../../core/puzzle-model';
 import type { Grade } from '../../core/schedule';
@@ -33,7 +34,13 @@ import { LineNotes } from '../trap/LineNotes';
 export function SessionScreen() {
   const pool = usePuzzles();
   if (pool.state !== 'ready') return <PoolNotice pool={pool} />;
-  return <Session puzzles={pool.puzzles} />;
+  return <SessionWithOwn puzzles={pool.puzzles} />;
+}
+
+/** The Lichess puzzles and the exercises from the player's own games, as one pool. */
+function SessionWithOwn({ puzzles }: { puzzles: PuzzleEntry[] }) {
+  const all = useMemo(() => [...puzzles, ...Object.values(getStore().data.own).map(ownEntry)], [puzzles]);
+  return <Session puzzles={all} />;
 }
 
 /**
@@ -178,7 +185,7 @@ function PuzzleItem({
       {/* The theme is not named in a mixed session: it would be half of the answer. */}
       <PuzzleHead title={position} puzzle={puzzle}>
         <p class="trap-meta">
-          {t.session.role[role]} {t.puzzles.test.goal}
+          {isOwnId(entry.id) ? t.session.roleOwn : t.session.role[role]} {t.puzzles.test.goal}
         </p>
       </PuzzleHead>
       <LineDrill trap={puzzle} line={puzzle.line} startPly={0} doneStatus={t.puzzles.done} onDone={finish}>
@@ -189,6 +196,7 @@ function PuzzleItem({
               : fmt(t.puzzles.notClean, { errors: result?.errors ?? 0, hints: result?.hints ?? 0 })}
           </p>
           {levelUp !== undefined && <p class="verdict verdict-ok">{fmt(t.puzzles.levelUp, { n: levelUp })}</p>}
+          {isOwnId(entry.id) && <p>{fmt(t.games.played, { san: getStore().data.own[entry.id]?.played ?? '' })}</p>}
           <div class="panel-actions">
             <NextButton onNext={onNext} nextLabel={nextLabel} />
           </div>

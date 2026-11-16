@@ -21,9 +21,9 @@ const BOT_MIN_DELAY_MS = 650;
 /** Nodes per position for the review after a game. */
 const REVIEW_NODES = 20_000;
 
-type EngineState = 'loading' | 'ready' | 'failed';
+export type EngineState = 'loading' | 'ready' | 'failed';
 
-function useEngine(): [EngineState, () => void] {
+export function useEngine(): [EngineState, () => void] {
   const [state, setState] = useState<EngineState>('loading');
   const [attempt, setAttempt] = useState(0);
   useEffect(() => {
@@ -40,7 +40,7 @@ function useEngine(): [EngineState, () => void] {
   return [state, () => setAttempt((current) => current + 1)];
 }
 
-function EngineNotice({ state, retry }: { state: EngineState; retry: () => void }) {
+export function EngineNotice({ state, retry }: { state: EngineState; retry: () => void }) {
   if (state === 'ready') return null;
   return (
     <section class="panel" role="status">
