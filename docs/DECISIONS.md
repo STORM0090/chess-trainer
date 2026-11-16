@@ -573,11 +573,31 @@ on `m5` (texts of batch 1 on `m4`):
   shown in the order of the game with the engine's move as an arrow. Positions where the
   player was already lost by six pawns are skipped. Takes a few seconds on a desktop; not
   measured on the phone.
-- **Games are not saved.** Leaving a game ends it without a result. The level, the last ten
+- **Trap games do not move the level.** In the book the bot plays the trap's mistakes
+  whatever its level (a quarter of Legal games go 4...g6 or h6, half of those 5...Bxd1??), so
+  a win there says little about its own play. They count for the day. Found by the review.
+- **Games are not saved.** Leaving a game ends it without a result. The review pointed out
+  that this lets a losing game be dodged; kept on purpose for now (no pressure, a game is an
+  extra), and listed for the owner in `docs/PENDING.md`. The level, the last ten
   results and the checklist switch are settings; progress file format 4 carries them.
 - **A finished game counts as one exercise of the day** for the norm and the streak.
 - **Not done in M6:** a short game as part of the daily session (the session stays about
   five minutes; a game is an extra), takebacks, a clock, saving an unfinished game.
+
+## Independent review of M6 (2026-11-16)
+
+Fixed on `m6`: the move number in "С N-го хода партия ушла от вариантов" was one too high
+after a Black move; trap games raised the bot's level; the game review kept the engine busy
+after the player left it, so the next game's bot waited behind it; a crashed or timed-out
+engine was never replaced; "Случайно" kept the first colour for every next game; a file
+from a build with more bot levels would not import (now it opens at the top level). Texts
+of batch 3: text 9 gave the wrong reason (see the batch file), texts 14, 16, 17, 20, 21
+reworded. Checked and found correct by the reviewer: the bot's move effect (no double move,
+no move after the end or after leaving), promotion both ways, the result recorded once,
+the policy's legality and mate scores, the review's score signs, the Bradley-Terry fit. Its
+note on the calibration: neighbouring levels measured 51 to 208 points apart in the 40-game
+run, with about 60 points of noise per pair, so "about 100 apart" is consistent with the
+data but only loosely supported; the bottom of the ladder is compressed.
 
 ## Known open points
 
