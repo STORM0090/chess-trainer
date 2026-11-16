@@ -7,7 +7,8 @@ A phone-first PWA for beginner-level players. The UI is in Russian.
 Learn mode with hints and a backward chain; progress is saved on the device, learned traps
 come back in spaced reviews, and the progress file can be exported and imported.
 Stages M4 and M5 are in review: puzzles from the Lichess database (CC0) in nine themes with an
-entry test that sets the level; a daily session, a soft streak and a calendar reminder.
+entry test that sets the level; a daily session, a soft streak and a calendar reminder; a bot
+with 13 calibrated levels and trap practice against it.
 The plan is in [docs/PLAN.md](docs/PLAN.md).
 
 ## Stack

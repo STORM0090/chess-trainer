@@ -25,6 +25,9 @@ Things that only the owner decides or checks. Nothing here was done on the owner
   both to take the texts out; the app then shows the general sentences again and the tests
   stay green.
 
+- Batch 3 (stage 2, 24 lines): written in autonomous mode, in the trap files as one commit
+  ("content: explanation texts of batch 3..."). Revert that commit to take the texts out.
+
 ## Decisions to confirm
 
 - **Navigation at the top** with "Сегодня / Ловушки / Задачи / Ещё". A bottom bar is the
@@ -35,3 +38,6 @@ Things that only the owner decides or checks. Nothing here was done on the owner
   streak.
 - **Puzzles solved cleanly at the first try are never repeated**; only failed ones get FSRS
   cards.
+- **The bot shows levels 1 to 13 and no human rating**: nothing was measured against people.
+- **The bot's level moves by itself**: up after every win, down after two losses in a row.
+- **Games against the bot are not saved**; leaving a game drops it.

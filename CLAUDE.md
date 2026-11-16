@@ -92,6 +92,7 @@ Read `docs/DECISIONS.md` before starting work: it records what was decided and w
 - `npm run check:size`: the size budget of `docs/PLAN.md`; needs `npm run build` first; CI runs it
 - `npm run test:e2e`: Playwright tests on a phone-sized screen, one of them offline; need `npm run build` first
 - `npm run verify`: verify every trap, update trap files, the cache and the ROADMAP catalogue
+- `npm run bot:calibrate -- --players 0,0.5,1 --games 40`: bot self-play matches (minutes; see `docs/DECISIONS.md`)
 - `npm run build:puzzles`: rebuild `content/puzzles/` from the Lichess archive in `.cache/lichess/`
 - `npm run explain:facts -- <trap id>`: facts about the lines of a trap, for writing explanations
 - `npm run explain:apply -- docs/explanations/batch-<n>.md`: copy reviewed texts into the trap files

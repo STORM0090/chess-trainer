@@ -520,6 +520,65 @@ on `m5` (texts of batch 1 on `m4`):
   and 2, the card and due-date invariant, no double counting, every state the app produces
   imports again, the fixtures are read, folding of the calendar file, the database upgrade.
 
+## The bot (M6, 2026-11-15/16, autonomous mode)
+
+- **What the engine offers, read from its own `uci` output** (Stockfish 19 Lite WASM, the
+  build the app ships): `Skill Level` 0 to 20, `UCI_Elo` 1320 to 3190, `MultiPV` up to 256,
+  `Threads` 1. The owner's target ladder (about 300 to 1200 for people) starts far below
+  the lowest `UCI_Elo`, and `Skill Level 0` plays random-looking blunders mixed with
+  engine moves. So the weakness is built in the app, not taken from the engine.
+- **The policy** (`shared/bot/policy.ts`). On a "tunnel" move the bot looks only at its own
+  idea: it takes what can be taken, gives a check, otherwise makes a natural move
+  (development, castling, a centre pawn); it does not ask what the opponent threatens, and
+  often does not check whether the square it moves to is attacked. This is where a beginner's
+  hanging pieces and missed threats come from. Otherwise it compares the engine's best
+  moves (MultiPV 8) and picks one with a preference that sharpens with the level. One
+  number, `strength` 0 to 1, sets the share of tunnel moves (60% to 2%), how often a tunnel
+  move looks at its square (15% to 90%), the sharpness, and the engine nodes per move
+  (300 to 12,000, geometric). A mate in one is always played when the bot sees it.
+- **Calibration** (`npm run bot:calibrate`, results in `content/bot/calibration.json`). The
+  bot plays itself on the bundled engine with fixed nodes and a cleared hash, so a search
+  depends only on the position; searches are cached by FEN. Every game has its own seed.
+  Run "grid-v1": 9 strengths from 0 to 1, each against its two neighbours on each side,
+  60 games per pairing, plus `Skill Level 0` and `UCI_Elo 1320` at 12,000 nodes as
+  landmarks: 1,320 games in 11 minutes. Ratings by Bradley-Terry with one virtual draw per
+  pairing. The scale runs from 0 (strength 0) to 1,338 (strength 1); the two engine
+  limiters land at 559 and 621. Run "levels-v1": the 13 chosen levels, each against its
+  neighbours, 40 games per pairing, 480 games: the order holds (0, 86, 240, 326, 431, 536,
+  587, 795, 900, 977, 1029, 1192, 1389).
+- **Thirteen levels** about 100 points apart on that scale (the stronger of two neighbours
+  scores about 64%). **No human rating is shown or claimed:** nothing was measured against
+  people. The owner's own results move the level: one up after a win, one down after two
+  losses in a row at the same level.
+- **On the phone** the engine runs in a Web Worker (the interface never waits for it), one
+  search at a time, at most 12,000 nodes and never longer than 1.5 seconds per move; a hot
+  or slow phone makes the bot a little weaker instead of slower. The bot never answers
+  faster than 0.65 s, the same pause as in the traps. **Not checked on the device:** heat
+  and battery (in the QA file).
+- **The engine is not precached** (1.9 MB, outside the size budget): the first game needs
+  the network once. Offline before that, the screen says so and offers to try again.
+- **Trap practice.** From the page of any open trap. The bot opens along the lines of the
+  trap file: at every branching point it chooses among the different moves of the lines
+  that match the game so far, with equal weights (the owner's rule for opponent moves). The
+  lines of the player's mistakes are included, so a mistake is punished as the trap file
+  shows. Once the game leaves every line, the bot plays by its level, and the screen says
+  from which move.
+- **ШВУ checklist** (owner's plan, switched off by default): before each of the player's
+  moves, five short questions (what the last move changed and threatens; checks; captures
+  and whether the target is defended; threats; whether the moved piece will hang), and the
+  board takes a move only after "Проверил".
+- **Game review** (optional in the plan, done). After a game with at least three moves of
+  the player: every position before a move of the player and after it is searched at
+  20,000 nodes; moves that gave up 1.5 pawns or more are mistakes, the three biggest are
+  shown in the order of the game with the engine's move as an arrow. Positions where the
+  player was already lost by six pawns are skipped. Takes a few seconds on a desktop; not
+  measured on the phone.
+- **Games are not saved.** Leaving a game ends it without a result. The level, the last ten
+  results and the checklist switch are settings; progress file format 4 carries them.
+- **A finished game counts as one exercise of the day** for the norm and the streak.
+- **Not done in M6:** a short game as part of the daily session (the session stays about
+  five minutes; a game is an extra), takebacks, a clock, saving an unfinished game.
+
 ## Known open points
 
 - The Lichess opening explorer API requires OAuth2 (it answers 401), so there is no frequency
