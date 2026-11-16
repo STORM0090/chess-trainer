@@ -231,9 +231,16 @@ export function recordChainRun(
  * Records a finished game against the bot: today's log, and the level to offer next. A game
  * at another level than the one offered (chosen by hand) moves the offer to that level first.
  */
-export function recordBotGame(level: number, result: GameResult): number {
+export function recordBotGame(level: number, result: GameResult, rated = true): number {
   const now = appNow();
   const { settings } = state.data;
+  if (!rated) {
+    // Counts for the day, leaves the level and its results alone.
+    const day = dayWith('game', result === 'win', now);
+    setData({ ...state.data, days: { ...state.data.days, [day.date]: day } });
+    persist(() => db.saveDay(day));
+    return settings.botLevel;
+  }
   const sameLevel = level === settings.botLevel;
   const results = [...(sameLevel ? settings.botResults : []), result].slice(-BOT_RESULTS_KEPT);
   const next = nextBotLevel(level, results);

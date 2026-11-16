@@ -211,8 +211,9 @@ function readSettings(value: unknown, format: number): Settings | undefined {
   };
   // Format 3 had no bot yet.
   if (format < 4) return base;
-  const level = value.botLevel;
-  if (!isCount(level) || level < 1 || level > BOT_LEVELS.length) return undefined;
+  // A file from a build with more levels opens at the top level of this one.
+  const level = isCount(value.botLevel) && value.botLevel >= 1 ? Math.min(value.botLevel, BOT_LEVELS.length) : undefined;
+  if (level === undefined) return undefined;
   const results = value.botResults;
   if (!Array.isArray(results) || results.length > BOT_RESULTS_KEPT) return undefined;
   if (!results.every((result) => result === 'win' || result === 'draw' || result === 'loss')) return undefined;

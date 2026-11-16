@@ -36,11 +36,27 @@ export function warmUpEngine(): Promise<void> {
   return engine().then(() => undefined);
 }
 
+/**
+ * Drops the engine after a failure (the worker crashed, or a search timed out and may still
+ * be running): the next search starts a fresh worker instead of waiting on a dead one.
+ */
+function discard(uci: UciEngine): void {
+  uci.terminate();
+  void starting?.then((current) => {
+    if (current === uci) starting = undefined;
+  });
+}
+
 export const browserAnalyse: Analyse = (fen, { nodes, multipv }) => {
   const run = queue.then(async () => {
     const uci = await engine();
-    const lines = await uci.lines(fen, { nodes, movetime: MOVE_TIME_LIMIT_MS }, multipv);
-    return parseCandidates(lines);
+    try {
+      const lines = await uci.lines(fen, { nodes, movetime: MOVE_TIME_LIMIT_MS }, multipv);
+      return parseCandidates(lines);
+    } catch (error) {
+      discard(uci);
+      throw error;
+    }
   });
   queue = run.catch(() => undefined);
   return run;
