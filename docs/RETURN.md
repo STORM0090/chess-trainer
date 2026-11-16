@@ -102,7 +102,7 @@ merging, or on `main` after it:
 | 1 (stage 0) | `c7ae46b` (texts 1, 6, 13 after the review), `51dd27d` |
 | 2 (stage 1) | `be21101` (texts 1, 9 after the review), `f6fbf1d` |
 | 3 (stage 2) | `5535d6b` (texts after the review), `3c08b88` |
-| 4 (stages 3, 4) | `41ebd07` |
+| 4 (stages 3, 4) | `17672c3` (texts 7, 9, 10, 15 after the review), `41ebd07` |
 
 **Rolling back the APK part only:** the web app does not depend on it. Reverting the merge of
 `m7` removes the Capacitor packages, `android/`, the two workflows and notifications;
