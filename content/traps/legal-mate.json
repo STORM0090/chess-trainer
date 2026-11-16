@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5 Bxd1?? 6.Bxf7+ Ke7 7.Nd5#",
+      "explanation": {
+        "ru": "Конь f3 закрывает ферзя от слона g4, но всё равно берёт пешку e5 и отдаёт ферзя. Если слон его забирает, ставят мат три лёгкие фигуры: Bxf7+ оставляет королю один ход, Ke7, и конь с d5 матует.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 h6? 5.Nxe5 Bxd1?? 6.Bxf7+ Ke7 7.Nd5#",
+      "explanation": {
+        "ru": "Ход h6 ничего не меняет: та же жертва ферзя и тот же мат тремя лёгкими фигурами.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -45,6 +57,12 @@
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bh5? 6.Nxe5 Bxd1?? 7.Bxf7+ Ke7 8.Nd5#",
       "note": "The natural move order given on Wikipedia.",
+      "explanation": {
+        "ru": "Пешка h3 прогнала слона на h5, но и оттуда он смотрит на коня f3 и ферзя за ним: конь берёт e5, и после Bxd1 тот же мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -54,6 +72,13 @@
       "tag": "decline",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5 dxe5 6.Qxg4",
+      "explanation": {
+        "ru": "Чёрные не берут ферзя, а забирают коня пешкой: ферзь берёт незащищённого слона g4. У вас лишняя пешка и большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 238,
         "best": "b8c6",
@@ -64,6 +89,13 @@
       "tag": "decline",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bh5? 6.Nxe5 Nxe5 7.Qxh5 Nxc4 8.Qb5+ c6 9.Qxc4",
+      "explanation": {
+        "ru": "Чёрные берут коня конём: ферзь забирает слона h5, а потом шахом с b5 нападает на коня c4 и забирает его. У вас лишняя пешка и большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 222,
         "best": "g8f6",
@@ -74,6 +106,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nf6 5.h3",
+      "explanation": {
+        "ru": "Чёрные выводят коня на f6, и он защищает слона g4: ловушки нет, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 41,
         "best": "g4f3",
@@ -84,6 +123,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 Nc6 5.h3",
+      "explanation": {
+        "ru": "Конь c6 добавил пешке e5 вторую защиту; вы спокойно гоните слона пешкой h3, по оценке у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 57,
         "best": "g4f3",
@@ -94,6 +140,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.h3 Bxf3 6.Qxf3",
+      "explanation": {
+        "ru": "Чёрные меняют слона на коня: ваш ферзь встаёт на f3 и вместе со слоном нападает на f7. Позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 45,
         "best": "g8f6",
@@ -105,6 +158,13 @@
       "expect": "loss",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 d6 4.Nc3 Bg4 5.Nxe5?? Nxe5",
       "note": "With a knight on c6 and the bishop still on g4 the sacrifice does not work.",
+      "explanation": {
+        "ru": "Так нельзя: здесь пешку e5 защищает ещё и конь c6. Он берёт вашего коня, и вы просто теряете фигуру: у соперника большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -486,
         "best": "c4e2",

@@ -25,6 +25,12 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Ba4?? Qa5+ 7.Nc3 Qxe5",
+      "explanation": {
+        "ru": "Конь ушёл с c6 на e7 и будто бы отдал пешку e5. После Nxe5 пешка c6 гонит слона, и если он отходит на a4, ферзь даёт шах с a5 и забирает коня e5.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 302,
         "best": "e1g1",
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Bc4?? Qa5+ 7.Nc3 Qxe5",
+      "explanation": {
+        "ru": "Слон отходит на c4: тот же шах с a5, и ферзь забирает коня e5.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 305,
         "best": "d3d4",
@@ -46,6 +58,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Nxe5? c6 6.Nc4 Ng6 7.Ba4 b5",
       "note": "Wikipedia: 6.Nc4 is the best try; Black still wins material.",
+      "explanation": {
+        "ru": "Конь уходит с e5 на c4. После b5 пешка нападает сразу на слона a4 и коня c4: пешка отдана, но по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 339,
         "best": "e4e5",
@@ -57,6 +76,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7?! 5.Bc4 c6 6.Nc3 Ng6",
       "note": "Wikipedia: White has the upper hand after 5.Bc4.",
+      "explanation": {
+        "ru": "Белые не берут пешку e5, а нападают слоном на f7: ловушки нет, и по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -65,
         "best": "h2h4",

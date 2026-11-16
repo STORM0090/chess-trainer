@@ -27,6 +27,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Qd2 Bxc3 8.Qxc3 Qc1#",
+      "explanation": {
+        "ru": "Шах с b4 нападает и на слона f4, и на пешку b2. После Bd2 ферзь берёт b2; если слон идёт на c3, слон b4 нападает на него, и после размена на c3 ферзь ставит мат на c1.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -36,6 +42,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Bc3?? Bb4 7.Bxb4 Nxb4",
+      "explanation": {
+        "ru": "Белые меняют слонов: конь отыгрывает слона, а ваш ферзь на b2 нападает на ладью a1. По оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 688,
         "best": "b1a3",
@@ -46,6 +59,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.c3?? Qxf4",
+      "explanation": {
+        "ru": "Белые закрылись пешкой c3, и слон f4 остался без защиты: ферзь его забирает.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 606,
         "best": "g2g3",
@@ -56,6 +75,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nbd2?? Qxf4",
+      "explanation": {
+        "ru": "Конь закрыл шах, а слон f4 остался без защиты: ферзь его забирает.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 571,
         "best": "g2g3",
@@ -66,6 +91,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Qd2?? Qxb2 6.Qc3 Bb4",
+      "explanation": {
+        "ru": "Белые закрылись ферзём: ваш ферзь берёт b2 и нападает на ладью a1, а на Qc3 слон b4 нападает на белого ферзя. По оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 980,
         "best": "e1d1",
@@ -76,6 +108,12 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.d4 e5 2.Bf4?? exf4",
+      "explanation": {
+        "ru": "Слон пошёл на f4 под удар пешки e5: пешка его забирает.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 663,
         "best": "g1h3",
@@ -87,6 +125,13 @@
       "expect": "eval",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Nc3 Qxf4 6.Nd5 Qe4",
       "note": "Wikipedia calls 5.Nc3 perfectly playable because of 6.Nd5.",
+      "explanation": {
+        "ru": "Белые закрылись конём: ферзь забирает слона f4, но конь d5 нападает на ферзя и на пешку c7. После Qe4 позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -18,
         "best": "d5c7",
@@ -98,6 +143,13 @@
       "expect": "eval",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Bf4 Qb4+ 5.Bd2 Qxb2 6.Nc3 Bb4 7.Rb1 Qa3 8.Nd5",
       "note": "The critical line. An opponent who knows 6.Nc3 is close to winning.",
+      "explanation": {
+        "ru": "Белые выводят коня c3 под защиту слона d2, ладьёй b1 прогоняют ферзя, и конь d5 нападает на c7 и слона b4: по оценке у соперника большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -284,
         "best": "b4d2",
@@ -109,6 +161,13 @@
       "expect": "eval",
       "moves": "1.d4 e5 2.dxe5 Nc6 3.Nf3 Qe7 4.Qd5",
       "note": "Stockholm Variation.",
+      "explanation": {
+        "ru": "Ферзь встаёт на d5 и защищает пешку e5: ловушки нет, по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -71,
         "best": "f7f6",
@@ -119,6 +178,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.d4 e5 2.d5 Bc5",
+      "explanation": {
+        "ru": "Белые не берут пешку e5, а идут вперёд ходом d5: ловушки нет, позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 8,
         "best": "e2e4",
@@ -129,6 +194,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.d4 e5 2.Nf3 e4",
+      "explanation": {
+        "ru": "На 2.Nf3 пешка e4 прогоняет коня: позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 26,
         "best": "f3d2",
