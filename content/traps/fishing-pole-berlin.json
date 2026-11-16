@@ -25,6 +25,13 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.hxg4?? hxg4 7.Ne1 Qh4",
+      "explanation": {
+        "ru": "Конь на g4 — наживка: после hxg4 пешка h5 берёт обратно, и линия h открыта для ладьи h8. Ферзь идёт на h4, и по оценке движка мат уже не остановить.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "mate": 3,
         "best": "f2f4",
@@ -35,6 +42,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.hxg4?? hxg4 7.Ne1 Qh4 8.f4 g3 9.Nf3 Qh1#",
+      "explanation": {
+        "ru": "Например, f4 g3, и после Nf3 ферзь ставит мат на h1: пешка g3 и ладья h8 отнимают у короля все поля.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -44,6 +57,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 h5 6.d3",
+      "explanation": {
+        "ru": "Белые не берут коня: ловушки нет, и по оценке у вас хуже.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -173,
         "best": "d7d6",
@@ -55,6 +74,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.O-O Ng4 5.h3 Nf6 6.Bxc6 dxc6 7.Nxe5",
       "note": "Wikipedia: the knight is simply kicked back and e5 falls.",
+      "explanation": {
+        "ru": "Если конь отступает на f6, белые меняют слона на коня c6 и забирают пешку e5: по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -189,
         "best": "c8e6",

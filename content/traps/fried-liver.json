@@ -27,6 +27,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Kg8?? 8.Bxd5+ Qxd5 9.Qxd5+ Be6 10.Qxe6#",
+      "explanation": {
+        "ru": "Жертва коня на f7 выгоняет короля, а шах ферзём с f3 нападает ещё и на коня d5. Король ушёл на g8 и запер себя: слон берёт d5 с шахом, и после Qxd5 Qxd5+ Be6 ферзь ставит мат на e6.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -36,6 +42,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Kg8?? 8.Bxd5+ Be6 9.Bxe6#",
+      "explanation": {
+        "ru": "Если чёрные закрываются слоном e6, слон берёт его с матом.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -45,6 +57,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Ke8? 8.Bxd5",
+      "explanation": {
+        "ru": "Король вернулся на e8: слон забирает коня d5 под защитой ферзя. У вас лишняя пешка и большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 343,
         "best": "d8f6",
@@ -56,6 +75,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Nxd5?! 6.Nxf7 Kxf7 7.Qf3+ Ke6 8.Nc3 Nb4 9.O-O c6 10.d4",
       "note": "The real Fried Liver. Wikipedia: a strong attack, not proven decisive.",
+      "explanation": {
+        "ru": "Король идёт на e6 и защищает коня d5: вы отдали фигуру за пешку, но по оценке у вас всё равно лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 91,
         "best": "d8f6",
@@ -66,6 +92,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nf6 4.Ng5 d5 5.exd5 Na5 6.Bb5+ c6 7.dxc6 bxc6 8.Bd3",
+      "explanation": {
+        "ru": "Чёрные не берут на d5, а нападают конём на слона c4: жертвы на f7 нет, у вас лишняя пешка, но позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 16,
         "best": "f6d5",

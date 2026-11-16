@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Rf1 Qxe4+ 7.Be2 Nf3#",
+      "explanation": {
+        "ru": "Конь d4 оставил пешку e5 без защиты, и это наживка. После Nxe5 ферзь с g5 нападает на коня и на пешку g2; если конь бьёт f7, ферзь берёт g2, потом e4 с шахом, и конь ставит мат на f3: королю мешают его собственные фигуры.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Nxf7?? Qxg2 6.Nxh8 Qxh1+ 7.Bf1 Qxe4+ 8.Be2 Nxc2+ 9.Kf1 Qh1#",
+      "explanation": {
+        "ru": "Белые забирают ладью h8, а ферзь берёт ладью h1 и пешку e4 с шахами; конь даёт шах с c2, и ферзь матует на h1.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -44,6 +56,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Ng4 d5",
+      "explanation": {
+        "ru": "Конь отступает на g4 под защиту ферзя, а пешка d5 нападает на слона c4 и пешку e4. Пешка отдана, но по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 504,
         "best": "g4e3",
@@ -55,6 +74,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Bxf7+ Kd8 6.O-O Qxe5",
       "note": "Wikipedia gives 5.Bxf7+ as White's best chance. The engine prefers 5...Kd8 to the book move 5...Ke7.",
+      "explanation": {
+        "ru": "Белые сначала берут f7 с шахом: король уходит на d8, а ферзь забирает коня e5. По оценке у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 68,
         "best": "c2c3",
@@ -66,6 +92,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxe5? Qg5 5.Bxf7+ Ke7 6.O-O Qxe5 7.Bxg8 Rxg8 8.c3 Nc6 9.d4",
       "note": "The line printed on Wikipedia.",
+      "explanation": {
+        "ru": "Если король идёт на e7, белые меняют слона на коня g8 и гонят фигуры пешками c3 и d4: по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -97,
         "best": "e5f6",
@@ -76,6 +109,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.Nxd4 exd4 5.O-O",
+      "explanation": {
+        "ru": "Белые просто меняют коней и рокируются: ловушки нет, и по оценке у вас хуже.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -128,
         "best": "c7c6",
@@ -86,6 +125,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.c3 Nxf3+ 5.Qxf3",
+      "explanation": {
+        "ru": "Пешка c3 прогоняет коня; после размена ферзь и слон вдвоём нападают на f7, и по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -55,
         "best": "g8f6",
@@ -96,6 +142,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.O-O",
+      "explanation": {
+        "ru": "Белые спокойно рокируются и не трогают пешку e5: ловушки нет, по оценке у вас хуже.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -111,
         "best": "d4f3",
@@ -106,6 +158,12 @@
       "tag": "mistake",
       "expect": "loss",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bc4 Nd4?! 4.c3 Nxf3+ 5.Qxf3 d6?? 6.Qxf7#",
+      "explanation": {
+        "ru": "Так нельзя: f7 защищает только король, а ферзь и слон бьют её вдвоём, и Qxf7 — мат.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmated",
         "ok": true

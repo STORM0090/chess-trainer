@@ -25,6 +25,13 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Qxd4?? c5 9.Qd5 Be6 10.Qc6+ Bd7 11.Qd5 c4",
+      "explanation": {
+        "ru": "Белые забрали пешку d4 ферзём, и пешки идут вперёд с темпом: c5 гонит ферзя, а c4 нападает на слона b3. Отступить слону некуда: и на a4, и на c4 его берёт пешка b5.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 472,
         "best": "b3c4",
@@ -36,6 +43,13 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.d4 b5 6.Bb3 Nxd4 7.Nxd4 exd4 8.Bd5",
       "note": "Wikipedia: White should play 8.Bd5 or gambit with 8.c3.",
+      "explanation": {
+        "ru": "Белые не берут d4 ферзём, а ставят слона на d5 с ударом по ладье a8: позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 14,
         "best": "a8b8",
@@ -47,6 +61,12 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Ba4 d6 5.c3",
       "note": "Wikipedia: 5.c3, 5.Bxc6+ and 5.O-O are better than 5.d4.",
+      "explanation": {
+        "ru": "Белые не идут на d4: ловушки нет, позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -26,
         "best": "g8f6",

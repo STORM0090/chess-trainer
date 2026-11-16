@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.hxg4?? hxg4 8.Nxe5 Qh4 9.f4 g3 10.Qh5 Rxh5 11.Rf3 Qh1#",
+      "explanation": {
+        "ru": "Слон на g4 — наживка: если белые его берут, пешка h5 забирает обратно, и линия h открыта для ладьи h8. Ферзь идёт на h4, пешка на g3, и ферзь ставит мат на h1: пешка g3 и ладья h5 отнимают у короля все поля.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.hxg4?? hxg4 8.Nh2 Qh4",
+      "explanation": {
+        "ru": "Белые закрывают линию h конём h2, но ферзь с h4 нападает и на коня, и на пешку f2: по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 835,
         "best": "f1e1",
@@ -46,6 +59,12 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.d3",
       "note": "Wikipedia: White should play 7.d3.",
+      "explanation": {
+        "ru": "Белые не берут слона: ловушки нет, позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 3,
         "best": "d8f6",
@@ -56,6 +75,12 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nc6 3.Bb5 a6 4.Bxc6 dxc6 5.O-O Bg4 6.h3 h5 7.c3",
+      "explanation": {
+        "ru": "Белые не берут слона и играют c3: позиция примерно равна.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": 0,
         "best": "d8d3",
