@@ -53,6 +53,14 @@ export function duePuzzleIds(stats: Record<string, PuzzleStat>, now: number): st
 }
 
 /**
+ * The record of an exercise that has just been made from the player's own game: the move
+ * was missed in a real game, so it is due at once and then follows the FSRS schedule.
+ */
+export function newOwnStat(id: string, now: number): PuzzleStat {
+  return { id, attempts: 0, clean: 0, lastAt: now, lastClean: false, card: startCard(id, 'again', now), dueAt: now };
+}
+
+/**
  * A record written before puzzles had FSRS cards (the M4 build, progress file format 2).
  * A puzzle that was failed last time gets a card as if it had been failed under the new
  * rule: it is due on the day after that attempt, which is when the old rule brought it back.

@@ -28,8 +28,10 @@ import {
   type Settings,
   type TrapProgress,
 } from '../core/progress';
+import type { OwnExercise } from '../core/own-games';
 import type { Grade } from '../core/schedule';
 import {
+  newOwnStat,
   applyPuzzleStat,
   applyPuzzleToLevel,
   applyTest,
@@ -267,6 +269,40 @@ export function recordReview(id: string, grade: Grade): void {
   const after = applyReview(before, grade, now);
   if (after === before) return;
   saveTrapRun(id, after, dayWith('review', grade === 'good', now));
+}
+
+/**
+ * Adds exercises made from the player's own games. One that exists already is left as it
+ * is, with its history. Returns how many were new.
+ */
+export function addOwnExercises(exercises: OwnExercise[]): number {
+  const now = appNow();
+  const fresh = exercises.filter(
+    (exercise, index) =>
+      state.data.own[exercise.id] === undefined && exercises.findIndex((other) => other.id === exercise.id) === index,
+  );
+  if (fresh.length === 0) return 0;
+  const stats = fresh.map((exercise) => newOwnStat(exercise.id, now));
+  const own = { ...state.data.own };
+  const puzzles = { ...state.data.puzzles };
+  for (const exercise of fresh) own[exercise.id] = exercise;
+  for (const stat of stats) puzzles[stat.id] = stat;
+  setData({ ...state.data, own, puzzles });
+  persist(() => db.saveOwn(fresh, stats));
+  return fresh.length;
+}
+
+/** Removes exercises from own games, with everything the app remembers about them. */
+export function removeOwnExercises(ids: string[]): void {
+  if (ids.length === 0) return;
+  const own = { ...state.data.own };
+  const puzzles = { ...state.data.puzzles };
+  for (const id of ids) {
+    delete own[id];
+    delete puzzles[id];
+  }
+  setData({ ...state.data, own, puzzles });
+  persist(() => db.deleteOwn(ids));
 }
 
 /**

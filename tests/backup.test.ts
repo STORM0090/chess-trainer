@@ -45,6 +45,16 @@ function sample(): AppData {
       '0000D': applyPuzzleStat(undefined, '0000D', { errors: 0, hints: 0 }, NOW),
       cfxZa: applyPuzzleStat(undefined, 'cfxZa', { errors: 2, hints: 1 }, NOW),
     },
+    own: {
+      own0123abcd: {
+        id: 'own0123abcd',
+        fen: 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1',
+        moves: 'e2e4 e7e5',
+        played: 'd5',
+        loss: 240,
+        addedAt: NOW,
+      },
+    },
     days: {
       '2026-11-14': {
         ...applyActivity(applyActivity(emptyDay('2026-11-14'), 'puzzle', true, 1, NOW), 'trapStep', false, 1, NOW),
@@ -159,6 +169,17 @@ describe('progress file', () => {
     expect(parsed.ok && parsed.data.settings.botLevel).toBe(4);
   });
 
+  it('reads a file of format 5 (M7): no exercises from own games yet', () => {
+    const parsed = parseBackup(
+      fileWith((file) => {
+        file.format = 5;
+        delete file.data.own;
+      }),
+    );
+    expect(parsed.ok && parsed.data.own).toEqual({});
+    expect(parsed.ok && parsed.data.settings.remindersOn).toBe(true);
+  });
+
   it('opens a bot level above this ladder at its top level', () => {
     const parsed = parseBackup(fileWith((file) => (file.data.settings.botLevel = 99)));
     expect(parsed.ok && parsed.data.settings.botLevel).toBe(13);
@@ -266,6 +287,13 @@ describe('progress file', () => {
       (file) => (file.data.settings.botResults = Array(11).fill('win')),
       (file) => (file.data.settings.shvuChecklist = 'on'),
       (file) => delete file.data.settings.remindersOn,
+      (file) => delete file.data.own,
+      (file) => (file.data.own['own0123abcd'].id = 'own00000000'),
+      (file) => (file.data.own['own0123abcd'].moves = 'e2e5 e7e5'),
+      (file) => (file.data.own['own0123abcd'].fen = 'x'),
+      (file) => (file.data.own['own0123abcd'].played = '<b>'),
+      (file) => (file.data.own['own0123abcd'].loss = -5),
+      (file) => (file.data.own['bad id'] = { ...file.data.own['own0123abcd'], id: 'bad id' }),
     ];
     for (const change of damaged) {
       expect(parseBackup(fileWith(change)), String(change)).toEqual({ ok: false, problem: 'damaged' });

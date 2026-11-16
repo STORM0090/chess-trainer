@@ -5,6 +5,7 @@ import { DAILY_NORMS, type DailyNorm, type DayRecord, type SessionItem } from '.
 import { isDayKey, type DayKey } from './days';
 import { isReminderTime } from './ics';
 import { BOT_LEVELS } from '../../shared/bot/levels.ts';
+import { isValidExercise, type OwnExercise } from './own-games';
 import {
   BOT_RESULTS_KEPT,
   defaultSettings,
@@ -31,9 +32,12 @@ export const BACKUP_APP = 'chess-trainer';
  * Format 2 (M4) added puzzles and the tactics level. Format 3 (M5) added the daily log, the
  * FSRS cards of failed puzzles and new settings. Format 4 (M6) added the bot settings. Older
  * files are still read and brought up to the current shape. Format 5 (M7) added the switch
- * for notifications.
+ * for notifications. Format 6 (M8) added exercises from the player's own games.
  */
-export const BACKUP_FORMAT = 5;
+export const BACKUP_FORMAT = 6;
+
+/** More exercises than this in one file is not something the app would write. */
+const MAX_OWN = 5000;
 
 export interface BackupFile {
   app: typeof BACKUP_APP;
@@ -329,7 +333,7 @@ function readData(value: unknown, format: number): AppData | undefined {
   const settings = readSettings(value.settings, format);
   if (!settings) return undefined;
   // Format 1 was written before puzzles existed.
-  if (format < 2) return { traps, games, settings, puzzles: {}, tactics: emptyTactics(), days: {} };
+  if (format < 2) return { traps, games, settings, puzzles: {}, tactics: emptyTactics(), days: {}, own: {} };
   if (!isObject(value.puzzles)) return undefined;
   const puzzles: Record<string, PuzzleStat> = {};
   for (const [id, raw] of Object.entries(value.puzzles)) {
@@ -340,7 +344,7 @@ function readData(value: unknown, format: number): AppData | undefined {
   const tactics = readTactics(value.tactics);
   if (!tactics) return undefined;
   // Format 2 was written before the daily log existed: the streak starts from the import.
-  if (format < 3) return { traps, games, settings, puzzles, tactics, days: {} };
+  if (format < 3) return { traps, games, settings, puzzles, tactics, days: {}, own: {} };
   if (!isObject(value.days)) return undefined;
   const days: Record<DayKey, DayRecord> = {};
   for (const [date, raw] of Object.entries(value.days)) {
@@ -348,7 +352,24 @@ function readData(value: unknown, format: number): AppData | undefined {
     if (!day) return undefined;
     days[date] = day;
   }
-  return { traps, games, settings, puzzles, tactics, days };
+  // Formats up to 5 had no exercises from own games.
+  if (format < 6) return { traps, games, settings, puzzles, tactics, days, own: {} };
+  if (!isObject(value.own)) return undefined;
+  const entries = Object.entries(value.own);
+  if (entries.length > MAX_OWN) return undefined;
+  const own: Record<string, OwnExercise> = {};
+  for (const [id, raw] of entries) {
+    if (!isObject(raw) || raw.id !== id) return undefined;
+    const { fen, moves, played, loss, addedAt } = raw;
+    if (typeof fen !== 'string' || fen.length > 100 || typeof moves !== 'string' || moves.length > 12) return undefined;
+    if (typeof played !== 'string' || !/^[A-Za-z0-9+#=x-]{2,8}$/.test(played)) return undefined;
+    if (!isCount(loss) || loss > 4000 || !isTime(addedAt)) return undefined;
+    const exercise: OwnExercise = { id, fen, moves, played, loss, addedAt };
+    // Played through: a legal position and two legal moves.
+    if (!isValidExercise(exercise)) return undefined;
+    own[id] = exercise;
+  }
+  return { traps, games, settings, puzzles, tactics, days, own };
 }
 
 /**

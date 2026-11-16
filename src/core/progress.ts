@@ -5,6 +5,7 @@ import type { ChainStep } from './chain';
 import { firstCard, nextReviewDay, reviewCard, type Grade, type StoredCard } from './schedule';
 import { startOfNextLocalDay, type DayKey } from './days';
 import type { DailyNorm, DayRecord } from './daily';
+import type { OwnExercise } from './own-games';
 import { emptyTactics, type PuzzleStat, type TacticsState } from './tactics';
 
 export interface LineStat {
@@ -102,10 +103,15 @@ export interface AppData {
   tactics: TacticsState;
   /** The daily log, by local date. */
   days: Record<DayKey, DayRecord>;
+  /**
+   * Exercises made from the player's own games, by id. Positions and moves only: no names,
+   * no dates, no links. Their attempts and review cards live in `puzzles` under the same id.
+   */
+  own: Record<string, OwnExercise>;
 }
 
 export function emptyData(): AppData {
-  return { traps: {}, games: [], settings: defaultSettings(), puzzles: {}, tactics: emptyTactics(), days: {} };
+  return { traps: {}, games: [], settings: defaultSettings(), puzzles: {}, tactics: emptyTactics(), days: {}, own: {} };
 }
 
 export function emptyProgress(id: string): TrapProgress {
