@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.axb4?? Nd3#",
+      "explanation": {
+        "ru": "Конь берёт на e5 и оставляет слона b4 под ударом пешки a3. Если белые берут слона, конь ставит мат с d3: пешка e2 не может его взять, потому что закрывает короля от ферзя e7, а королю некуда уйти.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,12 @@
       "tag": "trap",
       "expect": "mate",
       "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.Nxe5 Nxe5 9.axb4?? Nd3#",
+      "explanation": {
+        "ru": "После размена коней на e5 ничего не меняется: взятие слона b4 снова разрешает мат конём на d3.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -44,6 +56,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nbd2 Qe7 7.a3 Ngxe5 8.Nxe5 Nxe5 9.e3 Bxd2+ 10.Qxd2",
+      "explanation": {
+        "ru": "Белые не берут слона, а играют e3: мата нет. Вы меняете слона на коня d2, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -30,
         "best": "d7d6",
@@ -54,6 +73,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.Bf4 Nc6 5.Nf3 Bb4+ 6.Nc3 Bxc3+ 7.bxc3 Qe7 8.Qd5",
+      "explanation": {
+        "ru": "Белые закрываются конём c3 и после размена защищают пешку e5 ферзём с d5: пешка остаётся у них, по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -61,
         "best": "f7f6",
@@ -64,6 +90,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.d4 Nf6 2.c4 e5 3.dxe5 Ng4 4.e4",
+      "explanation": {
+        "ru": "Белые сразу играют e4, и ферзь нападает на коня g4: ловушки нет, по оценке у вас хуже.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": -78,
         "best": "g4e5",

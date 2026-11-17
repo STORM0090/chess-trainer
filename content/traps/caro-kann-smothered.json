@@ -25,6 +25,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ngf6?? 6.Nd6#",
+      "explanation": {
+        "ru": "Ход Ngf6 не защищает от шаха конём с d6, и это мат. Пешка e7 не может взять коня, потому что закрывает короля от ферзя e2, а все поля вокруг короля заняты своими фигурами и пешками.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,13 @@
       "expect": "eval",
       "moves": "1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ndf6",
       "note": "Wikipedia: after 5...Ndf6 Black is solid.",
+      "explanation": {
+        "ru": "Правильно пойти другим конём, с d7: у короля освобождается поле d7, мата нет, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 24,
         "best": "g1f3",

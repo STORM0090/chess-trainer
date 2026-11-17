@@ -26,6 +26,12 @@
       "main": true,
       "expect": "win",
       "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 g6?! 7.Nxc6 bxc6 8.e5 dxe5?? 9.Bxf7+ Kxf7 10.Qxd8",
+      "explanation": {
+        "ru": "Пешка e5 нападает на коня f6 и на пешку d6. Если чёрные берут её пешкой d6, линия d открывается: слон бьёт на f7 с шахом, у короля единственный ход — взять слона, и ферзь d8 остаётся без защиты.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "cp": 818,
         "best": "f8g7",
@@ -37,6 +43,13 @@
       "expect": "eval",
       "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 g6?! 7.Nxc6 bxc6 8.e5 Ng4 9.Bf4",
       "note": "Wikipedia: 8...Ng4 is correct (Fischer); White is still better.",
+      "explanation": {
+        "ru": "Чёрные не берут пешку, а уводят коня на g4 с нападением на неё: вы защищаете e5 слоном f4, по оценке у вас лучше.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 53,
         "best": "d6d5",
@@ -47,6 +60,13 @@
       "tag": "sound",
       "expect": "eval",
       "moves": "1.e4 c5 2.Nf3 d6 3.d4 cxd4 4.Nxd4 Nf6 5.Nc3 Nc6 6.Bc4 e6",
+      "explanation": {
+        "ru": "Чёрные играют e6: теперь слон c4 упирается в эту пешку и на f7 больше не нападает. Ловушки нет, позиция примерно равна.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 28,
         "best": "c1e3",

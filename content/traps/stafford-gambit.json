@@ -26,6 +26,12 @@
       "main": true,
       "expect": "mate",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5? Nxe4 7.Bxd8?? Bxf2+ 8.Ke2 Bg4#",
+      "explanation": {
+        "ru": "Слон g5 напал на коня f6, но конь берёт e4 и подставляет ферзя. Если белые его берут, слон бьёт f2 с шахом, у короля один ход, и второй слон ставит мат с g4.",
+        "sources": [
+          "board"
+        ]
+      },
       "result": {
         "end": "checkmate",
         "ok": true
@@ -35,6 +41,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5? Nxe4 7.Be3 Bxe3 8.fxe3 Qh4+",
+      "explanation": {
+        "ru": "Белые не берут ферзя, а закрываются слоном e3: после размена слонов ферзь даёт шах с h4, и по оценке у вас большой перевес.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 604,
         "best": "g2g3",
@@ -45,6 +58,13 @@
       "tag": "trap",
       "expect": "win",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.e5 Ne4 6.d3?? Bc5 7.dxe4 Bxf2+ 8.Ke2 Bg4+",
+      "explanation": {
+        "ru": "Белые гонят коня пешками и забирают его, но слон бьёт f2 с шахом, а второй слон даёт шах с g4: королю остаётся только взять на f2, и ферзь d1 пропадает без защиты.",
+        "sources": [
+          "board",
+          "engine"
+        ]
+      },
       "result": {
         "cp": 748,
         "best": "e2f2",
@@ -56,6 +76,12 @@
       "expect": "eval",
       "moves": "1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Be2 h5 7.h3",
       "note": "Wikipedia: Black has insufficient compensation for the pawn.",
+      "explanation": {
+        "ru": "Белые спокойно выводят слона на e2: ловушки нет, лишняя пешка у них, и по оценке у соперника большой перевес.",
+        "sources": [
+          "engine"
+        ]
+      },
       "result": {
         "cp": -251,
         "best": "d8d4",
