@@ -1,6 +1,17 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test, type Page } from '@playwright/test';
-import { expectNoSidewaysScroll, loadPuzzles, nextDay, playMove, solvePuzzle, watchForErrors, type PuzzleRow } from './helpers.ts';
+import {
+  NO_TEST_CLOCK,
+  databaseName,
+  expectNoSidewaysScroll,
+  loadPuzzles,
+  nextDay,
+  playMove,
+  solvePuzzle,
+  testClock,
+  watchForErrors,
+  type PuzzleRow,
+} from './helpers.ts';
 
 /** Plays whatever the session shows: a puzzle, or a chain step of Fool's Mate as Black. */
 async function playItem(page: Page, puzzles: Map<string, PuzzleRow>): Promise<'puzzle' | 'trap'> {
@@ -29,6 +40,7 @@ async function playItem(page: Page, puzzles: Map<string, PuzzleRow>): Promise<'p
 }
 
 test('the daily session, the streak, the settings and the calendar file', async ({ page }) => {
+  test.skip(!testClock, NO_TEST_CLOCK);
   const problems = watchForErrors(page);
   const puzzles = await loadPuzzles();
 
@@ -115,6 +127,7 @@ test('the daily session, the streak, the settings and the calendar file', async 
 });
 
 test('only one new trap a day', async ({ page }) => {
+  test.skip(!testClock, NO_TEST_CLOCK);
   const problems = watchForErrors(page);
   // Start the first trap (one chain step), then mark it as known: the second trap opens.
   await page.goto('./#/trap/fools-mate/chain');
@@ -143,10 +156,10 @@ test('data saved by the M4 build is carried over', async ({ page }) => {
   // A page of the same origin that does not start the app.
   await page.goto('./manifest.webmanifest');
   await page.evaluate(
-    () =>
+    (name) =>
       new Promise<void>((resolve, reject) => {
         // The database as the M4 build made it: version 2, no "days" store, no cards.
-        const open = indexedDB.open('chess-trainer', 2);
+        const open = indexedDB.open(name, 2);
         open.onupgradeneeded = () => {
           const db = open.result;
           db.createObjectStore('traps', { keyPath: 'id' });
@@ -170,6 +183,7 @@ test('data saved by the M4 build is carried over', async ({ page }) => {
           tx.onerror = () => reject(tx.error);
         };
       }),
+    databaseName,
   );
 
   await page.goto('./');

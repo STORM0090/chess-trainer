@@ -16,8 +16,10 @@ import {
 } from '../core/progress';
 import type { DayRecord } from '../core/daily';
 import { migratePuzzleStat, type PuzzleStat, type TacticsState } from '../core/tactics';
+import { DATABASE_NAME } from '../build-info';
 
-const DB_NAME = 'chess-trainer';
+/** Each preview has a database of its own; the site root and the APK keep `chess-trainer`. */
+const DB_NAME = DATABASE_NAME;
 const DB_VERSION = 3;
 const SETTINGS_KEY = 'settings';
 const TACTICS_KEY = 'tactics';
@@ -39,6 +41,25 @@ let opening: Promise<IDBPDatabase<Schema>> | undefined;
  * for it), or when a newer build in another tab wants to upgrade this one.
  */
 export const databaseEvents: { onBlocked?: () => void; onOutdated?: () => void } = {};
+export interface DatabaseInfo {
+  name: string;
+  /** The version found in the browser; `null` until the database was opened. */
+  version: number | null;
+  /** The version this build knows. */
+  known: number;
+}
+
+let found: number | null = null;
+
+/** For the diagnostics page. */
+export function databaseInfo(): DatabaseInfo {
+  return { name: DB_NAME, version: found, known: DB_VERSION };
+}
+
+/** True for the error of opening a database that a newer build has upgraded. */
+export function isNewerDatabase(error: unknown): boolean {
+  return error instanceof DOMException && error.name === 'VersionError';
+}
 
 function database(): Promise<IDBPDatabase<Schema>> {
   opening ??= openDB<Schema>(DB_NAME, DB_VERSION, {
@@ -65,6 +86,26 @@ function database(): Promise<IDBPDatabase<Schema>> {
 
 export async function loadAll(): Promise<AppData> {
   const db = await database();
+  found = db.version;
+  return readAll(db);
+}
+
+/**
+ * Reads a database that a newer build has upgraded, without changing it: opened at its own
+ * version, so nothing is upgraded, and closed again. Newer builds only add stores, so every
+ * store this build knows is there. The caller keeps the result in memory, read-only.
+ */
+export async function loadNewer(): Promise<AppData> {
+  const db = await openDB<Schema>(DB_NAME);
+  try {
+    found = db.version;
+    return await readAll(db);
+  } finally {
+    db.close();
+  }
+}
+
+async function readAll(db: IDBPDatabase<Schema>): Promise<AppData> {
   const tx = db.transaction(STORES);
   const [traps, games, settings, tactics, puzzles, days] = await Promise.all([
     tx.objectStore('traps').getAll(),

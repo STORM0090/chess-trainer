@@ -36,6 +36,7 @@ import {
   type AttemptResult,
   type TacticsState,
 } from '../core/tactics';
+import { TEST_CLOCK } from '../build-info';
 import * as db from './db';
 
 export interface StoreState {
@@ -44,9 +45,11 @@ export interface StoreState {
    * `saved`: changes reach IndexedDB. `memory`: the database could not be opened (for example
    * a private window), progress lives until the page is closed. `failed`: a write failed.
    * `blocked`: another tab of an older version holds the database. `outdated`: a newer
-   * version was opened in another tab; this page must be reloaded.
+   * version was opened in another tab; this page must be reloaded. `newer`: a newer build
+   * has upgraded the database; its progress is shown read-only and nothing is written, so the
+   * newer build finds it as it left it.
    */
-  storage: 'saved' | 'memory' | 'failed' | 'blocked' | 'outdated';
+  storage: 'saved' | 'memory' | 'failed' | 'blocked' | 'outdated' | 'newer';
 }
 
 let state: StoreState = { data: emptyData(), storage: 'saved' };
@@ -98,7 +101,15 @@ export async function loadStore(): Promise<void> {
     const loaded = await Promise.race([db.loadAll(), blocked]);
     if (loaded === 'blocked') publish({ data: emptyData(), storage: 'blocked' });
     else publish({ data: loaded, storage: 'saved' });
-  } catch {
+  } catch (error) {
+    if (db.isNewerDatabase(error)) {
+      try {
+        publish({ data: await db.loadNewer(), storage: 'newer' });
+        return;
+      } catch {
+        // Could not even read it: fall back to an empty session below.
+      }
+    }
     publish({ data: emptyData(), storage: 'memory' });
   }
 }
@@ -118,9 +129,12 @@ export function useStore(): StoreState {
   return current;
 }
 
-/** The app's clock: the device time, plus the test shift from the "Данные" screen. */
+/**
+ * The app's clock: the device time, plus the test shift from the "Данные" screen. Builds
+ * without the test clock (the site root, the APK) ignore a shift saved earlier or imported.
+ */
 export function appNow(): number {
-  return Date.now() + state.data.settings.clockShiftDays * DAY_MS;
+  return Date.now() + (TEST_CLOCK ? state.data.settings.clockShiftDays : 0) * DAY_MS;
 }
 
 export function updateTrap(id: string, change: (progress: TrapProgress) => TrapProgress): void {
@@ -289,6 +303,8 @@ export function finishSessionItem(date: DayKey, index: number, clean: boolean | 
 
 /** Replaces everything with imported data. Resolves to `false` when it could not be saved. */
 export async function replaceData(data: AppData): Promise<boolean> {
+  // The database of a newer build is not overwritten from here.
+  if (state.storage === 'newer') return false;
   if (state.storage === 'saved' || state.storage === 'failed') {
     try {
       await db.replaceAll(data);

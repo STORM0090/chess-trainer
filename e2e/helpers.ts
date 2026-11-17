@@ -3,6 +3,16 @@ import { expect, type Page } from '@playwright/test';
 
 export type Side = 'white' | 'black';
 
+const base = process.env.E2E_BASE ?? '/';
+const previewBranch = /\/preview\/([^/]+)\/?$/.exec(base)?.[1];
+/** The rule of src/build-info.ts: the test clock exists in previews and in test builds only. */
+export const testClock = previewBranch !== undefined || process.env.VITE_TEST_CLOCK === '1';
+/** Why a test that needs the clock is skipped in the root build. */
+export const NO_TEST_CLOCK = 'no test clock in this build (build with VITE_TEST_CLOCK=1)';
+/** The rule of src/build-info.ts: every preview has its own database. */
+export const databaseName =
+  previewBranch === undefined ? 'chess-trainer' : `chess-trainer@preview/${previewBranch}`;
+
 /** Taps the middle of a square on a board shown from `side`. */
 export async function tapSquare(page: Page, square: string, side: Side): Promise<void> {
   const board = page.locator('.board cg-board');
