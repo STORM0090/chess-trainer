@@ -1,6 +1,15 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
-import { expectNoSidewaysScroll, loadPuzzles, playMove, solvePuzzle, watchForErrors } from './helpers.ts';
+import {
+  NO_TEST_CLOCK,
+  databaseName,
+  expectNoSidewaysScroll,
+  loadPuzzles,
+  playMove,
+  solvePuzzle,
+  testClock,
+  watchForErrors,
+} from './helpers.ts';
 
 test('the list and the View screen work on a phone screen', async ({ page }) => {
   const problems = watchForErrors(page);
@@ -33,6 +42,8 @@ test('the list and the View screen work on a phone screen', async ({ page }) => 
 });
 
 test('a trap is chained, saved, reviewed, exported and imported', async ({ page }) => {
+  // The site root has no test clock; the stage branch ran this test on the same tree.
+  test.skip(!testClock, NO_TEST_CLOCK);
   const problems = watchForErrors(page);
   // The review picks its line at random; 0 always gives the main line.
   await page.addInitScript(() => {
@@ -222,4 +233,61 @@ test('the entry test sets the level and puzzles are served by theme', async ({ p
   await expect(page.getByText(/Задач решено чисто: \d+\. Уровень в задачах: 3 \/ 5\./)).toBeVisible();
 
   expect(problems, 'errors in the browser console').toEqual([]);
+});
+
+test('the site root has no test clock', async ({ page }) => {
+  test.skip(testClock, 'this build has the test clock');
+  await page.goto('./#/data');
+  await expect(page.getByRole('button', { name: 'Сохранить файл' })).toBeVisible();
+  await expect(page.getByRole('button', { name: 'На день вперёд' })).toHaveCount(0);
+});
+
+test('a database upgraded by a newer build is shown read-only and can be saved', async ({ page }) => {
+  // Make the database as a newer build would leave it, from a page of the same origin that is
+  // not the app, so no connection of the app is open.
+  await page.goto('./manifest.webmanifest');
+  await page.evaluate(async (name) => {
+    await new Promise<void>((resolve, reject) => {
+      const removing = indexedDB.deleteDatabase(name);
+      removing.onsuccess = () => resolve();
+      removing.onerror = () => reject(removing.error);
+    });
+    await new Promise<void>((resolve, reject) => {
+      const opening = indexedDB.open(name, 99);
+      opening.onupgradeneeded = () => {
+        const db = opening.result;
+        for (const store of ['traps', 'games', 'puzzles', 'own']) db.createObjectStore(store, { keyPath: 'id' });
+        db.createObjectStore('days', { keyPath: 'date' });
+        db.createObjectStore('settings');
+        db.createObjectStore('future', { keyPath: 'id' });
+        opening.transaction?.objectStore('traps').put({ id: 'fools-mate', chainDepth: 2 });
+      };
+      opening.onsuccess = () => {
+        opening.result.close();
+        resolve();
+      };
+      opening.onerror = () => reject(opening.error);
+    });
+  }, databaseName);
+
+  await page.goto('./');
+  const notice = page.getByRole('alert');
+  await expect(notice).toContainText('Прогресс записан более новой версией приложения.');
+  await notice.getByRole('link', { name: 'Сохранить файл' }).tap();
+  const downloading = page.waitForEvent('download');
+  await page.getByRole('button', { name: 'Сохранить файл' }).tap();
+  const file = JSON.parse(await readFile(await (await downloading).path(), 'utf8'));
+  expect(file.data.traps['fools-mate']).toMatchObject({ chainDepth: 2 });
+
+  // The diagnostics page names the database and both versions.
+  await page.goto('./#/diag');
+  await expect(page.getByText(databaseName, { exact: true })).toBeVisible();
+  await expect(page.getByText(/^99 \(эта сборка знает \d+\)$/)).toBeVisible();
+
+  // Nothing was written: the newer build finds its database as it left it.
+  const version = await page.evaluate(
+    async (name) => (await indexedDB.databases()).find((db) => db.name === name)?.version,
+    databaseName,
+  );
+  expect(version).toBe(99);
 });
