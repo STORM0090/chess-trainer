@@ -12,11 +12,13 @@ project; `docs/DECISIONS.md` keeps the reasons. Every stage has its own branch, 
 | M1b (done) | Verified trap content, verify script, two-year roadmap | `docs/QA/M1b-content.md` | |
 | M2 (done) | Learning modes: View and Learn on all 32 traps, ШВУ hints, reliability label | `docs/QA/M2.md` | |
 | M3 (done) | Progression: backward chain, FSRS reviews, stages and unlocking, collection, game log, export and import | `docs/QA/M3.md` | |
-| M4 (built; the phone checklist waits for the owner) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
-| M5 (built in autonomous mode; the phone checklist waits for the owner) | Daily session, trap of the day, soft streak, settings, `.ics` reminder, FSRS for failed puzzles; explanations, batch 2 | `docs/QA/M5.md`: a week of sessions; add the calendar reminder | medium |
-| M6 (built in autonomous mode; the phone checklist waits for the owner) | Bot ladder of 13 levels (Stockfish lite plus a layer of beginner-like mistakes, calibrated by self-play), trap practice against the bot, ШВУ checklist, game review; explanations, batch 3 | `docs/QA/M6.md`: games at several levels; watch heat and battery | large |
-| M7 (built in autonomous mode; nothing installed on a device yet) | Capacitor project, debug APK in GitHub Actions, prepared signed release, local notifications, files through the share sheet, full license texts; explanations, batch 4 | `docs/QA/M7.md`: install, move the progress over, get a notification the next morning | medium |
-| M8 (part `m8a` built in autonomous mode: exercises from the owner's games; the other parts are not started) | More content: exercises from own games (PGN), basic mates, simple endgames, opening principles, new trap batches | `docs/QA/M8a.md`; per part | open-ended |
+| M4 (built; waits for the owner's pass) | Lichess puzzles by theme, entry test of 10 puzzles, hint ladder; explanations, batch 1 | `docs/QA/M4.md`: take the test; solve 5 puzzles in three themes with the network off | medium |
+| M5 (built; waits for the owner's pass) | Daily session, trap of the day, soft streak, settings, `.ics` reminder, FSRS for failed puzzles; explanations, batch 2 | `docs/QA/M5.md`: a week of sessions; add the calendar reminder | medium |
+| M6 (built; waits for the owner's pass) | Bot ladder of 13 levels (Stockfish lite plus a layer of beginner-like mistakes, calibrated by self-play), trap practice against the bot, ШВУ checklist, game review; explanations, batch 3 | `docs/QA/M6.md`: games at several levels; watch heat and battery | large |
+| M7 (built; nothing installed on a device yet) | Capacitor project, debug APK in GitHub Actions, prepared signed release, local notifications, files through the share sheet, full license texts; explanations, batch 4 | `docs/QA/M7.md`: install, move the progress over, get a notification the next morning | medium |
+| M8a (built; its independent review is not finished) | Exercises from the owner's own games (PGN, on the device only) | `docs/QA/M8a.md`: import a real chess.com export | medium |
+| M8b (batch 5 texts only) | Explanations, batch 5 | read `docs/explanations/batch-5.md` | small |
+| M8c (on hold until the owner decides, after about two weeks of use) | Basic mates and simple pawn endgames against the engine | to be written | large |
 
 Dependencies that need the owner's approval when their stage starts: `@playwright/test` (M2,
 the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3; approved and added on
@@ -24,29 +26,42 @@ the smoke test; approved and added on 2026-11-13), `idb` and `ts-fsrs` (M3; appr
 `@capacitor/local-notifications`, `@capacitor/filesystem` and `@capacitor/share` (M7), and a JDK
 for `keytool` (M7).
 
-## Autonomous mode (from 2026-11-14 until the owner is back)
+## Path after the return (approved by the owner on 2026-11-17)
 
-The owner is away for about two days or longer and gave new rules for that time. They replace
-"stop after every stage" and "merge only after the phone checklist"; everything else in
-`CLAUDE.md` stays.
+The autonomous mode of 2026-11-14 is over (its rules: `docs/archive/PLAN-autonomous-mode.md`).
+Every stage again ends with a stop and the owner's "ok"; `main` only after the owner's
+checklist. The branches still build on each other (`m5` contains `m4`, and so on), so a fix
+goes on the earliest branch that has the problem and is merged forward along the chain.
 
-- Stages are built one after another without waiting: `m5` from `m4`, `m6` from `m5`, and
-  so on. Every branch has a preview and a green CI. Nothing goes into `main`, no tags.
-- Dependencies: only the Capacitor packages of M7 are approved in advance. Anything else is
-  written into `docs/PENDING.md` and worked around.
-- Only the owner decides: the APK signing key and GitHub secrets, a Lichess token, deleting
-  branches or tags, force-push, the license, the visibility of the repository, anything that
-  touches the owner's data.
-- `docs/PROGRESS.md` says where the work is. `docs/RETURN.md` (last branch) is the hand-over.
-- Depth before width: a stage is finished completely before the next one starts. Priority:
-  M5, M6, M7, then M8.
+1. **Storage fix, on `m4`, merged forward to `m8b`.** Every preview gets its own IndexedDB
+   database; the site root keeps `chess-trainer`. A build that meets a newer database than it
+   knows says so, shows the progress read-only and offers the progress file. The diagnostics
+   page shows the database name and version. "На день вперёд" exists only in previews. Progress
+   files of formats 3 to 5 exported from the real `m5`, `m6`, `m7` builds become test fixtures.
+   `npm audit` (without `--force`) is recorded.
+2. **The owner's pass** (`docs/RETURN.md`, section 2) on the M7 preview. Fixes go on the
+   earliest affected branch and forward; each is written into the QA file of its stage.
+3. **Merge `m4`, `m5`, `m6`, `m7` into `main` one by one, with tags.** `m7` once its web part
+   and steps 12 to 14 (APK install, notification, file) pass. Then one check on the phone: the
+   root opens the owner's real M3 progress after the database upgrade.
+4. **M8a**: finish the independent review (fresh context, the diff from `m7` to `m8a` only),
+   the owner imports a real chess.com export, merge.
+5. **M8b, batch 5**: review of the texts by a fresh context, the owner reads them, merge.
+6. **Release APK**: the owner makes the signing key and the secrets (`docs/APK-SIGNING.md`).
+
+On hold: **M8c** (basic mates and pawn endgames), decided after about two weeks of use.
+Deferred: **batches 6 and 7**. Dropped: a separate opening-principles module; four or five
+principles go into the ШВУ checklist later.
+
+## Rules for every stage
 
 ### Quality bar for every stage
 
 1. Green: typecheck, unit tests, e2e on the phone-sized screen including one offline run,
    `verify:check`, `check:privacy`, and the size budget below.
 2. Data: the IndexedDB schema and the progress file are versioned; migrations have tests;
-   files written in M3 (format 1) and M4 (format 2) must open.
+   files written by every earlier build (format 1 from M3 to format 5 from M7) must open, and
+   the fixtures are files exported by those real builds.
 3. An independent review by a fresh context that has not seen the implementation, before the
    stage is closed. What it finds is fixed first.
 4. What cannot be checked without the device is marked "not checked on the device" and is
@@ -64,36 +79,14 @@ The owner is away for about two days or longer and gave new rules for that time.
 The engine (1.9 MB) stays outside the precache and is cached on first use. A stage that needs
 more than the budget says why in `docs/DECISIONS.md` and changes the number in the script.
 
-### Changes to the stage plan
-
-- **M4** is closed without the phone checklist: the owner approved the batch 1 texts with
-  edits and gave defaults for the open questions. The checklist is done after the return.
-- **M5** adds FSRS for failed puzzles (instead of "on another day"), the size check, the
-  offline e2e run, and a check of day boundaries under clock changes. Batch 2.
-- **M6**: the bot ladder is calibrated by matches of the bundled engine against itself at
-  fixed nodes; the real ranges of its options are read from its own `uci` output. Trap
-  practice against the bot and the ШВУ checklist belong to this stage. A short game review is
-  optional. Batch 3.
-- **M7**: the debug APK is built in GitHub Actions. A `workflow_dispatch` workflow can be
-  started only once its file is on `main`, so on the stage branch the same job also runs on
-  pushes to that branch; the release workflow is prepared and stays idle without the secrets.
-  Notifications are written against the current Capacitor and Android documentation and
-  cannot be checked without the phone. Batch 4.
-- **M8** is split into branches in order of use: `m8a` exercises from the owner's own games
-  (PGN, on the device only), `m8b` basic mates, `m8c` simple endgames, `m8d` opening
-  principles; batches 5 to 7 go with them.
-- **Moved to after the return:** every check on a real device, the signing key and the
-  release build, the 25-game review of the Englund Gambit, new puzzle themes for levels 4 and
-  5 (need approval), anything that needs a Lichess token or the chess.com API.
-
 ## Owner's requests of 2026-11-14
 
 - **Backward chain** ("откат на ход назад", the owner's main idea) is M3 and is built there:
-  see "Progression (M3)" in `docs/DECISIONS.md`.
+  see "Progression (M3)" in `docs/archive/DECISIONS-M1-M3.md`.
 - **"Skip variant" button** in Learn: done in M3. Deviation steps of the chain can be skipped
   too; the main steps of the chain cannot.
 - **"Я это знаю" button** on the trap page and **the `order` field** inside a stage: done in
-  M3 at the owner's request; see "Progression (M3)" in `docs/DECISIONS.md`. The owner
+  M3 at the owner's request; see "Progression (M3)" in `docs/archive/DECISIONS-M1-M3.md`. The owner
   confirmed the proposed order on 2026-11-14.
 - **Russian explanations for every line.** Approved by the owner on 2026-11-14 with the
   rules below. The split into batches was redone at the owner's request and waits for a last
@@ -118,9 +111,9 @@ more than the budget says why in `docs/DECISIONS.md` and changes the number in t
     | 2 | Stage 1: King's Gambit Declined Qh4, Knight Attack on f7, Petrov discovered check, Damiano Defence, Blackburne Shilling refutation | 26 | M5 |
     | 3 | Stage 2: Legal Trap, Mortimer Trap, Englund Trap | 24 | M6 |
     | 4 | Stage 3 and 4: Blackburne Shilling, Fishing Pole (Exchange), Fishing Pole (Berlin), Fried Liver, Noah's Ark | 25 | M7 |
-    | 5 | Stage 5: Caro-Kann smothered mate, Budapest Kieninger, Magnus Smith, Stafford, Owen Greco mate | 17 | M8 |
-    | 6 | Marshall Trap (stage 5); stage 6: Halosar, Siberian, Tarrasch, Sea Cadet | 15 | M8 |
-    | 7 | Stage 6: Smith-Morra queen trap, Cambridge Springs, QGA b5, Elephant, Lasker | 15 | M8 |
+    | 5 | Stage 5: Caro-Kann smothered mate, Budapest Kieninger, Magnus Smith, Stafford, Owen Greco mate | 17 | M8b |
+    | 6 | Marshall Trap (stage 5); stage 6: Halosar, Siberian, Tarrasch, Sea Cadet | 15 | deferred (owner, 2026-11-17) |
+    | 7 | Stage 6: Smith-Morra queen trap, Cambridge Springs, QGA b5, Elephant, Lasker | 15 | deferred (owner, 2026-11-17) |
 
   - If the owner's practice gets ahead of the texts, the next batch can be done earlier as
     its own content branch, with the owner's "ok".

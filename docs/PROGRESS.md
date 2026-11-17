@@ -1,46 +1,44 @@
-# Progress in autonomous mode
+# Progress
 
-The owner is away from 2026-11-14 for about two days or longer and cannot answer. Work goes
-on stage after stage (rules: `docs/PLAN.md`, "Autonomous mode"). **After a limit reset or a new
-session, start here.** Things only the owner may decide are in `docs/PENDING.md`.
+**Start here after a limit reset or a new session.** The path is in `docs/PLAN.md`, "Path after
+the return"; things only the owner decides are in `docs/PENDING.md`; the hand-over of the
+autonomous mode is `docs/RETURN.md`.
 
-Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing is merged into
-`main`, no tags.
+Since 2026-11-17 the work is step by step again: every stage ends with a stop and the owner's
+"ok", `main` only after the owner's checklist. Branches build on each other (`m5` from `m4`,
+and so on); a fix goes on the earliest branch with the problem and is merged forward.
 
 ## State
 
 | Stage | Branch | State |
 | --- | --- | --- |
-| M4 puzzles, entry test, batch 1 texts | `m4` | done: CI green, preview published; phone checklist waits for the owner |
-| M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | done: reviewed, findings fixed, CI green |
-| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | done: reviewed, findings fixed |
-| M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | done: reviewed, findings fixed; debug APK builds in CI; `docs/RETURN.md` written |
-| M8a exercises from own games (PGN) | `m8a` | built, CI green, pushed 2026-11-17; the independent review was never finished |
-| M8b basic mates, endgames, opening principles; batches 5-7 | `m8b` | batch 5 texts only (`af71039`), not reviewed; the rest not started |
-| `docs/RETURN.md` | last branch | written on `m7`; update when an M8 part is finished |
+| M4 puzzles, entry test, batch 1 texts | `m4` | built, CI green; waits for the owner's pass |
+| M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | built, reviewed, CI green; waits for the owner's pass |
+| M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | built, reviewed, CI green; waits for the owner's pass |
+| M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | built, reviewed, CI green; nothing installed on a device |
+| M8a exercises from own games (PGN) | `m8a` | built, CI green; the independent review was never finished |
+| M8b batch 5 texts | `m8b` | texts in the trap files (`af71039`), not reviewed |
+| M8c basic mates, pawn endgames | none | on hold until the owner decides |
+
+## Next
+
+Step 1 of the path: the storage fix on `m4`, merged forward to `m8b`; fixtures of formats 3 to
+5 from the real builds; `npm audit`. Then the owner's pass.
 
 ## Log
 
-- 2026-11-14: autonomous mode started. Plan revised, this file and `docs/PENDING.md` created.
-- 2026-11-14: M4 closed. Batch 1 texts edited as the owner asked, written into the trap files
-  and shown under the lines. "большой перевес" from +2.0 in the whole app.
-
-- 2026-11-14: M5 built on `m5`: daily log, streak, session, FSRS for puzzles, settings,
-  `.ics`, format 3, size check, offline and migration e2e, batch 2 texts.
-
-- 2026-11-15: independent review of M4 and M5 (on Opus: the Fable limit ran out until
-  2026-11-20). Findings fixed on `m5`, texts of batch 1 on `m4`; merged forward.
-- 2026-11-15: M6 on `m6`: bot policy, calibration (1,320 + 480 games), 13 levels, games,
-  trap practice, ШВУ checklist, game review, format 4.
-
-- 2026-11-15: usage limit reached. Next: the rest of M6 (see the table), then M7.
-
-- 2026-11-16/17: independent review of M7, findings fixed on `m7`. `docs/RETURN.md` written.
-  M8a built on `m8a`.
+- 2026-11-14 to 2026-11-17: autonomous mode, M4 to M8a and batch 5 (details in
+  `docs/RETURN.md` and `docs/archive/PLAN-autonomous-mode.md`).
+- 2026-11-17: the owner is back. `m8a` and `m8b` pushed. Check of the state: all previews and
+  the site root share one IndexedDB database (the decision said otherwise). Path revised and
+  approved; `docs/DECISIONS.md` shortened (M1b to M3 in `docs/archive/`).
 
 ## Working notes
 
 - Every stage closes with: typecheck, unit tests, e2e (phone screen, offline), `verify:check`,
-  `check:privacy`, size budget, an independent review by a fresh context, a QA file.
+  `check:privacy`, size budget, a QA file. An independent review by a fresh context only for
+  logic where a mistake is silent or costly: streak and FSRS, data migrations, notifications,
+  the bot, trap texts.
 - Explanation texts: `docs/explanations/batch-N.md` is the reviewed text;
   `npm run explain:apply` copies it into the trap files; one commit per batch.
+- Engine runs: only changed positions, with the FEN cache.

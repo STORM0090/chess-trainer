@@ -2,7 +2,8 @@
 
 Chess Trainer teaches opening traps and basic tactics to beginner-level players
 (target user: ~400 rapid on chess.com) in five-minute daily sessions.
-Read `docs/DECISIONS.md` before starting work: it records what was decided and why.
+Read `docs/PROGRESS.md` before starting work; look up `docs/DECISIONS.md` (contents at the top)
+and `docs/archive/` only for the topic at hand, by section or grep, never whole.
 `docs/PLAN.md` holds the approved stage order and the plans for engagement, reminders and the APK.
 
 ## Language
