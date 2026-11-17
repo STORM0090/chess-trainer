@@ -300,3 +300,46 @@ describe('progress file', () => {
     }
   });
 });
+
+// Files exported by the real builds of M5 (format 3), M6 (format 4) and M7 (format 5), made on
+// 2026-11-17 by driving each build in a browser: settings changed, a trap step, puzzles (one
+// failed, so it has a review card), the daily session on three days with the test clock.
+describe('files written by the real builds of M5, M6 and M7', () => {
+  const builds = [
+    { format: 3, app: '0.6.0' },
+    { format: 4, app: '0.7.0' },
+    { format: 5, app: '0.8.0' },
+  ];
+
+  for (const build of builds) {
+    it(`opens the file of format ${build.format} (version ${build.app}) with everything in it`, () => {
+      const text = fixture(`backup-format-${build.format}.json`);
+      expect(JSON.parse(text)).toMatchObject({ app: 'chess-trainer', format: build.format, appVersion: build.app });
+      const parsed = parseBackup(text);
+      expect(parsed.ok).toBe(true);
+      if (!parsed.ok) return;
+      const { data } = parsed;
+
+      expect(Object.keys(data.traps)).toEqual(['fools-mate']);
+      expect(data.settings).toMatchObject({ dailyNorm: 3, reminderTime: '07:30', clockShiftDays: 2 });
+      expect(data.settings.lastBackupAt).not.toBeNull();
+      // Settings a build did not have start from their defaults.
+      expect(data.settings).toMatchObject({ botLevel: 1, botResults: [], shvuChecklist: false, remindersOn: false });
+
+      const puzzles = Object.values(data.puzzles);
+      expect(puzzles).toHaveLength(4);
+      const reviewed = puzzles.filter((puzzle) => puzzle.card !== null);
+      expect(reviewed).toHaveLength(1);
+      expect(reviewed[0]?.dueAt).not.toBeNull();
+
+      expect(Object.keys(data.days).sort()).toEqual(['2026-11-17', '2026-11-18', '2026-11-19']);
+      expect(Object.values(data.days).filter((day) => day.metAt !== null)).toHaveLength(1);
+      for (const day of Object.values(data.days)) expect(day.session).toHaveLength(6);
+      expect(data.tactics.recent).toEqual([true, false, true, true]);
+
+      // Saved again by this build and read back, nothing changes.
+      const again = parseBackup(JSON.stringify(makeBackup(data, NOW, '9.9.9')));
+      expect(again.ok && again.data).toEqual(data);
+    });
+  }
+});
