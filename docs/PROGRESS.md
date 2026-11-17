@@ -22,8 +22,10 @@ and so on); a fix goes on the earliest branch with the problem and is merged for
 
 ## Next
 
-Step 1 of the path: the storage fix on `m4`, merged forward to `m8b`; fixtures of formats 3 to
-5 from the real builds; `npm audit`. Then the owner's pass.
+Step 1 of the path is done (2026-11-17): own database per preview, read-only mode for a newer
+database, database name and version in the diagnostics, the test clock in previews only (fix on
+`m4`, merged forward to `m8b`); fixtures of formats 3 to 5 from the real builds (on `m7`);
+`npm audit` recorded. Next: the owner's pass (`docs/RETURN.md`, section 2) on the M7 preview.
 
 ## Log
 

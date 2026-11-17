@@ -41,11 +41,13 @@ important steps in one go.
 Use the **M7 preview** (it contains M4 to M6) in Samsung Internet or Chrome, then the APK.
 About 40 minutes. Write a word next to every step that does not match.
 
-**Storage warning.** All previews and the site root share one browser storage (same origin,
-same IndexedDB name); `docs/DECISIONS.md` said otherwise, which was wrong. A newer preview
-upgrades the database, and after that every older build (the root with M3, or the M7 preview
-after the M8a one) opens with empty progress and does not save. Nothing is deleted. So do the
-whole pass in the M7 preview and do not open the M8a or M8b previews before it is done.
+**Storage (fixed on 2026-11-17).** Until then all previews and the site root shared one
+database, and a newer preview made older builds open with empty progress. Now every preview
+has its own database, so the M7 preview starts empty and your M3 progress in the site root is
+not touched. A build that meets a newer database shows the progress read-only with a notice
+and a way to save the file. Before step 1, open "Ещё", "Данные", "Диагностика": "База данных"
+must say `chess-trainer@preview/m7`, "Версия базы" `3 (эта сборка знает 3)`. The test clock
+("На день вперёд", step 8) exists in previews only.
 
 | # | Step | Expected |
 | --- | --- | --- |

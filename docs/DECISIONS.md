@@ -560,6 +560,12 @@ resources.
   "Verify traps (full, no cache)" searched all 109 positions again on a GitHub Linux runner
   (3 workers) and matched every committed result from the owner's Windows machine.
 
+- **`npm audit` on 2026-11-17 (branch `m8b`, without `--force`): 4 moderate, 0 in what is
+  shipped.** `npm audit --omit=dev` finds nothing. The four are `glob` (GHSA-3g3m-2fjr-6pw4),
+  `minimatch` (GHSA-g3hv-75wg-m249), `workbox-build` 7.4.1 and `vite-plugin-pwa` 2.0.0, the
+  same build-time chain as below; the two low ones (`deepmerge`, `@rollup/plugin-node-resolve`)
+  are gone. The only offered fix is `--force`, which would downgrade `workbox-build` to 7.3.0
+  (a breaking change). Accepted again; next look before the release APK.
 - **`npm audit`: 6 advisories (2 low, 4 moderate), accepted for now; revisit in M5.**
   Recorded on 2026-11-11. All six sit in the build-time chain
   `vite-plugin-pwa` -> `workbox-build` -> (`glob` -> `minimatch`, `@rollup/plugin-node-resolve`
