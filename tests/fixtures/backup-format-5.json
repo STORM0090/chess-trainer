@@ -1,0 +1,280 @@
+{
+  "app": "chess-trainer",
+  "format": 5,
+  "exportedAt": "2026-11-17T00:28:29.080Z",
+  "appVersion": "0.8.0",
+  "data": {
+    "traps": {
+      "fools-mate": {
+        "id": "fools-mate",
+        "seenAt": 1794875286297,
+        "chainDepth": 2,
+        "lines": {},
+        "runs": {
+          "clean": 2,
+          "failed": 0
+        },
+        "learnedAt": 1795048102945,
+        "knownAt": null,
+        "card": {
+          "cardId": "fools-mate",
+          "stability": 3.9221,
+          "stabilityFast": 3.13768,
+          "difficulty": 3.53072398,
+          "state": 2,
+          "scheduleStatus": "review",
+          "dueAt": 1795460898109,
+          "lastReviewAt": 1795048102945,
+          "reps": 1,
+          "lapses": 0,
+          "scheduledDays": 4.777721809269843,
+          "learningStep": 0
+        },
+        "dueAt": 1795129200000,
+        "reviews": 0,
+        "masteredAt": null,
+        "updatedAt": 1795048102945
+      }
+    },
+    "games": [],
+    "settings": {
+      "clockShiftDays": 2,
+      "dailyNorm": 3,
+      "reminderTime": "07:30",
+      "lastBackupAt": 1794875309080,
+      "backupSnoozedUntil": null,
+      "botLevel": 1,
+      "botResults": [],
+      "shvuChecklist": false,
+      "remindersOn": false
+    },
+    "puzzles": {
+      "laF3t": {
+        "id": "laF3t",
+        "attempts": 1,
+        "clean": 1,
+        "lastAt": 1794875285431,
+        "lastClean": true,
+        "card": null,
+        "dueAt": null
+      },
+      "o8DWa": {
+        "id": "o8DWa",
+        "attempts": 2,
+        "clean": 1,
+        "lastAt": 1795048100330,
+        "lastClean": true,
+        "card": {
+          "cardId": "o8DWa",
+          "stability": 0.91083952,
+          "stabilityFast": 43.90596755,
+          "difficulty": 6.109214,
+          "state": 1,
+          "scheduleStatus": "learning",
+          "dueAt": 1795065347719,
+          "lastReviewAt": 1795048100330,
+          "reps": 2,
+          "lapses": 0,
+          "scheduledDays": 0.19962256145771165,
+          "learningStep": 0
+        },
+        "dueAt": 1795129200000
+      },
+      "O6LO8": {
+        "id": "O6LO8",
+        "attempts": 1,
+        "clean": 1,
+        "lastAt": 1794961695445,
+        "lastClean": true,
+        "card": null,
+        "dueAt": null
+      },
+      "2Vozi": {
+        "id": "2Vozi",
+        "attempts": 1,
+        "clean": 1,
+        "lastAt": 1795048098813,
+        "lastClean": true,
+        "card": null,
+        "dueAt": null
+      }
+    },
+    "tactics": {
+      "level": null,
+      "test": null,
+      "recent": [
+        true,
+        false,
+        true,
+        true
+      ],
+      "updatedAt": 1795048098813
+    },
+    "days": {
+      "2026-11-17": {
+        "date": "2026-11-17",
+        "done": 2,
+        "puzzles": 1,
+        "cleanPuzzles": 1,
+        "trapSteps": 1,
+        "reviews": 0,
+        "metAt": null,
+        "newTrap": "fools-mate",
+        "session": [
+          {
+            "kind": "puzzle",
+            "id": "laF3t",
+            "role": "warmup",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "trapStep",
+            "id": "fools-mate",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "trapStep",
+            "id": "fools-mate",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "AYX6t",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "ofJzF",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "BV5Bw",
+            "role": "new",
+            "done": false,
+            "clean": null
+          }
+        ],
+        "sessionDoneAt": null,
+        "updatedAt": 1794875286297
+      },
+      "2026-11-18": {
+        "date": "2026-11-18",
+        "done": 2,
+        "puzzles": 2,
+        "cleanPuzzles": 1,
+        "trapSteps": 0,
+        "reviews": 0,
+        "metAt": null,
+        "newTrap": null,
+        "session": [
+          {
+            "kind": "puzzle",
+            "id": "O6LO8",
+            "role": "warmup",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "trapStep",
+            "id": "fools-mate",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "9j0SG",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "2mIIM",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "Gc8cQ",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "6kDnt",
+            "role": "new",
+            "done": false,
+            "clean": null
+          }
+        ],
+        "sessionDoneAt": null,
+        "updatedAt": 1794961695445
+      },
+      "2026-11-19": {
+        "date": "2026-11-19",
+        "done": 3,
+        "puzzles": 2,
+        "cleanPuzzles": 2,
+        "trapSteps": 1,
+        "reviews": 0,
+        "metAt": 1795048102945,
+        "newTrap": null,
+        "session": [
+          {
+            "kind": "puzzle",
+            "id": "2Vozi",
+            "role": "warmup",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "puzzle",
+            "id": "o8DWa",
+            "role": "review",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "trapStep",
+            "id": "fools-mate",
+            "done": true,
+            "clean": true
+          },
+          {
+            "kind": "puzzle",
+            "id": "FfQU7",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "CkUWy",
+            "role": "new",
+            "done": false,
+            "clean": null
+          },
+          {
+            "kind": "puzzle",
+            "id": "OiHC9",
+            "role": "new",
+            "done": false,
+            "clean": null
+          }
+        ],
+        "sessionDoneAt": null,
+        "updatedAt": 1795048102946
+      }
+    }
+  }
+}
