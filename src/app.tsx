@@ -60,6 +60,11 @@ function StorageNotice() {
   return (
     <div class="notice notice-warning" role="alert">
       <span>{t.storage[storage]}</span>
+      {storage === 'newer' && (
+        <a class="button" href={routeHref({ name: 'data' })}>
+          {t.storage.saveFile}
+        </a>
+      )}
     </div>
   );
 }

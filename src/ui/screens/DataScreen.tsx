@@ -4,6 +4,7 @@ import { trapStatus, type AppData } from '../../core/progress';
 import { TOP_LEVEL } from '../../../shared/puzzle-types.ts';
 import { fmt, t } from '../../i18n';
 import { routeHref } from '../../router';
+import { TEST_CLOCK } from '../../build-info';
 import { replaceData, setClockShift, updateSettings, useStore } from '../../storage/store';
 import { isNativeApp, saveTextFile } from '../../platform/native';
 
@@ -143,21 +144,23 @@ export function DataScreen() {
         </div>
       </section>
 
-      <section class="panel">
-        <h2 class="panel-title">{t.data.testTitle}</h2>
-        <p class="hint-text">{t.data.testHelp}</p>
-        <p class={shift > 0 ? 'verdict' : undefined} role="status">
-          {shift > 0 ? fmt(t.data.clock, { n: shift }) : t.data.clockNormal}
-        </p>
-        <div class="panel-actions">
-          <button type="button" class="button" onClick={() => setClockShift(shift + 1)}>
-            {t.data.clockForward}
-          </button>
-          <button type="button" class="button" disabled={shift === 0} onClick={() => setClockShift(0)}>
-            {t.data.clockReset}
-          </button>
-        </div>
-      </section>
+      {TEST_CLOCK && (
+        <section class="panel">
+          <h2 class="panel-title">{t.data.testTitle}</h2>
+          <p class="hint-text">{t.data.testHelp}</p>
+          <p class={shift > 0 ? 'verdict' : undefined} role="status">
+            {shift > 0 ? fmt(t.data.clock, { n: shift }) : t.data.clockNormal}
+          </p>
+          <div class="panel-actions">
+            <button type="button" class="button" onClick={() => setClockShift(shift + 1)}>
+              {t.data.clockForward}
+            </button>
+            <button type="button" class="button" disabled={shift === 0} onClick={() => setClockShift(0)}>
+              {t.data.clockReset}
+            </button>
+          </div>
+        </section>
+      )}
 
       <a class="button button-quiet" href={routeHref({ name: 'more' })}>
         {t.more.back}

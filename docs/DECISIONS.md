@@ -86,8 +86,24 @@ M3 (content and verify, learning modes, progression, privacy check) are in
   be checked on the phone before merging. CI publishes to the `gh-pages` branch with plain git:
   `main` goes to the site root, any stage branch goes to `/preview/<branch>/`. A root deploy
   keeps the `preview/` directory.
-- **Each preview is a separate PWA** with its own scope, service worker and storage. Progress is
-  not shared between a preview and the main app.
+- **Each preview is a separate PWA** with its own scope and service worker. **Storage
+  (corrected on 2026-11-17):** this said "and storage", which was wrong. IndexedDB belongs to
+  the origin, not to the path, so until then the root and every preview shared the database
+  `chess-trainer`, and a newer preview upgraded it so that older builds (the root among them)
+  opened with empty progress. Since then the database name comes from the base path
+  (`src/build-info.ts`): the root and the APK keep `chess-trainer`, a preview uses
+  `chess-trainer@preview/<branch>`. A unit test checks that the root and the previews never
+  share a name.
+- **A database newer than the build** (a newer build upgraded it, or a merge was reverted):
+  the build opens it at its own version without upgrading, shows the progress read-only with a
+  notice and the way to the progress file, and writes nothing, so the newer build finds it as
+  it left it. The diagnostics page shows the database name and both versions. An e2e test
+  makes a version-99 database and checks the notice, the export and that nothing was written.
+- **The test clock ("На день вперёд") exists only in previews**, on the dev server and in
+  builds made with `VITE_TEST_CLOCK=1`. The root and the APK have no button and ignore a saved
+  shift. The e2e test that needs the clock is skipped in the root build; the stage branch ran
+  it on the same tree before the merge. Locally: `VITE_TEST_CLOCK=1 npm run build`, then
+  `VITE_TEST_CLOCK=1 npm run test:e2e`.
 - **`navigateFallbackDenylist: [/\/preview\//]`.** The root service worker's scope also covers
   `/preview/...`. Without the deny-list, the first visit to a preview would be answered with the
   root app's cached `index.html`.

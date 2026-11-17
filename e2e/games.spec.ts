@@ -1,6 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { expect, test } from '@playwright/test';
-import { expectNoSidewaysScroll, playMove, watchForErrors } from './helpers.ts';
+import { databaseName, expectNoSidewaysScroll, playMove, watchForErrors } from './helpers.ts';
 
 // A made-up game: on move 5 White (the "player") could mate on f7 and played a3 instead.
 const PGN = `[Event "Live Chess"]
@@ -66,9 +66,9 @@ test('own games become exercises, and no name is kept', async ({ page }) => {
 
   // Nothing with the names in the device's storage either.
   const stored = await page.evaluate(
-    () =>
+    (database) =>
       new Promise<string>((resolve, reject) => {
-        const open = indexedDB.open('chess-trainer');
+        const open = indexedDB.open(database);
         open.onerror = () => reject(open.error);
         open.onsuccess = () => {
           const db = open.result;
@@ -85,6 +85,7 @@ test('own games become exercises, and no name is kept', async ({ page }) => {
           }
         };
       }),
+    databaseName,
   );
   expect(stored).toContain('c6d4 f3f7');
   expect(stored).not.toContain('tester-name');

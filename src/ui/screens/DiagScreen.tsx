@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'preact/hooks';
 import { engineScriptUrl } from '../../engine/engine-files';
 import { UciEngine } from '../../engine/uci-client';
-import { t } from '../../i18n';
+import { fmt, t } from '../../i18n';
+import { databaseInfo } from '../../storage/db';
 
 /** White mates in one with Ra8#. Used to check that the engine actually calculates. */
 const MATE_IN_ONE_FEN = '6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1';
@@ -94,7 +95,13 @@ async function readStorage(): Promise<StorageInfo> {
 
 function storageRows(storage: StorageInfo | undefined): Row[] {
   if (!storage) return [];
+  const database = databaseInfo();
   return [
+    [t.diag.database, database.name],
+    [
+      t.diag.databaseVersion,
+      fmt(t.diag.databaseVersionValue, { found: database.version ?? t.diag.unknown, known: database.known }),
+    ],
     [t.diag.persisted, yesNo(storage.persisted)],
     [t.diag.usage, storage.usage],
   ];
