@@ -12,6 +12,7 @@ import {
   type TrapProgress,
 } from '../core/progress';
 import { applyPuzzleStat, applyPuzzleToLevel, applyTest, type TacticsState } from '../core/tactics';
+import { TEST_CLOCK } from '../build-info';
 import * as db from './db';
 
 export interface StoreState {
@@ -19,8 +20,10 @@ export interface StoreState {
   /**
    * `saved`: changes reach IndexedDB. `memory`: the database could not be opened (for example
    * a private window), progress lives until the page is closed. `failed`: a write failed.
+   * `newer`: a newer build has upgraded the database; its progress is shown read-only and
+   * nothing is written, so the newer build finds it as it left it.
    */
-  storage: 'saved' | 'memory' | 'failed';
+  storage: 'saved' | 'memory' | 'failed' | 'newer';
 }
 
 let state: StoreState = { data: emptyData(), storage: 'saved' };
@@ -37,7 +40,7 @@ function setData(data: AppData): void {
 
 /** Runs a write and remembers when it fails, so the UI can say that progress is not saved. */
 function persist(write: () => Promise<void>): void {
-  if (state.storage === 'memory') return;
+  if (state.storage === 'memory' || state.storage === 'newer') return;
   write().then(
     () => void askForPersistentStorage(),
     () => publish({ ...state, storage: 'failed' }),
@@ -64,7 +67,15 @@ async function askForPersistentStorage(): Promise<void> {
 export async function loadStore(): Promise<void> {
   try {
     publish({ data: await db.loadAll(), storage: 'saved' });
-  } catch {
+  } catch (error) {
+    if (db.isNewerDatabase(error)) {
+      try {
+        publish({ data: await db.loadNewer(), storage: 'newer' });
+        return;
+      } catch {
+        // Could not even read it: fall back to an empty session below.
+      }
+    }
     publish({ data: emptyData(), storage: 'memory' });
   }
 }
@@ -84,9 +95,12 @@ export function useStore(): StoreState {
   return current;
 }
 
-/** The app's clock: the device time, plus the test shift from the "Данные" screen. */
+/**
+ * The app's clock: the device time, plus the test shift from the "Данные" screen. Builds
+ * without the test clock (the site root, the APK) ignore a shift saved earlier or imported.
+ */
 export function appNow(): number {
-  return Date.now() + state.data.settings.clockShiftDays * DAY_MS;
+  return Date.now() + (TEST_CLOCK ? state.data.settings.clockShiftDays : 0) * DAY_MS;
 }
 
 export function updateTrap(id: string, change: (progress: TrapProgress) => TrapProgress): void {
@@ -140,6 +154,8 @@ export function recordTest(results: boolean[]): TacticsState {
 
 /** Replaces everything with imported data. Resolves to `false` when it could not be saved. */
 export async function replaceData(data: AppData): Promise<boolean> {
+  // The database of a newer build is not overwritten from here.
+  if (state.storage === 'newer') return false;
   if (state.storage !== 'memory') {
     try {
       await db.replaceAll(data);

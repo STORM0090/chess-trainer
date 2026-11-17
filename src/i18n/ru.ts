@@ -13,6 +13,9 @@ export const ru = {
       'Прогресс не сохраняется: браузер не дал доступ к хранилищу. Так бывает в приватном окне.',
     failed:
       'Не удалось сохранить прогресс. Сделайте копию на экране «Данные» и перезагрузите страницу.',
+    newer:
+      'Прогресс записан более новой версией приложения. Здесь он только для просмотра: изменения не сохраняются. Откройте новую версию или сохраните файл.',
+    saveFile: 'Сохранить файл',
   },
   home: {
     mastered: 'Освоено {n} из {total}',
@@ -368,6 +371,9 @@ export const ru = {
     wasmSimd: 'WebAssembly SIMD',
     crossOriginIsolated: 'Cross-origin isolation',
     indexedDb: 'IndexedDB',
+    database: 'База данных',
+    databaseVersion: 'Версия базы',
+    databaseVersionValue: '{found} (эта сборка знает {known})',
     persisted: 'Постоянное хранение',
     usage: 'Занято',
     requestPersist: 'Запросить постоянное хранение',
