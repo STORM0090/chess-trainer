@@ -15,8 +15,8 @@ Branches follow each other: `m5` from `m4`, `m6` from `m5`, and so on. Nothing i
 | M5 daily session, streak, settings, `.ics`, FSRS for puzzles, batch 2 | `m5` | done: reviewed, findings fixed, CI green |
 | M6 bot ladder, trap practice, ШВУ checklist, batch 3 | `m6` | done: reviewed, findings fixed |
 | M7 Capacitor, APK workflows, notifications, license texts, batch 4 | `m7` | done: reviewed, findings fixed; debug APK builds in CI; `docs/RETURN.md` written |
-| M8a exercises from own games (PGN) | `m8a` | built and tested; independent review running; then push |
-| M8b... basic mates, endgames, opening principles; batches 5-7 | not created | not started |
+| M8a exercises from own games (PGN) | `m8a` | built, CI green, pushed 2026-11-17; the independent review was never finished |
+| M8b basic mates, endgames, opening principles; batches 5-7 | `m8b` | batch 5 texts only (`af71039`), not reviewed; the rest not started |
 | `docs/RETURN.md` | last branch | written on `m7`; update when an M8 part is finished |
 
 ## Log

@@ -1,6 +1,6 @@
 # Back from autonomous mode: what is here and how to check it
 
-Written for the owner, on the last branch of the chain. Built from 2026-11-14 to 2026-11-16
+Written for the owner, on the last branch of the chain. Built from 2026-11-14 to 2026-11-17
 while the owner was away. **Nothing is merged into `main` and no tag was set**; the site root
 still serves M3. Everything below is on stage branches with their own previews.
 
@@ -16,9 +16,11 @@ What was done, in one line each:
   short game review; batch 3.
 - **M7**: the Android app: a debug APK built in GitHub Actions, a prepared signed release,
   local notifications, files through the share sheet, the full license texts; batch 4.
-- **M8** (own games, mates, endgames, principles; batches 5 to 7): **not started**. Depth
-  went first, as you asked: every stage above was reviewed by an independent context and its
-  findings were fixed before the next one.
+- **M8a** (exercises from your own games, PGN): built on `m8a`, CI green, preview published.
+  Its independent review was started but never finished (no section in `docs/DECISIONS.md`).
+- **M8b**: only the batch 5 texts (stage 5) on `m8b`, waiting for your read-through. Basic
+  mates, endgames, opening principles and batches 6 and 7 are not started.
+- M4 to M7 were reviewed by an independent context and the findings were fixed.
 
 ## 1. Stages
 
@@ -28,6 +30,8 @@ What was done, in one line each:
 | M5 | `m5` | https://storm0090.github.io/chess-trainer/preview/m5/ | Home screen, session, streak and freezes, norm, settings, `.ics`, FSRS for failed puzzles, one new trap a day, backup hint, size budget, offline e2e; batch 2 | CI green, plus a test that walks every day of 2026 in nine time zones | The calendar file in Samsung Calendar; the home screen on the real display |
 | M6 | `m6` | https://storm0090.github.io/chess-trainer/preview/m6/ | Bot policy, calibration, 13 levels, games, trap practice, ШВУ checklist, game review; batch 3 | CI green; 1,320 + 480 calibration games on the bundled engine | Heat and battery during games; whether level 1 feels right |
 | M7 | `m7` | https://storm0090.github.io/chess-trainer/preview/m7/ (web part) | Capacitor 8 project, debug APK workflow, release workflow (idle without a key), notifications, export through the share sheet, license texts; batch 4 | CI green; the debug APK builds in 2 minutes (5.5 MB) | **Everything about the APK**: install, notifications, Doze, reboot, the share sheet, the file picker |
+| M8a | `m8a` | https://storm0090.github.io/chess-trainer/preview/m8a/ | "Мои партии": PGN import, exercises from your mistakes, practice, up to two in the session; IndexedDB 4, file format 6 | CI green, 220 unit tests | A real chess.com export: `docs/QA/M8a.md` |
+| M8b | `m8b` | https://storm0090.github.io/chess-trainer/preview/m8b/ | Batch 5 texts only | CI green | The texts: `docs/explanations/batch-5.md` |
 
 The checklists are `docs/QA/M4.md` to `docs/QA/M7.md`; the scenario below covers their most
 important steps in one go.
@@ -36,6 +40,12 @@ important steps in one go.
 
 Use the **M7 preview** (it contains M4 to M6) in Samsung Internet or Chrome, then the APK.
 About 40 minutes. Write a word next to every step that does not match.
+
+**Storage warning.** All previews and the site root share one browser storage (same origin,
+same IndexedDB name); `docs/DECISIONS.md` said otherwise, which was wrong. A newer preview
+upgrades the database, and after that every older build (the root with M3, or the M7 preview
+after the M8a one) opens with empty progress and does not save. Nothing is deleted. So do the
+whole pass in the M7 preview and do not open the M8a or M8b previews before it is done.
 
 | # | Step | Expected |
 | --- | --- | --- |
@@ -103,6 +113,7 @@ merging, or on `main` after it:
 | 2 (stage 1) | `be21101` (texts 1, 9 after the review), `f6fbf1d` |
 | 3 (stage 2) | `5535d6b` (texts after the review), `3c08b88` |
 | 4 (stages 3, 4) | `17672c3` (texts 7, 9, 10, 15 after the review), `41ebd07` |
+| 5 (stage 5, on `m8b`) | `af71039` |
 
 **Rolling back the APK part only:** the web app does not depend on it. Reverting the merge of
 `m7` removes the Capacitor packages, `android/`, the two workflows and notifications;
@@ -121,7 +132,7 @@ Everything is also in `docs/PENDING.md`; the reasons are in `docs/DECISIONS.md`.
 
 **Texts to read** (all with the facts they rest on): `docs/explanations/batch-1.md` (texts
 1, 6, 13 changed after a review: only f3 or f6 opens the diagonal), `batch-2.md`,
-`batch-3.md`, `batch-4.md`.
+`batch-3.md`, `batch-4.md`, `batch-5.md` (on `m8b`; not reviewed by a second context).
 
 **Decisions taken in your absence, worth a look** (defaults you gave are not repeated):
 
