@@ -131,9 +131,9 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
 
   // Wipe the device, then bring the progress back from the file.
   await page.evaluate(
-    () =>
+    (database) =>
       new Promise<void>((resolve, reject) => {
-        const open = indexedDB.open('chess-trainer');
+        const open = indexedDB.open(database);
         open.onerror = () => reject(open.error);
         open.onsuccess = () => {
           const stores = ['traps', 'games', 'settings', 'puzzles', 'days'];
@@ -143,6 +143,7 @@ test('a trap is chained, saved, reviewed, exported and imported', async ({ page 
           tx.onerror = () => reject(tx.error);
         };
       }),
+    databaseName,
   );
   await page.reload();
   await expect(page.getByText('Ловушек с прогрессом: 0. Освоено: 0. Записей о партиях: 0.')).toBeVisible();
